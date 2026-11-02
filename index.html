@@ -289,6 +289,22 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
 .who b{display:block;font:800 1.05em/1.15 var(--fd)}
 .who small{color:var(--muted)}
 @media (max-width:1050px){.kstage{grid-template-columns:1fr}.xscene{width:100%}}
+
+.xsteps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.xsteps button{display:grid;justify-items:center;gap:4px;padding:8px 4px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--muted);font:700 .74em/1.15 var(--fb);cursor:pointer;text-align:center}
+.xsteps button b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--panel2);font:800 1.1em/1 var(--fd);color:var(--ink)}
+.xsteps button.cur{border-color:var(--cyan);color:var(--ink);background:#6ff3ff14}.xsteps button.cur b{background:var(--cyan);color:#062314}
+.xsteps button.done b{background:var(--uv);color:#062314}
+.xsteps button:disabled{cursor:default;opacity:.6}
+.xcons{margin:0;font-size:.86em;color:var(--ink);background:#6ff3ff12;border-left:4px solid var(--cyan);border-radius:10px;padding:8px 10px}
+.off{opacity:.3;pointer-events:none;filter:saturate(.3)}
+.xbrief{max-width:820px!important;text-align:left;justify-items:stretch}
+.xbrief p{color:var(--muted)}
+.xrules{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.xrules div{background:#ffffff0a;border:1px solid var(--line);border-radius:14px;padding:10px;display:grid;gap:3px;animation:fadeup .45s both}
+.xrules span{font-size:1.6em}.xrules b{font:800 .95em/1.15 var(--fd)}.xrules small{color:var(--muted);font-size:.8em;line-height:1.25}
+.xzones{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px;font-size:.85em;color:var(--muted)}
+.xzones span{display:flex;gap:8px;align-items:center}.xzones i{width:14px;height:14px;border-radius:4px;flex:none}.xzones b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -360,7 +376,7 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
           <text x="120" y="160" text-anchor="middle" font-size="22">🧪 🧽 🌡️ ⏱️</text></svg>
         <div class="chips"><span class="chip">Bionettoyage · S2</span><span class="chip">Trinômes · 20 min</span></div>
         <h3>La recette du nettoyage</h3>
-        <p>10 jetons à répartir entre produit, frottement, chaleur et temps : le cercle de Sinner en action, sur 4 missions avec contraintes.</p>
+        <p>Chaque salissure a sa recette : produit, frottement, chaleur, temps. 26 jetons pour 4 missions, et un « pourquoi ? » à justifier à chaque fois.</p>
         <span class="btn go">Jouer →</span>
       </button>
       <button class="gcard" data-nav="coin" style="animation-delay:.4s">
@@ -397,6 +413,16 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
           <div class="chips"><span class="chip">Séances 1 et 2</span><span class="chip">Toute la classe · 10 min</span></div>
           <h3>Le tri express</h3>
           <p>Nettoyer, désinfecter ou bionettoyer ? Risque fort ou faible ? Bon ou mauvais geste ? Chacun trie sur son téléphone, les jetons tombent dans les colonnes.</p>
+          <span class="btn go">Ouvrir →</span>
+        </a>
+        <a class="gcard live" href="live.html#sinner" style="text-decoration:none;color:inherit;animation-delay:.7s">
+          <svg class="ill" viewBox="0 0 400 170" aria-hidden="true"><rect width="400" height="170" fill="#22163f"/>
+            <g transform="translate(110 85) rotate(-90)" fill="none" stroke-width="22"><circle r="48" stroke="#4dabff" stroke-dasharray="75 302"/><circle r="48" stroke="#ff9d5c" stroke-dasharray="75 302" stroke-dashoffset="-75"/><circle r="48" stroke="#ff5c8a" stroke-dasharray="60 302" stroke-dashoffset="-150"/><circle r="48" stroke="#b48cff" stroke-dasharray="90 302" stroke-dashoffset="-210"/></g>
+            <rect x="230" y="22" width="78" height="128" rx="14" fill="#120d2b" stroke="#6f63b8" stroke-width="3"/><rect x="242" y="44" width="54" height="12" rx="6" fill="#ffc94a"/><rect x="242" y="64" width="54" height="12" rx="6" fill="#4dabff"/><rect x="242" y="84" width="54" height="12" rx="6" fill="#ff9d5c"/><rect x="242" y="104" width="54" height="12" rx="6" fill="#b48cff"/>
+            <text x="350" y="92" text-anchor="middle" font-size="30">🤔</text></svg>
+          <div class="chips"><span class="chip">Bionettoyage · S2</span><span class="chip">Chacun son téléphone · 20 min</span></div>
+          <h3>La recette du nettoyage</h3>
+          <p>Chaque élève joue les 4 missions sur son téléphone, à son rythme. Audrey suit tout le monde en direct, puis projette la correction avec les recettes de la classe.</p>
           <span class="btn go">Ouvrir →</span>
         </a>
       </div>
@@ -491,7 +517,7 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
           <div class="res" id="kres" hidden></div>
         </div>
         <div class="kside">
-          <div class="kring" id="kring"><svg viewBox="0 0 200 200" id="kdonut"></svg><div id="klbls"></div><div class="mid"><div><b id="kleft">10</b><small>jetons à placer</small></div></div></div>
+          <div class="kring" id="kring"><svg viewBox="0 0 200 200" id="kdonut"></svg><div id="klbls"></div><div class="mid"><div><b id="kleft">26</b><small>jetons pour 4 missions</small></div></div></div>
           <div id="kfacs" style="display:grid;gap:6px"></div>
           <button class="btn big" id="kgo">🧽 Nettoyer !</button>
         </div>
@@ -499,10 +525,10 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
       <aside class="side">
         <div class="panel">
           <h3>🎯 Le défi</h3>
-          <p class="hint" style="color:var(--ink)">Répartissez <b>10 jetons</b> entre les 4 facteurs du cercle de Sinner, puis nettoyez. Si un facteur est bloqué, il faut <b>compenser</b> avec les autres.</p>
+          <p class="hint" style="color:var(--ink)">Lisez l'indice 🔎 de chaque mission et trouvez <b>la bonne recette</b> : ni trop, ni trop peu sur chacun des 4 facteurs. Attention, il n'y a que <b>26 jetons pour les 4 missions</b>. Après chaque nettoyage, une question « Pourquoi ? » rapporte 25 points.</p><p class="hint" style="margin-top:8px">📱 Version téléphone (toute la classe en même temps) : <a href="live.html#sinner" style="color:var(--warm)">jeux live</a>.</p>
           <div class="mchips" id="kchips" style="margin-top:10px"></div>
         </div>
-        <div class="panel board"><h3>🏆 Classement <small style="color:var(--muted);font:400 .78em var(--fb)">moyenne des 4 missions</small></h3><ol id="kboard"></ol></div>
+        <div class="panel board"><h3>🏆 Classement <small style="color:var(--muted);font:400 .78em var(--fb)">points sur 500</small></h3><ol id="kboard"></ol></div>
       </aside>
     </div>
   </div>
@@ -524,10 +550,12 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
       <aside class="side">
         <div class="panel" style="display:grid;gap:10px">
           <div class="who" id="xwho"></div>
+          <div class="xsteps" id="xsteps"></div>
+          <p class="xcons" id="xcons"></p>
+          <div class="row"><button class="btn big" id="xnext" style="flex:1">✓ Hauteur réglée</button><button class="btn big" id="xgo" style="flex:1">▶ Faire le change</button></div>
           <div class="hrange"><div class="v"><span class="hint">Hauteur du plan de change</span><b id="xhv">70 cm</b></div><input type="range" id="xh" min="60" max="110" step="1" value="70" aria-label="Hauteur du plan de change"><div class="pm"><button id="xhm">− 2 cm</button><button id="xhp">+ 2 cm</button></div></div>
           <div><p class="hint" style="margin-bottom:6px">Glissez chaque objet à sa place (ou touchez l'objet, puis l'emplacement) :</p><div class="xtray" id="xtray"></div></div>
-          <div class="row"><button class="btn big" id="xgo" style="flex:1">▶ Faire le change</button></div>
-          <div class="row"><button class="btn ghost" id="xclear">↺ Tout ranger</button></div>
+          <div class="row"><button class="btn ghost" id="xclear">↺ Tout ranger</button><button class="btn ghost" id="xrules">📖 Revoir les règles</button></div>
           <div class="mchips" id="xchips" style="--n:3"></div>
         </div>
         <div class="panel board"><h3>🏆 Classement <small style="color:var(--muted);font:400 .78em var(--fb)">moyenne des 3 missions</small></h3><ol id="xboard"></ol></div>
@@ -957,70 +985,80 @@ const Scan=(()=>{
 
 
 /* =====================================================================
-   JEU 3 : LA RECETTE DU NETTOYAGE (cercle de Sinner)
+   JEU 3 : LA RECETTE DU NETTOYAGE (cercle de Sinner) · version TBI
    ===================================================================== */
 const Sinner=(()=>{
   const FAC=[{k:'chim',e:'🧪',n:'Action chimique',d:'le produit',c:'#4dabff'},{k:'meca',e:'🧽',n:'Action mécanique',d:'frotter',c:'#ff9d5c'},{k:'temp',e:'🌡️',n:'Température',d:'l\'eau chaude',c:'#ff5c8a'},{k:'temps',e:'⏱️',n:'Temps',d:'laisser agir',c:'#b48cff'}];
+  const BUDGET=26;
   const MIS=[
-    {name:'La chaise haute de Lina',sub:'Après le repas de midi',obj:'chair',caps:{},why:{},seed:11,
-      stains:[{n:'Purée séchée',type:'puree',w:{chim:.6,meca:1.2,temp:.6,temps:1.2},R:8,tip:'Une salissure sèche se ramollit en la laissant tremper (temps), puis part en frottant.'},
-              {n:'Taches de gras',type:'gras',w:{chim:1.3,meca:.6,temp:1.3,temps:.4},R:8,tip:'Le gras part avec un détergent (produit) et de l\'eau chaude.'}]},
-    {name:'La tétine d\'Inès',sub:'Elle est tombée par terre',obj:'tetine',caps:{chim:0},why:{chim:'Bloqué : pas de produit, Inès la met à la bouche'},seed:23,
-      stains:[{n:'Microbes',type:'germ',w:{chim:1.5,meca:.5,temp:1.5,temps:1},R:9,tip:'Sans produit, on compense par la chaleur (ébullition) et le temps.'}]},
-    {name:'Le sol de la salle de jeux',sub:'Traces collantes de jus de raisin',obj:'floor',caps:{temp:0},why:{temp:'Bloqué : eau froide seulement, chauffe-eau en panne'},seed:37,
-      stains:[{n:'Traces collantes',type:'trace',w:{chim:1.2,meca:1.3,temp:1,temps:.8},R:10,tip:'Sans eau chaude, on compense avec le produit, le frottement et le temps.'}]},
-    {name:'Le plan de change',sub:'Après le change de Noah, qui a la gastro',obj:'change',caps:{temp:2},why:{temp:'Limité : eau tiède seulement'},seed:51,
-      stains:[{n:'Salissures',type:'sale',w:{chim:1,meca:1.3,temp:.8,temps:.6},R:7,tip:'On enlève d\'abord les salissures visibles : on nettoie avant de désinfecter.'},
-              {n:'Microbes de la gastro',type:'germ',w:{chim:1.4,meca:.4,temp:.8,temps:1},R:8,min:{temps:3},tip:'Un désinfectant doit agir plusieurs minutes : c\'est le temps de contact (au moins 3 jetons de temps).'}]}];
+    {id:'chair',name:'La chaise haute de Lina',sub:'Après le repas de midi',obj:'chair',seed:11,lock:{},why0:{},
+      hint:'De la purée a séché et collé sur la tablette, avec quelques traces de gras.',
+      r:{chim:[1,2],meca:[2,3],temp:[1,2],temps:[2,3]},stains:['puree','gras'],
+      why:{q:'Pourquoi laisser tremper (temps) avant de frotter ?',o:['Pour désinfecter la tablette','Pour que le produit sente meilleur','Pour ramollir la purée séchée'],a:2,x:'Une salissure sèche se ramollit en trempant : ensuite, elle part facilement en frottant. Le gras part avec un peu de détergent et d\'eau chaude.'}},
+    {id:'tetine',name:'La tétine d\'Inès',sub:'Tombée par terre',obj:'tetine',seed:23,lock:{},
+      hint:'Elle est tombée par terre. Inès, 5 mois, la remet tout de suite à la bouche.',
+      r:{chim:[0,0],meca:[0,1],temp:[4,5],temps:[2,3]},stains:['germ'],
+      why:{q:'Pourquoi ne mettre aucun produit sur la tétine ?',o:['Inès la met à la bouche : elle avalerait les résidus','Les produits abîment le plastique de la tétine','Pour aller plus vite, la crèche est pressée'],a:0,x:'Pas de produit chimique sur ce qui va à la bouche : on compense avec la chaleur (ébullition) et le temps.'}},
+    {id:'floor',name:'Le sol de la salle de jeux',sub:'Jus de raisin renversé',obj:'floor',seed:37,lock:{temp:0},why0:{temp:'Bloqué : chauffe-eau en panne, eau froide seulement'},
+      hint:'Du jus de raisin a coulé et colle au sol. Le chauffe-eau est en panne : eau froide seulement.',
+      r:{chim:[2,3],meca:[2,3],temp:[0,0],temps:[1,2]},stains:['trace'],
+      why:{q:'L\'eau est froide. Comment nettoyer quand même ?',o:['C\'est impossible : il faut attendre l\'eau chaude','On compense : plus de produit, de frottement et de temps','On ajoute du parfum pour masquer les traces'],a:1,x:'Les 4 facteurs se compensent : si la température baisse, on augmente les autres.'}},
+    {id:'change',name:'Le plan de change',sub:'Noah a la gastro',obj:'change',seed:51,lock:{},
+      hint:'Noah a la gastro. Il faut nettoyer ET désinfecter, avec un produit détergent-désinfectant.',
+      r:{chim:[2,3],meca:[1,2],temp:[0,2],temps:[3,4]},stains:['sale','germ'],
+      why:{q:'Pourquoi faut-il beaucoup de temps ici ?',o:['Pour laisser la surface sécher complètement','Pour que la couleur du produit disparaisse','Le désinfectant a besoin d\'un temps de contact'],a:2,x:'Un désinfectant n\'agit qu\'après un temps de contact (indiqué sur l\'étiquette). Sans ce temps, les microbes restent.'}}];
+  const LOW={chim:'Pas assez de produit : la saleté ou les microbes résistent.',meca:'Pas assez de frottement : la salissure reste collée.',temp:'Pas assez de chaleur pour décoller le gras ou détruire les microbes.',temps:'Pas assez de temps : trempage ou temps de contact trop court.'};
+  function scoreM(m,x){ let pen=0; const notes=[];
+    FAC.forEach(f=>{ const [lo,hi]=m.r[f.k], v=x[f.k];
+      if(v<lo){ pen+=(lo-v)*15+(v===0&&lo>=3?10:0); notes.push({f,s:'low',t:LOW[f.k]}); }
+      else if(v>hi){ const per=f.k==='chim'?(m.id==='tetine'?25:10):5; pen+=(v-hi)*per; notes.push({f,s:'high',t:f.k==='chim'?(m.id==='tetine'?'Du produit sur une tétine : Inès avalerait les résidus !':'Trop de produit : irritant pour les enfants, polluant et coûteux.'):'Plus que nécessaire : des jetons gaspillés.'}); }
+      else notes.push({f,s:'ok',t:''}); });
+    return {pct:Math.max(0,100-pen),notes}; }
   const svg=$('#ksvg'), cv=$('#kfx'), cx=cv.getContext('2d'), obj=$('#kobj');
-  let team=0, mi=0, x={}, phase='set', last=[], done=[null,null,null,null], recorded=false;
+  let team=0, mi=0, x={}, phase='set', last=null, res=[], recorded=false;
   const scores=TEAMS.map(()=>[]);
   const C=2*Math.PI*74;
   const rng=s=>()=>{ s=(s*16807)%2147483647; return (s-1)/2147483646; };
   function blob(x0,y0,r,R,flat){ const n=9, p=[]; for(let i=0;i<n;i++){ const a=i/n*Math.PI*2, k=r*(.68+R()*.55); p.push([x0+Math.cos(a)*k,y0+Math.sin(a)*k*(flat||.8)]); }
     let d=`M${((p[0][0]+p[n-1][0])/2).toFixed(1)} ${((p[0][1]+p[n-1][1])/2).toFixed(1)}`; for(let i=0;i<n;i++){ const a=p[i], b=p[(i+1)%n]; d+=` Q${a[0].toFixed(1)} ${a[1].toFixed(1)} ${((a[0]+b[0])/2).toFixed(1)} ${((a[1]+b[1])/2).toFixed(1)}`; } return d+'Z'; }
   function germ(x0,y0,s){ let l=''; for(let k=0;k<8;k++){ const a=k*Math.PI/4; l+=`<line x1="${(Math.cos(a)*10).toFixed(1)}" y1="${(Math.sin(a)*10).toFixed(1)}" x2="${(Math.cos(a)*17).toFixed(1)}" y2="${(Math.sin(a)*17).toFixed(1)}"/><circle cx="${(Math.cos(a)*18).toFixed(1)}" cy="${(Math.sin(a)*18).toFixed(1)}" r="2.4"/>`; }
-    return `<g transform="translate(${x0.toFixed(1)} ${y0.toFixed(1)}) scale(${s.toFixed(2)})" stroke="#2f9a5a" fill="#2f9a5a" stroke-width="3" stroke-linecap="round">${l}<circle r="11" fill="#5fd38b"/><circle cx="-3.5" cy="-3.5" r="3.2" fill="#ffffffaa" stroke="none"/><circle cx="3" cy="4" r="2" fill="#2f9a5a55" stroke="none"/></g>`; }
+    return `<g transform="translate(${x0.toFixed(1)} ${y0.toFixed(1)}) scale(${s.toFixed(2)})" stroke="#2f9a5a" fill="#2f9a5a" stroke-width="3" stroke-linecap="round">${l}<circle r="11" fill="#5fd38b"/><circle cx="-3.5" cy="-3.5" r="3.2" fill="#ffffffaa" stroke="none"/></g>`; }
   const AREA={chair:[150,150,400,270],tetine:[210,170,280,250],floor:[90,140,520,330],change:[140,160,420,260]};
   function objSvg(o){
     if(o==='chair') return `<rect x="105" y="115" width="490" height="350" rx="70" fill="#9fc3ff"/><rect x="128" y="138" width="444" height="304" rx="54" fill="#fdfdfd"/><circle cx="520" cy="190" r="34" fill="#e8eef8" stroke="#c9d5ea" stroke-width="4"/><text x="350" y="505" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">Tablette de la chaise haute, vue de dessus</text>`;
-    if(o==='tetine') return `<circle cx="350" cy="295" r="190" fill="#fffef9" stroke="#e2d6c0" stroke-width="3" stroke-dasharray="10 8"/><text x="350" y="512" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">🔎 Vue à la loupe</text><ellipse cx="350" cy="235" rx="62" ry="80" fill="#f8d9a0" stroke="#e0b46a" stroke-width="4"/><ellipse cx="335" cy="205" rx="18" ry="26" fill="#fff5" /><path d="M235 330 Q350 280 465 330 Q470 360 440 372 L260 372 Q230 360 235 330Z" fill="#7fd6c7" stroke="#4fb3a4" stroke-width="4"/><circle cx="350" cy="410" r="44" fill="none" stroke="#7fd6c7" stroke-width="16"/>`;
+    if(o==='tetine') return `<circle cx="350" cy="295" r="190" fill="#fffef9" stroke="#e2d6c0" stroke-width="3" stroke-dasharray="10 8"/><text x="350" y="512" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">🔎 Vue à la loupe</text><ellipse cx="350" cy="235" rx="62" ry="80" fill="#f8d9a0" stroke="#e0b46a" stroke-width="4"/><ellipse cx="335" cy="205" rx="18" ry="26" fill="#fff5"/><path d="M235 330 Q350 280 465 330 Q470 360 440 372 L260 372 Q230 360 235 330Z" fill="#7fd6c7" stroke="#4fb3a4" stroke-width="4"/><circle cx="350" cy="410" r="44" fill="none" stroke="#7fd6c7" stroke-width="16"/>`;
     if(o==='floor'){ let t=''; for(let i=0;i<8;i++) for(let j=0;j<5;j++) t+=`<rect x="${70+i*70}" y="${120+j*70}" width="68" height="68" rx="4" fill="${(i+j)%2?'#efe7da':'#f8f2e8'}"/>`; return t+`<text x="350" y="505" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">Sol de la salle de jeux, vue de dessus</text>`; }
-    return `<rect x="110" y="130" width="480" height="320" rx="60" fill="#ffd27a"/><rect x="132" y="152" width="436" height="276" rx="44" fill="#fff4d8"/><g stroke="#ffe3a3" stroke-width="16">${[0,1,2,3,4].map(k=>`<line x1="${190+k*80}" y1="160" x2="${190+k*80}" y2="420"/>`).join('')}</g><text x="350" y="490" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">Matelas du plan de change, vue de dessus</text>`;
-  }
-  function stainSvg(st,R,o){ const [ax,ay,aw,ah]=AREA[o]; let s=''; const P=()=>[ax+R()*aw,ay+R()*ah];
-    if(st.type==='puree'){ for(let k=0;k<6;k++){ const [a,b]=P(), r=18+R()*26; s+=`<path d="${blob(a,b,r,R)}" fill="#d98b3a"/><path d="${blob(a-r*.15,b-r*.15,r*.45,R)}" fill="#eaa75a"/>`; } }
-    else if(st.type==='gras'){ for(let k=0;k<5;k++){ const [a,b]=P(), r=22+R()*22; s+=`<path d="${blob(a,b,r,R,.65)}" fill="#f1cf5e" opacity=".75"/><ellipse cx="${(a-r*.3).toFixed(1)}" cy="${(b-r*.2).toFixed(1)}" rx="${(r*.35).toFixed(1)}" ry="${(r*.12).toFixed(1)}" fill="#fffbe8" opacity=".9"/>`; } }
-    else if(st.type==='trace'){ for(let k=0;k<7;k++){ const a=ax+40+k*68, b=ay+60+(k%2)*120+R()*40; s+=`<g transform="translate(${a.toFixed(0)} ${b.toFixed(0)}) rotate(${(k%2?18:-18)})"><ellipse rx="17" ry="27" fill="#7b3f8f" opacity=".55"/><ellipse cy="36" rx="13" ry="13" fill="#7b3f8f" opacity=".55"/></g>`; }
+    return `<rect x="110" y="130" width="480" height="320" rx="60" fill="#ffd27a"/><rect x="132" y="152" width="436" height="276" rx="44" fill="#fff4d8"/><g stroke="#ffe3a3" stroke-width="16">${[0,1,2,3,4].map(k=>`<line x1="${190+k*80}" y1="160" x2="${190+k*80}" y2="420"/>`).join('')}</g><text x="350" y="490" text-anchor="middle" font-size="18" font-weight="700" fill="#8a7458">Matelas du plan de change, vue de dessus</text>`; }
+  function stainSvg(type,R,o){ const [ax,ay,aw,ah]=AREA[o]; let s=''; const P=()=>[ax+R()*aw,ay+R()*ah];
+    if(type==='puree'){ for(let k=0;k<6;k++){ const [a,b]=P(), r=18+R()*26; s+=`<path d="${blob(a,b,r,R)}" fill="#d98b3a"/><path d="${blob(a-r*.15,b-r*.15,r*.45,R)}" fill="#eaa75a"/>`; } }
+    else if(type==='gras'){ for(let k=0;k<5;k++){ const [a,b]=P(), r=22+R()*22; s+=`<path d="${blob(a,b,r,R,.65)}" fill="#f1cf5e" opacity=".75"/><ellipse cx="${(a-r*.3).toFixed(1)}" cy="${(b-r*.2).toFixed(1)}" rx="${(r*.35).toFixed(1)}" ry="${(r*.12).toFixed(1)}" fill="#fffbe8" opacity=".9"/>`; } }
+    else if(type==='trace'){ for(let k=0;k<7;k++){ const a=ax+40+k*68, b=ay+60+(k%2)*120+R()*40; s+=`<g transform="translate(${a.toFixed(0)} ${b.toFixed(0)}) rotate(${(k%2?18:-18)})"><ellipse rx="17" ry="27" fill="#7b3f8f" opacity=".55"/><ellipse cy="36" rx="13" ry="13" fill="#7b3f8f" opacity=".55"/></g>`; }
       for(let k=0;k<2;k++){ const [a,b]=P(); s+=`<path d="${blob(a,b,46+R()*20,R,.6)}" fill="#8e3fa3" opacity=".55"/>`; } }
-    else if(st.type==='sale'){ for(let k=0;k<5;k++){ const [a,b]=P(), r=20+R()*24; s+=`<path d="${blob(a,b,r,R,.7)}" fill="#a37a4d" opacity=".75"/>`; } }
+    else if(type==='sale'){ for(let k=0;k<5;k++){ const [a,b]=P(), r=20+R()*24; s+=`<path d="${blob(a,b,r,R,.7)}" fill="#a37a4d" opacity=".75"/>`; } }
     else { const n=o==='tetine'?11:9; for(let k=0;k<n;k++){ const [a,b]=P(); s+=germ(a,b,.7+R()*.6); } }
     return s; }
+  const spent=()=>res.reduce((s,r)=>s+r.used,0), used=()=>FAC.reduce((s,f)=>s+x[f.k],0), left=()=>BUDGET-spent()-used();
+  const capOf=k=>MIS[mi].lock[k]!=null?MIS[mi].lock[k]:5;
+  const chips=()=>{ $('#kchips').innerHTML=MIS.map((mm,i)=>{ const r=res[i]; return `<span class="${i===mi&&phase!=='end'?'cur':''} ${r?'done':''}"><b>${r?r.pct+' %':(i+1)}</b>${r?(r.why?'✓ pourquoi':'✗ pourquoi'):({chair:'🪑',tetine:'🍼',floor:'🧩',change:'🚼'})[mm.id]}</span>`; }).join(''); };
   function draw(){ const m=MIS[mi], R=rng(m.seed);
-    svg.innerHTML=objSvg(m.obj)+m.stains.map((st,i)=>`<g class="stain" id="kst${i}">${stainSvg(st,R,m.obj)}</g>`).join('');
-    $('#kmis').innerHTML=`<span class="t">Mission ${mi+1}/4 · ${m.name}</span><span class="s">${m.sub}</span>`+Object.keys(m.caps).map(k=>{ const f=FAC.find(f=>f.k===k); return `<span class="c">${f.e} ${m.why[k]}</span>`; }).join('');
-    $('#kchips').innerHTML=MIS.map((mm,i)=>`<span class="${i===mi?'cur':''} ${done[i]!=null?'done':''}"><b>${done[i]!=null?done[i]+' %':(i+1)}</b>${mm.obj==='chair'?'🪑':mm.obj==='tetine'?'🍼':mm.obj==='floor'?'🧩':'🚼'}</span>`).join('');
-    $('#kres').hidden=true; phase='set'; renderCtl(); }
-  const used=()=>FAC.reduce((s,f)=>s+x[f.k],0);
-  const cap=k=>{ const c=MIS[mi].caps[k]; return c==null?5:c; };
-  function renderCtl(){ const left=10-used(), m=MIS[mi];
-    $('#kfacs').innerHTML=FAC.map(f=>{ const cp=cap(f.k); return `<div class="kf${x[f.k]?' hot':''}" style="--c:${f.c}"><span class="e">${f.e}</span><div class="n">${f.n}<small>${f.d}</small><div class="pips">${[0,1,2,3,4].map(i=>`<i class="${i<x[f.k]?'on':i>=cp?'lock':''}"></i>`).join('')}</div></div><div class="ctl"><button data-k="${f.k}" data-d="-1" ${x[f.k]<=0||phase!=='set'?'disabled':''} aria-label="Moins">−</button><button data-k="${f.k}" data-d="1" ${x[f.k]>=cp||left<=0||phase!=='set'?'disabled':''} aria-label="Plus">+</button></div>${m.why[f.k]?`<div class="why">🔒 ${m.why[f.k]}</div>`:''}</div>`; }).join('');
+    svg.innerHTML=objSvg(m.obj)+m.stains.map((t,i)=>`<g class="stain" id="kst${i}">${stainSvg(t,R,m.obj)}</g>`).join('');
+    $('#kmis').innerHTML=`<span class="t">Mission ${mi+1}/4 · ${m.name}</span><span class="s">🔎 ${m.hint}</span>`;
+    $('#kres').hidden=true; phase='set'; FAC.forEach(f=>x[f.k]=0); chips(); renderCtl(); }
+  function renderCtl(){ const L=left(), m=MIS[mi];
+    $('#kfacs').innerHTML=FAC.map(f=>{ const cp=capOf(f.k); return `<div class="kf${x[f.k]?' hot':''}" style="--c:${f.c}"><span class="e">${f.e}</span><div class="n">${f.n}<small>${f.d}</small><div class="pips">${[0,1,2,3,4].map(i=>`<i class="${i<x[f.k]?'on':i>=cp?'lock':''}"></i>`).join('')}</div></div><div class="ctl"><button data-k="${f.k}" data-d="-1" ${x[f.k]<=0||phase!=='set'?'disabled':''} aria-label="Moins">−</button><button data-k="${f.k}" data-d="1" ${x[f.k]>=cp||L<=0||phase!=='set'?'disabled':''} aria-label="Plus">+</button></div>${m.why0&&m.why0[f.k]?`<div class="why">🔒 ${m.why0[f.k]}</div>`:''}</div>`; }).join('');
     $$('#kfacs .ctl button').forEach(b=>b.onclick=()=>{ x[b.dataset.k]+=+b.dataset.d; (+b.dataset.d>0?Snd.pop:Snd.blip)(); renderCtl(); });
-    let st=0, ring=`<circle cx="100" cy="100" r="74" fill="none" stroke="#ffffff14" stroke-width="34"/>`, lb='';
-    FAC.forEach(f=>{ const len=x[f.k]/10*C; ring+=`<circle class="sec" cx="100" cy="100" r="74" stroke="${f.c}" stroke-dasharray="${Math.max(0,len-2).toFixed(1)} ${C.toFixed(1)}" stroke-dashoffset="${(-st).toFixed(1)}"/>`;
+    let st=0, ring=`<circle cx="100" cy="100" r="74" fill="none" stroke="#ffffff14" stroke-width="34"/>`, lb='', tot=Math.max(1,used());
+    FAC.forEach(f=>{ const len=x[f.k]/Math.max(tot,6)*C; ring+=`<circle class="sec" cx="100" cy="100" r="74" stroke="${f.c}" stroke-dasharray="${Math.max(0,len-2).toFixed(1)} ${C.toFixed(1)}" stroke-dashoffset="${(-st).toFixed(1)}"/>`;
       const a=(st+len/2)/C*Math.PI*2-Math.PI/2; lb+=`<span class="lb" style="left:${(50+Math.cos(a)*37).toFixed(1)}%;top:${(50+Math.sin(a)*37).toFixed(1)}%;opacity:${x[f.k]?1:0}">${f.e}</span>`; st+=len; });
-    $('#kdonut').innerHTML=ring; $('#klbls').innerHTML=lb; $('#kleft').textContent=left; $('#kring').classList.toggle('full',left===0);
-    $('#kring .mid small').textContent=left===0?'recette prête !':left===1?'jeton à placer':'jetons à placer';
+    $('#kdonut').innerHTML=ring; $('#klbls').innerHTML=lb; $('#kleft').textContent=L; $('#kring').classList.toggle('full',L<=0);
+    $('#kring .mid small').textContent=`jeton${L>1?'s':''} pour ${4-mi} mission${4-mi>1?'s':''}`;
     $('#kgo').disabled=phase!=='set'; }
-  function evalStain(st){ let v=0; FAC.forEach(f=>v+=st.w[f.k]*x[f.k]); let s=Math.min(1,v/st.R), miss=null;
-    if(st.min) for(const k in st.min) if(x[k]<st.min[k]){ s=Math.min(s,.55); miss=k; }
-    return {s,miss}; }
-  /* animation de nettoyage */
+  /* animation */
   let anim=null, parts=[];
   function fit(){ const r=obj.getBoundingClientRect(); if(!r.width) return; const d=DPR(); cv.width=Math.round(r.width*d); cv.height=Math.round(r.height*d); }
   function go(){ if(phase!=='set') return; if(used()===0){ Snd.tick(); const b=$('#kgo'); b.textContent='Placez d\'abord des jetons !'; setTimeout(()=>b.textContent='🧽 Nettoyer !',1400); return; }
-    phase='clean'; renderCtl(); const m=MIS[mi]; last=m.stains.map(evalStain); const dur=2.2+x.temps*.35;
-    m.stains.forEach((st,i)=>{ const g=$('#kst'+i); g.style.transitionDuration=dur+'s'; requestAnimationFrame(()=>g.style.opacity=(1-last[i].s).toFixed(2)); });
+    phase='clean'; renderCtl(); const m=MIS[mi]; last=scoreM(m,x); const dur=2.2+x.temps*.35;
+    m.stains.forEach((t,i)=>{ const g=$('#kst'+i); g.style.transitionDuration=dur+'s'; requestAnimationFrame(()=>g.style.opacity=(1-last.pct/100).toFixed(2)); });
     anim={t:0,dur}; parts=[]; Snd.water(.6); if(x.chim) Snd.spray(); if(!raf) raf=requestAnimationFrame(loop); }
   let raf=0, lt=0;
   function loop(ts){ const dt=Math.min(.05,(ts-(lt||ts))/1000); lt=ts; fit();
@@ -1029,31 +1067,39 @@ const Sinner=(()=>{
       const sp=1.4+x.meca*.9, sx=ax+aw/2+Math.sin(anim.t*sp*2.1)*aw*.45, sy=ay+ah*(.1+.8*((Math.sin(anim.t*sp*.55)+1)/2));
       if(Math.random()<.25+x.chim*.12) parts.push({k:'bub',x:sx+(Math.random()-.5)*60,y:sy+(Math.random()-.5)*40,r:4+Math.random()*9,vy:-20-Math.random()*30,l:0,m:.8+Math.random()*.6});
       if(x.temp&&Math.random()<x.temp*.06) parts.push({k:'steam',x:ax+Math.random()*aw,y:ay+ah,vy:-50-Math.random()*40,l:0,m:1.6,ph:Math.random()*6});
-      if(x.meca&&p<.95){ cx.font='64px system-ui'; cx.textAlign='center'; cx.textBaseline='middle'; cx.fillText('🧽',sx,sy); }
+      cx.textAlign='center'; cx.textBaseline='middle';
+      if(x.meca&&p<.95){ cx.font='64px system-ui'; cx.fillText('🧽',sx,sy); }
       if(x.temps){ cx.save(); cx.translate(640,470); cx.fillStyle='#120d2bcc'; cx.beginPath(); cx.arc(0,0,38,0,7); cx.fill(); cx.strokeStyle='#b48cff'; cx.lineWidth=5; cx.beginPath(); cx.arc(0,0,30,-Math.PI/2,-Math.PI/2+p*Math.PI*2); cx.stroke(); cx.rotate(anim.t*4); cx.strokeStyle='#fff'; cx.lineWidth=3; cx.beginPath(); cx.moveTo(0,0); cx.lineTo(0,-20); cx.stroke(); cx.restore(); }
-      if(!x.meca&&p<.95){ cx.font='54px system-ui'; cx.textAlign='center'; cx.textBaseline='middle'; cx.fillText(x.temp>=3?'♨️':'💧',350,300+Math.sin(anim.t*3)*10); }
+      if(!x.meca&&p<.95){ cx.font='54px system-ui'; cx.fillText(x.temp>=3?'♨️':'💧',350,300+Math.sin(anim.t*3)*10); }
       if(p>=1){ anim=null; Snd.water(0); setTimeout(result,300); } }
     parts=parts.filter(q=>{ q.l+=dt; const a=Math.max(0,1-q.l/q.m);
       if(q.k==='bub'){ q.y+=q.vy*dt; cx.strokeStyle=`rgba(90,160,200,${.8*a})`; cx.fillStyle=`rgba(255,255,255,${.5*a})`; cx.lineWidth=1.6; cx.beginPath(); cx.arc(q.x,q.y,q.r*(1+q.l*.6),0,7); cx.fill(); cx.stroke(); }
       else { q.y+=q.vy*dt; cx.strokeStyle=`rgba(255,255,255,${.7*a})`; cx.lineWidth=6; cx.lineCap='round'; cx.beginPath(); for(let k=0;k<5;k++){ const yy=q.y-k*9; cx.lineTo(q.x+Math.sin(q.ph+yy*.05)*10,yy); } cx.stroke(); }
       return q.l<q.m; });
     if(anim||parts.length) raf=requestAnimationFrame(loop); else { raf=0; lt=0; cx.setTransform(1,0,0,1,0,0); cx.clearRect(0,0,cv.width,cv.height); } }
-  function result(){ phase='res'; const m=MIS[mi], pc=Math.round(last.reduce((s,r)=>s+r.s,0)/last.length*100), st=pc>=95?3:pc>=80?2:pc>=60?1:0; done[mi]=pc;
-    const res=$('#kres'); res.hidden=false; const lastM=mi===3;
-    res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · mission ${mi+1}/4</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><div><span class="n">${pc} %</span> <span style="color:var(--muted)">propre</span></div><div class="lines">${m.stains.map((s,i)=>{ const r=last[i], ok=r.s>=.999; return `<div class="${ok?'ok':'ko'}"><b>${ok?'✓':'✗'} ${s.n} : ${Math.round(r.s*100)} %</b>${ok?'':'<br>'+s.tip}</div>`; }).join('')}</div><div class="row" style="justify-content:center;margin-top:6px"><button class="btn ghost" data-a="retry">↺ Réessayer</button><button class="btn" data-a="next">${lastM?'🏁 Voir le bilan':'Mission suivante →'}</button></div></div>`;
+  const range=([lo,hi])=>lo===hi?String(lo):lo+' à '+hi;
+  function result(){ phase='why'; const m=MIS[mi], pc=last.pct, st=pc>=95?3:pc>=75?2:pc>=50?1:0, el=$('#kres'); el.hidden=false;
+    const ord=shuffle([0,1,2]);
+    el.innerHTML=`<div class="rescard" style="max-width:540px"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · mission ${mi+1}/4</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><div><span class="n">${pc} %</span> <span style="color:var(--muted)">propre</span></div>
+      <div class="lines">${last.notes.filter(n=>n.s!=='ok').map(n=>`<div class="ko"><b>${n.f.e} ${n.s==='low'?'↑ Pas assez':'↓ Trop'}</b> · ${n.t}</div>`).join('')||'<div class="ok"><b>✓ Recette juste sur les 4 facteurs !</b></div>'}</div>
+      <div id="kwhy" style="display:grid;gap:8px;width:100%"><h3 style="font-size:1.15em;margin-top:6px">🤔 ${m.why.q}</h3>${ord.map(i=>`<button class="btn ghost" data-i="${i}" style="justify-content:flex-start;text-align:left;line-height:1.25">${m.why.o[i]}</button>`).join('')}</div></div>`;
     if(st===3) Snd.win(); else if(st>=1) Snd.good(); else Snd.fail();
-    res.querySelector('[data-a="retry"]').onclick=()=>{ draw(); };
-    res.querySelector('[data-a="next"]').onclick=()=>{ if(lastM) final(); else { mi++; FAC.forEach(f=>x[f.k]=0); draw(); Snd.pop(); } };
-    $('#kchips').innerHTML=MIS.map((mm,i)=>`<span class="${i===mi?'cur':''} ${done[i]!=null?'done':''}"><b>${done[i]!=null?done[i]+' %':(i+1)}</b>${mm.obj==='chair'?'🪑':mm.obj==='tetine'?'🍼':mm.obj==='floor'?'🧩':'🚼'}</span>`).join(''); }
-  function final(){ const avg=Math.round(done.reduce((s,v)=>s+(v||0),0)/4); if(!recorded){ scores[team].push(avg); recorded=true; board(); }
-    const st=avg>=95?3:avg>=80?2:avg>=60?1:0, res=$('#kres');
-    res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · bilan</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><h3 style="font-size:1.6em">${['Les taches résistent…','Pas mal !','Très propre !','Recette parfaite !'][st]}</h3><div><span class="n">${avg} %</span> <span style="color:var(--muted)">de moyenne</span></div><p>À retenir : les 4 facteurs se compensent. Si l'un baisse (pas de produit, eau froide…), on augmente les autres.</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="next">Trinôme suivant →</button></div></div>`;
+    el.querySelectorAll('#kwhy button').forEach(b=>b.onclick=()=>answer(+b.dataset.i)); }
+  function answer(i){ const m=MIS[mi], ok=i===m.why.a, lastM=mi===3; res[mi]={pct:last.pct,why:ok,used:used(),x:{...x}}; phase='done'; chips();
+    $$('#kwhy button').forEach(b=>{ const k=+b.dataset.i; b.disabled=true; if(k===m.why.a){ b.style.background='var(--uv)'; b.style.color='#062314'; b.style.opacity='1'; } else if(k===i){ b.style.borderColor='var(--hot)'; b.style.opacity='1'; } });
+    $('#kwhy').insertAdjacentHTML('beforeend',`<div class="lines"><div class="${ok?'ok':'ko'}"><b>${ok?'✓ Bien vu !':'✗ Pas tout à fait.'}</b> ${m.why.x}</div><div><b>La bonne recette :</b> ${FAC.map(f=>`${f.e} ${range(m.r[f.k])}`).join(' · ')}</div></div><div class="row" style="justify-content:center"><button class="btn" id="knext">${lastM?'🏁 Voir le bilan':'Mission suivante →'}</button></div>`);
+    if(ok) Snd.sparkle(); else Snd.splat();
+    $('#knext').onclick=()=>{ if(lastM) final(); else { mi++; draw(); Snd.pop(); } }; }
+  function final(){ phase='end'; const pts=res.reduce((s,r)=>s+r.pct+(r.why?25:0),0), why=res.filter(r=>r.why).length;
+    if(!recorded){ scores[team].push(pts); recorded=true; board(); } chips();
+    const st=pts>=450?3:pts>=350?2:pts>=250?1:0, el=$('#kres'); el.hidden=false;
+    el.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · bilan</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><h3 style="font-size:1.6em">${['Les taches résistent…','Pas mal !','Très propre !','Recette parfaite !'][st]}</h3><div><span class="n">${pts}</span> <span style="color:var(--muted)">/ 500 points</span></div><p>Propreté : ${res.map(r=>r.pct+' %').join(' · ')}<br>Compréhension : ${why}/4 « pourquoi » justes · ${BUDGET-spent()} jeton${BUDGET-spent()>1?'s':''} économisé${BUDGET-spent()>1?'s':''}</p><p>À retenir : chaque salissure a sa recette, et les 4 facteurs se compensent.</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="next">Trinôme suivant →</button></div></div>`;
     if(st===3){ Snd.win(); Confetti.burst(); } else Snd.good();
-    res.querySelector('[data-a="next"]').onclick=()=>pickTeam((team+1)%6); }
-  function board(){ drawBoard($('#kboard'),scores,team,'high',v=>`${v} %<span class="stars">${'★'.repeat(v>=95?3:v>=80?2:v>=60?1:0)}</span>`); }
-  function pickTeam(i){ if(phase==='clean') return; team=i; mi=0; done=[null,null,null,null]; recorded=false; FAC.forEach(f=>x[f.k]=0); drawTeams($('#kteams'),team,pickTeam); board(); draw(); Snd.pop(); }
+    el.querySelector('[data-a="next"]').onclick=()=>pickTeam((team+1)%6); }
+  function board(){ drawBoard($('#kboard'),scores,team,'high',v=>`${v} pts<span class="stars">${'★'.repeat(v>=450?3:v>=350?2:v>=250?1:0)}</span>`); }
+  function pickTeam(i){ if(phase==='clean') return; team=i; mi=0; res=[]; recorded=false; drawTeams($('#kteams'),team,pickTeam); board(); draw(); Snd.pop(); }
   $('#kgo').onclick=go;
-  FAC.forEach(f=>x[f.k]=0); drawTeams($('#kteams'),team,pickTeam); board(); draw();
+  drawTeams($('#kteams'),team,pickTeam); board(); draw();
   return { show(){ fit(); } };
 })();
 
@@ -1066,6 +1112,7 @@ const Coin=(()=>{
   const ITEMS=[{k:'couche',e:'🩲',n:'Couches'},{k:'ling',e:'🧻',n:'Lingettes'},{k:'creme',e:'🧴',n:'Crème'},{k:'body',e:'👕',n:'Body propre'},{k:'poub',e:'🗑️',n:'Poubelle à couches'},{k:'linge',e:'🧺',n:'Sac à linge sale'}];
   const SLOTS={reach:{n:'À portée de main',cap:4},shelf:{n:'Étagère haute',cap:3},low:{n:'Placard bas',cap:3},foot:{n:'Au pied (pédale)',cap:2}};
   const scene=$('#xscene'), gS=$('#xstatic'), gF=$('#xfig'), gX=$('#xfx');
+  let step=1; const RULES=[['📏','Plan à hauteur des hanches','ni dos penché, ni bras levés'],['🧰','Tout prêt et à portée avant de commencer','le matériel du change sur la tablette, à portée de main'],['✋','Une main toujours sur l\'enfant','on ne se penche pas loin, on ne s\'éloigne jamais'],['🧼','Déchets et linge sale au pied','poubelle et sac à pédale, jamais sur le plan de change'],['🪜','L\'enfant qui marche monte seul','par l\'escalier : on ne porte pas 12 kg à chaque change']];
   let team=0, mi=0, th=70, stair=false, place={}, phase='set', armed=null, sim=null, done=[null,null,null], recorded=false, flashT=0, flashMsg='', t=0;
   const scores=TEAMS.map(()=>[]);
   const M=()=>MIS[mi], hip=()=>M().h*.53, top=()=>FLOOR-th*S;
@@ -1130,23 +1177,30 @@ const Coin=(()=>{
   function updPhase(){ const el=$('#xphase'), tx=$('#xphaseT'); el.classList.toggle('run',phase==='sim'); el.classList.toggle('alert',flashT>0);
     if(flashT>0){ tx.textContent=flashMsg; return; }
     const left=ITEMS.filter(it=>!place[it.k]).length;
-    tx.textContent=phase==='set'?(left?`✋ Réglez la hauteur et rangez ${left} objet${left>1?'s':''}`:'✅ Tout est rangé : lancez le change !'):phase==='sim'?'▶ Le change commence…':'📊 Résultat'; }
+    tx.textContent=phase==='set'?(step===1?'📏 Étape 1 · Réglez la hauteur du plan':step===2?(left?`🧰 Étape 2 · Rangez encore ${left} objet${left>1?'s':''}`:'🧰 Étape 2 · Tout est rangé !'):'▶ Étape 3 · Lancez le change'):phase==='sim'?'▶ Le change commence…':'📊 Résultat'; }
   function flash(m){ flashMsg=m; flashT=2.4; updPhase(); Snd.tick(); }
   function renderSide(){ const m=M();
+    const ST=[['Régler la hauteur','📏'],['Ranger le matériel','🧰'],['Faire le change','▶']];
+    $('#xsteps').innerHTML=ST.map((x,i)=>`<button class="${i+1===step?'cur':i+1<step?'done':''}" data-s="${i+1}" ${i+1>step||phase!=='set'?'disabled':''}><b>${i+1<step?'✓':i+1}</b>${x[0]}</button>`).join('');
+    $$('#xsteps button').forEach(b=>b.onclick=()=>{ if(phase!=='set') return; step=+b.dataset.s; renderAll(); });
+    $('#xcons').innerHTML=step===1?`<b>Étape 1.</b> Réglez le plan pour que ${m.who} ne se penche pas et ne lève pas les bras. Observez son dos sur le dessin.`:step===2?`<b>Étape 2.</b> Rangez les 6 objets <b>avant</b> de commencer : tout à portée, une main toujours sur l'enfant, poubelle et linge sale au pied.${m.kid==='toddler'?' Pensez à l\'escalier pour Sacha !':''}`:`<b>Étape 3.</b> Tout est prêt ? Lancez le change et observez ${m.who}.`;
+    document.querySelector('#coin .hrange').classList.toggle('off',step!==1);
+    $('#xtray').classList.toggle('off',step!==2);
+    $('#xnext').hidden=step===3; $('#xnext').textContent=step===1?'✓ Hauteur réglée':'✓ Rangement terminé'; $('#xgo').hidden=step!==3;
     $('#xwho').innerHTML=`<span class="av">${m.em}</span><div><b>${m.who}, ${String(m.h/100).replace('.',',')} m</b><small>change ${m.child}${m.twist?' · '+m.twist:''}</small></div>`;
     $('#xh').value=th; $('#xhv').textContent=th+' cm';
     $('#xtray').innerHTML=ITEMS.map(it=>`<div class="xit${place[it.k]?' placed':''}${armed===it.k?' armed':''}" data-k="${it.k}"><span>${it.e}</span><small>${it.n}</small></div>`).join('')+`<div class="xit${stair?' armed':''}" id="xstair" style="cursor:pointer"><span>🪜</span><small>Escalier ${stair?'sorti':'rentré'}</small></div>`;
     $$('#xtray .xit[data-k]').forEach(el=>el.addEventListener('pointerdown',e=>startDrag(e,el)));
-    $('#xstair').onclick=()=>{ if(phase!=='set') return; stair=!stair; Snd.pop(); renderAll(); };
+    $('#xstair').onclick=()=>{ if(phase!=='set'||step!==2) return; stair=!stair; Snd.pop(); renderAll(); };
     $('#xchips').innerHTML=MIS.map((mm,i)=>`<span class="${i===mi?'cur':''} ${done[i]!=null?'done':''}"><b>${done[i]!=null?done[i]+' %':i+1}</b>${mm.em}</span>`).join('');
     scene.classList.toggle('armed',!!armed); updPhase(); }
   function renderAll(){ drawStatic(); figure({hand:babyHand()}); renderSide(); }
-  function setH(v){ if(phase!=='set') return; th=Math.max(60,Math.min(110,v)); renderAll(); }
+  function setH(v){ if(phase!=='set'||step!==1) return; th=Math.max(60,Math.min(110,v)); renderAll(); }
   $('#xh').addEventListener('input',e=>setH(+e.target.value));
   $('#xhm').onclick=()=>{ setH(th-2); Snd.blip(); }; $('#xhp').onclick=()=>{ setH(th+2); Snd.blip(); };
-  function put(k,slot){ if(phase!=='set') return; if(inSlot(slot).length>=capOf(slot)&&place[k]!==slot){ flash(`${SLOTS[slot].n} : plus de place !`); return; }
+  function put(k,slot){ if(phase!=='set'||step!==2) return; if(inSlot(slot).length>=capOf(slot)&&place[k]!==slot){ flash(`${SLOTS[slot].n} : plus de place !`); return; }
     place[k]=slot; armed=null; Snd.pop(); renderAll(); }
-  function startDrag(e,el){ if(phase!=='set'||el.classList.contains('placed')) return; e.preventDefault(); const k=el.dataset.k, sx=e.clientX, sy=e.clientY; let moved=false, ghost=null, hover=null;
+  function startDrag(e,el){ if(phase!=='set'||step!==2||el.classList.contains('placed')) return; e.preventDefault(); const k=el.dataset.k, sx=e.clientX, sy=e.clientY; let moved=false, ghost=null, hover=null;
     const mv=ev=>{ if(!moved&&Math.hypot(ev.clientX-sx,ev.clientY-sy)>6){ moved=true; ghost=document.createElement('div'); ghost.className='ghostdrag'; ghost.textContent=ITEMS.find(i=>i.k===k).e; document.body.appendChild(ghost); scene.classList.add('dragging'); }
       if(!moved) return; ghost.style.left=ev.clientX+'px'; ghost.style.top=ev.clientY+'px'; const t2=document.elementFromPoint(ev.clientX,ev.clientY), tg=t2&&t2.closest?t2.closest('[data-drop="slot"]'):null;
       if(tg!==hover){ if(hover) hover.classList.remove('hover'); hover=tg; if(hover) hover.classList.add('hover'); } };
@@ -1154,18 +1208,18 @@ const Coin=(()=>{
       if(moved){ ghost.remove(); if(hover){ hover.classList.remove('hover'); put(k,hover.dataset.slot); } }
       else { armed=armed===k?null:k; Snd.blip(); renderSide(); } };
     addEventListener('pointermove',mv); addEventListener('pointerup',up); addEventListener('pointercancel',up); }
-  $('#xsvg').addEventListener('click',e=>{ if(phase!=='set') return; const pi=e.target.closest('.pitem'), sl=e.target.closest('.slot');
+  $('#xsvg').addEventListener('click',e=>{ if(phase!=='set'||step!==2) return; const pi=e.target.closest('.pitem'), sl=e.target.closest('.slot');
     if(armed){ const k=sl?sl.dataset.slot:pi?place[pi.dataset.k]:null; if(k) put(armed,k); return; }
     if(pi){ delete place[pi.dataset.k]; Snd.blip(); renderAll(); return; }
     if(sl) flash('Choisissez d\'abord un objet dans la liste à droite'); });
   $('#xclear').onclick=()=>{ if(phase!=='set') return; place={}; armed=null; renderAll(); Snd.blip(); };
   /* ----- simulation ----- */
   function pen(it,slot){ const pedal=it.k==='poub'||it.k==='linge', n=it.n;
-    if(slot==='reach') return pedal?{hyg:30,msg:`${n} sur la tablette : pas de déchets ni de linge sale à côté de l'enfant.`}:{};
-    if(slot==='shelf') return pedal?{ep:10,hyg:15,msg:`${n} en hauteur : peu pratique et peu hygiénique.`}:{ep:10,msg:`${n} en hauteur : bras levés, épaules sollicitées.`};
-    if(slot==='low') return {dos:15,secu:pedal?10:30,msg:`${n} dans le placard bas : il faut se pencher et lâcher l'enfant.`,alarm:!pedal};
-    if(slot==='foot') return pedal?{}:{dos:15,secu:30,msg:`${n} au sol : il faut se pencher et lâcher l'enfant.`,alarm:true};
-    return {secu:45,msg:`${n} hors de portée : l'enfant reste seul sur la table !`,alarm:true,away:true}; }
+    if(slot==='reach') return pedal?{hyg:30,msg:`4|${n} sur la tablette : pas de déchets ni de linge sale à côté de l'enfant.`}:{};
+    if(slot==='shelf') return pedal?{ep:10,hyg:15,msg:`4|${n} en hauteur : peu pratique et peu hygiénique.`}:{ep:10,msg:`1|${n} sur l'étagère haute : bras levés, épaules sollicitées.`};
+    if(slot==='low') return {dos:15,secu:pedal?10:30,msg:pedal?`4|${n} dans le placard bas : il faut se pencher, la pédale est faite pour ça.`:`3|${n} dans le placard bas : il faut se pencher et lâcher l'enfant.`,alarm:!pedal};
+    if(slot==='foot') return pedal?{}:{dos:15,secu:30,msg:`3|${n} au sol : il faut se pencher et lâcher l'enfant.`,alarm:true};
+    return {secu:45,msg:`2|${n} pas rangé : il faut aller le chercher, l'enfant reste seul sur la table !`,alarm:true,away:true}; }
   function startSim(){ if(phase!=='set') return; phase='sim'; armed=null; const m=M(), steps=[];
     if(m.kid==='toddler') steps.push({k:'lift',lab:stair?'Sacha monte par l\'escalier':'Soulever Sacha (12 kg)'});
     ['couche','ling','creme','body','poub','linge'].forEach(k=>steps.push({k}));
@@ -1173,7 +1227,7 @@ const Coin=(()=>{
   function stepSim(dt){ const st=sim.steps[sim.i]; if(!st){ sim=null; finish(); return; } sim.t+=dt; const D=1.25, p=Math.min(1,sim.t/D);
     const ez=v=>v<.5?2*v*v:1-Math.pow(-2*v+2,2)/2, s=p<.42?ez(p/.42):p<.58?1:1-ez((p-.58)/.42);
     const bh=babyHand(); let o={hand:bh,hand2:bh};
-    if(st.k==='lift'){ if(!stair){ o.bend=40*s; o.hand=[bh[0]+30,bh[1]+60*s]; } if(!st.done&&p>.5){ st.done=true; if(!stair){ sim.acc.dos+=25; sim.msgs.push('Sacha (12 kg) soulevé à chaque change : sortez l\'escalier !'); sim.floats.push({x:FX+80,y:top()-120,txt:'⚠ 12 kg dans les bras !',c:'#ff5c8a',t:0}); Snd.splat(); } else { sim.floats.push({x:T1+60,y:top()-90,txt:'✓ Sacha monte seul',c:'#2f9a5a',t:0}); Snd.good(); } } }
+    if(st.k==='lift'){ if(!stair){ o.bend=40*s; o.hand=[bh[0]+30,bh[1]+60*s]; } if(!st.done&&p>.5){ st.done=true; if(!stair){ sim.acc.dos+=25; sim.msgs.push('5|Sacha (12 kg) soulevé à chaque change : sortez l\'escalier !'); sim.floats.push({x:FX+80,y:top()-120,txt:'⚠ 12 kg dans les bras !',c:'#ff5c8a',t:0}); Snd.splat(); } else { sim.floats.push({x:T1+60,y:top()-90,txt:'✓ Sacha monte seul',c:'#2f9a5a',t:0}); Snd.good(); } } }
     else { const it=ITEMS.find(i=>i.k===st.k), slot=place[st.k]||null, pz=pen(it,slot), tgt=slot?itemPos(st.k):[FX-300,FLOOR-200];
       const pedal=(st.k==='poub'||st.k==='linge')&&slot==='foot';
       if(pedal){ sim.lid=s>.3; o.hand=[bh[0]+20,bh[1]-10]; }
@@ -1186,8 +1240,8 @@ const Coin=(()=>{
     figure(o); drawStatic();
     if(p>=1){ sim.i++; sim.t=0; sim.carry=null; sim.lid=false; } }
   function finish(){ phase='res'; const m=M(), hp=hip(), diff=th-hp, acc={dos:0,ep:0,secu:0,hyg:0}, msgs=[];
-    if(diff<-4){ acc.dos+=Math.round((-diff-4)*3); msgs.push(`Plan trop bas de ${Math.round(-diff)} cm : le dos se penche à chaque change.`); }
-    if(diff>4){ acc.ep+=Math.round((diff-4)*3); msgs.push(`Plan trop haut de ${Math.round(diff)} cm : épaules et bras levés.`); }
+    if(diff<-4){ acc.dos+=Math.round((-diff-4)*3); msgs.push(`1|Plan trop bas de ${Math.round(-diff)} cm : le dos se penche à chaque change.`); }
+    if(diff>4){ acc.ep+=Math.round((diff-4)*3); msgs.push(`1|Plan trop haut de ${Math.round(diff)} cm : épaules et bras levés.`); }
     const last=sim0; for(const k in acc) acc[k]+=last.acc[k]; msgs.push(...last.msgs);
     const sc={dos:Math.max(0,100-acc.dos),ep:Math.max(0,100-acc.ep),secu:Math.max(0,100-acc.secu),hyg:Math.max(0,100-acc.hyg)};
     const g=Math.round((sc.dos+sc.ep+sc.secu+sc.hyg)/4), st=g>=90?3:g>=75?2:g>=55?1:0; done[mi]=g;
@@ -1196,13 +1250,13 @@ const Coin=(()=>{
     const res=$('#xres'); res.hidden=false;
     res.innerHTML=`<div class="rescard" style="max-width:520px"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · mission ${mi+1}/3</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><div><span class="n">${g} %</span></div>
       <div class="meters">${[['🦴 Dos',sc.dos],['💪 Épaules',sc.ep],['👶 Sécurité de l\'enfant',sc.secu],['🧼 Hygiène',sc.hyg]].map(([n,v])=>`<div class="meter"><span>${n}</span><div class="tr"><i data-w="${v}" style="background:${col(v)}"></i></div><b>${v}</b></div>`).join('')}</div>
-      <div class="lines">${msgs.length?[...new Set(msgs)].slice(0,4).map(t=>`<div class="ko"><b>✗</b> ${t}</div>`).join(''):'<div class="ok"><b>✓ Poste de change parfait : tout est à portée, l\'enfant n\'est jamais lâché.</b></div>'}<div><b>Hauteur idéale pour ${m.who} :</b> ${ideal} (à hauteur des hanches).</div></div>
+      <div class="lines">${msgs.length?[...new Set(msgs)].slice(0,5).map(t=>{ const [r,x]=t.split('|'), R=RULES[+r-1]; return `<div class="ko"><b>${R[0]} Règle ${r} · ${R[1]}</b><br>${x}</div>`; }).join(''):'<div class="ok"><b>✓ Poste de change parfait : tout est à portée, l\'enfant n\'est jamais lâché.</b></div>'}<div><b>Hauteur idéale pour ${m.who} :</b> ${ideal} (à hauteur des hanches).</div></div>
       <div class="row" style="justify-content:center;margin-top:6px"><button class="btn ghost" data-a="retry">↺ Réessayer</button><button class="btn" data-a="next">${lastM?'🏁 Voir le bilan':'Mission suivante →'}</button></div></div>`;
     requestAnimationFrame(()=>requestAnimationFrame(()=>$$('#xres .meter i').forEach(i=>i.style.width=i.dataset.w+'%')));
     if(st===3) Snd.win(); else if(st>=1) Snd.good(); else Snd.fail();
     // repère des hanches
     gX.innerHTML=`<line x1="300" y1="${FLOOR-hp*S}" x2="${T1+40}" y2="${FLOOR-hp*S}" stroke="#ff5c8a" stroke-width="3" stroke-dasharray="10 7"/><text x="300" y="${FLOOR-hp*S-10}" font-size="16" font-weight="800" fill="#ff5c8a">hanches de ${m.who}</text>`;
-    res.querySelector('[data-a="retry"]').onclick=()=>{ res.hidden=true; phase='set'; gX.innerHTML=''; $('#xgo').disabled=false; renderAll(); };
+    res.querySelector('[data-a="retry"]').onclick=()=>{ res.hidden=true; phase='set'; step=1; gX.innerHTML=''; $('#xgo').disabled=false; renderAll(); };
     res.querySelector('[data-a="next"]').onclick=()=>{ if(lastM) final(); else { mi++; reset(); Snd.pop(); } };
     renderSide(); }
   let sim0=null;
@@ -1211,10 +1265,19 @@ const Coin=(()=>{
     res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n} · bilan</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.2+s*.2}s">★</span>`).join('')}</div><h3 style="font-size:1.6em">${['Aïe, le dos !','Peut mieux faire','Très bon poste !','Ergonome expert !'][st]}</h3><div><span class="n">${avg} %</span> <span style="color:var(--muted)">de moyenne</span></div><p>À retenir : plan à hauteur des hanches, tout le matériel prêt et à portée avant de commencer, une main toujours sur l'enfant.</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="next">Trinôme suivant →</button></div></div>`;
     if(st===3){ Snd.win(); Confetti.burst(); } else Snd.good();
     res.querySelector('[data-a="next"]').onclick=()=>pickTeam((team+1)%6); }
-  function reset(){ phase='set'; th=70; stair=false; place={}; armed=null; sim=null; gX.innerHTML=''; $('#xres').hidden=true; $('#xgo').disabled=false; renderAll(); }
+  function reset(){ phase='set'; step=1; th=70; stair=false; place={}; armed=null; sim=null; gX.innerHTML=''; $('#xres').hidden=true; $('#xgo').disabled=false; renderAll(); if(mi===0) brief(); }
+  function brief(){ const res=$('#xres'), m=M(); res.hidden=false;
+    res.innerHTML=`<div class="rescard xbrief"><span class="eyebrow">Le coin change · avant de commencer</span><h3 style="font-size:1.7em">Votre mission : un poste de change sûr et confortable</h3>
+      <p>Pour chaque professionnelle, réglez le plan, rangez le matériel, puis lancez le change. Le jeu vérifie <b>5 règles d'or</b> :</p>
+      <div class="xrules">${RULES.map((r,i)=>`<div style="animation-delay:${.1+i*.08}s"><span>${r[0]}</span><b>${i+1}. ${r[1]}</b><small>${r[2]}</small></div>`).join('')}</div>
+      <div class="xzones"><span><i style="background:#2ad1b8"></i><b>À portée de main</b> : la tablette à côté de l'enfant</span><span><i style="background:#ffc94a"></i><b>Étagère haute</b> : il faut lever les bras</span><span><i style="background:#ff7a8a"></i><b>Placard bas</b> : il faut se pencher et lâcher l'enfant</span><span><i style="background:#b48cff"></i><b>Au pied</b> : poubelle et sac à pédale</span><span><i style="background:#888"></i><b>Pas rangé</b> : resté dans une autre pièce</span></div>
+      <div class="row" style="justify-content:center"><button class="btn big" id="xbgo">C'est parti ▶</button></div></div>`;
+    $('#xbgo').onclick=()=>{ res.hidden=true; Snd.pop(); }; }
+  $('#xrules').onclick=()=>{ if(phase==='set') brief(); };
+  $('#xnext').onclick=()=>{ if(phase!=='set') return; if(step===1){ step=2; Snd.good(); } else if(step===2){ const left=ITEMS.filter(it=>!place[it.k]).length; if(left) flash(`${left} objet${left>1?'s':''} pas rangé${left>1?'s':''} : ${left>1?'ils resteront':'il restera'} dans une autre pièce !`); step=3; Snd.good(); } renderAll(); };
   function board(){ drawBoard($('#xboard'),scores,team,'high',v=>`${v} %<span class="stars">${'★'.repeat(v>=90?3:v>=75?2:v>=55?1:0)}</span>`); }
   function pickTeam(i){ if(phase==='sim') return; team=i; mi=0; done=[null,null,null]; recorded=false; drawTeams($('#xteams'),team,pickTeam); board(); reset(); Snd.pop(); }
-  $('#xgo').onclick=()=>{ const left=ITEMS.filter(it=>!place[it.k]).length; if(left&&phase==='set') flash(`${left} objet${left>1?'s':''} pas rangé${left>1?'s':''} : ${left>1?'ils resteront':'il restera'} hors de portée !`); startSim(); };
+  $('#xgo').onclick=()=>{ if(step===3) startSim(); };
   /* floats + boucle */
   let raf=0, lt=0, floats=[];
   function loop(ts){ const dt=Math.min(.05,(ts-(lt||ts))/1000); lt=ts; t+=dt;

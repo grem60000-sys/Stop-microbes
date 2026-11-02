@@ -42,7 +42,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--cyan);outline-o
 .nb{font:700 .86em/1 var(--fb);background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:9px 13px;cursor:pointer;color:var(--ink)}
 .stage{position:relative;flex:1;min-height:0;overflow:auto;padding:18px 22px}
 .wrap{max-width:1400px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;gap:18px;justify-content:center}
-.pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
 .gcard{text-align:left;background:linear-gradient(160deg,#3a2a52,var(--panel));border:1px solid #ffc94a55;border-radius:26px;padding:24px;cursor:pointer;display:grid;gap:10px;transition:transform .25s,border-color .25s,box-shadow .25s;animation:fadeup .5s both}
 .gcard:hover{transform:translateY(-6px);border-color:var(--warm);box-shadow:0 24px 50px -24px #ffc94a70}
 .gcard .em{font-size:3em}
@@ -157,6 +157,41 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--cyan);outline-o
 .ptimer{height:8px;border-radius:4px;background:#ffffff18;overflow:hidden}.ptimer i{display:block;height:100%;background:var(--warm)}
 .floaty{animation:floaty 2.4s ease-in-out infinite;display:inline-block}
 @media (max-width:900px){.lobby,.board,.pick{grid-template-columns:1fr}.opts{grid-template-columns:1fr}}
+
+/* ===== Recette du nettoyage (live) ===== */
+.srules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;max-width:1100px;width:100%}
+.srules div{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:14px;text-align:left;display:grid;gap:4px;animation:fadeup .5s both}
+.srules span{font-size:1.8em}.srules b{font:800 1.15em/1.15 var(--fd)}.srules small{color:var(--muted)}
+.stable{display:grid;gap:6px}
+.sr{display:grid;grid-template-columns:minmax(140px,1.6fr) repeat(4,minmax(0,1fr)) 80px;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px 12px;animation:fadeup .35s both}
+.sr.sh{background:none;border:0;color:var(--muted);font-weight:700;font-size:.85em;padding:0 12px}
+.sr .nm{display:flex;gap:8px;align-items:center;font-weight:700;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.sr .nm i{width:14px;height:14px;border-radius:50%;background:var(--c);flex:none}
+.sr .cell{text-align:center;font-weight:700;color:var(--muted)}.sr .cell b{color:var(--v);font:800 1.1em/1 var(--fd);margin-right:4px}
+.sr .cell.cur{animation:pulse 1.2s infinite;border-radius:10px}
+.sr .pts{font:800 1.3em/1 var(--fd);text-align:right;color:var(--warm);font-variant-numeric:tabular-nums}
+.corr{display:grid;gap:10px}
+.cf{display:grid;grid-template-columns:46px minmax(170px,1fr) minmax(0,2.2fr);gap:12px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:10px 14px}
+.cf .e{font-size:1.8em;text-align:center}.cf small{display:block;color:var(--muted)}
+.trk{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding-top:18px}
+.trk span{position:relative;height:52px;border-radius:10px;background:#ffffff0a;display:grid;place-items:center}
+.trk span.in{background:#8cffb426;outline:2px solid #8cffb4aa}
+.trk i{width:40px;height:40px;border-radius:50%;background:var(--c);display:grid;place-items:center;font:800 .95em/1 var(--fd);color:#120d2b;font-style:normal;transform:scale(var(--s));transition:transform .6s cubic-bezier(.3,1.5,.5,1)}
+.trk em{position:absolute;bottom:-18px;font:700 .75em/1 var(--fb);color:var(--muted);font-style:normal}
+.trk .av{position:absolute;top:-4px;transform:translateX(-50%);height:auto;background:none;color:var(--warm);font-size:1.1em}
+.sstats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.sstats div{background:var(--panel2);border-radius:16px;padding:12px;text-align:center}.sstats b{display:block;font:800 2em/1 var(--fd);color:var(--uv)}.sstats small{color:var(--muted)}
+.smh{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.smh b{font:800 1.15em/1.15 var(--fd)}
+.smh .tg{font:700 .75em/1 var(--fb);background:#ffc94a22;color:var(--warm);border-radius:99px;padding:6px 10px}
+.hintbox{background:#fff;color:#1d1a38;border-radius:16px;padding:12px 14px;font-weight:700;line-height:1.35}
+.budget{display:flex;align-items:baseline;gap:6px;justify-content:center;color:var(--muted);font-weight:700}.budget b{font:800 1.8em/1 var(--fd);color:var(--warm)}
+.sf{display:grid;grid-template-columns:30px minmax(0,1fr) 52px 52px;gap:8px;align-items:center;background:var(--panel);border:1.5px solid transparent;border-radius:16px;padding:8px 10px}
+.sf.hot{border-color:var(--c)}
+.sf .e{font-size:1.5em;text-align:center}.sf .n{font-weight:700;line-height:1.15}.sf .n small{display:block;color:var(--muted);font-weight:400;font-size:.8em}
+.sf .pips{display:flex;gap:5px;margin-top:5px}.sf .pips i{width:14px;height:14px;border-radius:50%;background:#ffffff1a}.sf .pips i.on{background:var(--c);box-shadow:0 0 8px var(--c)}.sf .pips i.lock{background:repeating-linear-gradient(45deg,#ff5c8a55 0 3px,transparent 3px 6px)}
+.sf button{height:52px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);font:800 1.5em/1 var(--fd);cursor:pointer}
+.sf button:active{transform:scale(.92)}.sf button:disabled{opacity:.25}
+.snotes{display:grid;gap:6px}.snotes div{background:#ffffff0a;border-radius:12px;padding:9px 11px;font-size:.92em;color:var(--muted)}.snotes div b{color:var(--ink)}.snotes .good b{color:var(--uv)}
+@media (max-width:900px){.srules,.sstats{grid-template-columns:1fr}.cf{grid-template-columns:40px 1fr}.cf .trk{grid-column:1/-1}.sr{grid-template-columns:minmax(90px,1.4fr) repeat(4,minmax(0,1fr)) 54px;font-size:.85em}}
 </style>
 </head>
 <body>
@@ -213,7 +248,28 @@ const TRI=[
    {e:'🧴',t:'J\'utilise du gel hydroalcoolique sur des mains visiblement sales',a:1,x:'Mains sales : eau et savon. Le gel, c\'est sur des mains propres et sèches.'},
    {e:'🗣️',t:'Je dis à Léo ce que je fais pendant que je le pose sur le tapis',a:0,x:'Mettre des mots rassure l\'enfant et nourrit son langage.'}]}
 ];
-const GAMES={quiz:{name:'Le grand quiz des Petits Pas',em:'🧠',limit:20},tri:{name:'Le tri express',em:'🗂️',limit:13}};
+
+/* ---- La recette du nettoyage (cercle de Sinner) ---- */
+const SFAC=[{k:'chim',e:'🧪',n:'Action chimique',d:'le produit',c:'#4dabff'},{k:'meca',e:'🧽',n:'Action mécanique',d:'frotter',c:'#ff9d5c'},{k:'temp',e:'🌡️',n:'Température',d:'l\'eau chaude',c:'#ff5c8a'},{k:'temps',e:'⏱️',n:'Temps',d:'laisser agir',c:'#b48cff'}];
+const SBUDGET=26;
+const SMIS=[
+ {id:'chair',em:'🪑',name:'La chaise haute de Lina',hint:'Après le repas : de la purée a séché et collé sur la tablette, avec quelques traces de gras.',lock:{},r:{chim:[1,2],meca:[2,3],temp:[1,2],temps:[2,3]},
+  why:{q:'Pourquoi laisser tremper (temps) avant de frotter ?',o:['Pour désinfecter la tablette','Pour que le produit sente meilleur','Pour ramollir la purée séchée'],a:2,x:'Une salissure sèche se ramollit en trempant, puis part en frottant. Le gras part avec un peu de détergent et d\'eau chaude.'}},
+ {id:'tetine',em:'🍼',name:'La tétine d\'Inès',hint:'Elle est tombée par terre. Inès, 5 mois, la remet tout de suite à la bouche.',lock:{},r:{chim:[0,0],meca:[0,1],temp:[4,5],temps:[2,3]},
+  why:{q:'Pourquoi ne mettre aucun produit sur la tétine ?',o:['Inès la met à la bouche : elle avalerait les résidus','Les produits abîment le plastique de la tétine','Pour aller plus vite, la crèche est pressée'],a:0,x:'Pas de produit chimique sur ce qui va à la bouche : on compense avec la chaleur (ébullition) et le temps.'}},
+ {id:'floor',em:'🧩',name:'Le sol de la salle de jeux',hint:'Du jus de raisin a coulé et colle au sol. Le chauffe-eau est en panne : eau froide seulement.',lock:{temp:0},lockWhy:{temp:'Eau froide seulement'},r:{chim:[2,3],meca:[2,3],temp:[0,0],temps:[1,2]},
+  why:{q:'L\'eau est froide. Comment nettoyer quand même ?',o:['C\'est impossible : il faut attendre l\'eau chaude','On compense : plus de produit, de frottement et de temps','On ajoute du parfum pour masquer les traces'],a:1,x:'Les 4 facteurs se compensent : si la température baisse, on augmente les autres.'}},
+ {id:'change',em:'🚼',name:'Le plan de change',hint:'Noah a la gastro. Il faut nettoyer ET désinfecter, avec un produit détergent-désinfectant.',lock:{},r:{chim:[2,3],meca:[1,2],temp:[0,2],temps:[3,4]},
+  why:{q:'Pourquoi faut-il beaucoup de temps ici ?',o:['Pour laisser la surface sécher complètement','Pour que la couleur du produit disparaisse','Le désinfectant a besoin d\'un temps de contact'],a:2,x:'Un désinfectant n\'agit qu\'après un temps de contact (indiqué sur l\'étiquette). Sans ce temps, les microbes restent.'}}];
+const SLOW={chim:'Pas assez de produit : la saleté ou les microbes résistent.',meca:'Pas assez de frottement : la salissure reste collée.',temp:'Pas assez de chaleur pour décoller le gras ou détruire les microbes.',temps:'Pas assez de temps : trempage ou temps de contact trop court.'};
+function sScore(m,x){ let pen=0; const notes=[];
+  SFAC.forEach(f=>{ const [lo,hi]=m.r[f.k], v=x[f.k]||0;
+    if(v<lo){ pen+=(lo-v)*15+(v===0&&lo>=3?10:0); notes.push({f,s:'low',t:SLOW[f.k]}); }
+    else if(v>hi){ const per=f.k==='chim'?(m.id==='tetine'?25:10):5; pen+=(v-hi)*per; notes.push({f,s:'high',t:f.k==='chim'?(m.id==='tetine'?'Du produit sur une tétine : Inès avalerait les résidus !':'Trop de produit : irritant pour les enfants, polluant et coûteux.'):'Plus que nécessaire : des jetons gaspillés.'}); }
+    else notes.push({f,s:'ok',t:''}); });
+  return {pct:Math.max(0,100-pen),notes}; }
+const sRange=([lo,hi])=>lo===hi?String(lo):lo+' à '+hi;
+const GAMES={quiz:{name:'Le grand quiz des Petits Pas',em:'🧠',limit:20},tri:{name:'Le tri express',em:'🗂️',limit:13},sinner:{name:'La recette du nettoyage',em:'⭕',limit:0}};
 
 /* ---------------- Réseau : Supabase Realtime ou mode test ---------------- */
 const Net=(()=>{ let ch=null, bc=null, handler=null, mode='none';
@@ -261,7 +317,8 @@ function host(){
   function pick(){ H.ph='pick';
     V.innerHTML=`<div style="display:grid;gap:8px"><span class="eyebrow">CAP AEPE · Séances 1 et 2</span><h1 style="font-size:clamp(34px,4.4vw,64px)">Jeux en direct : <span style="color:var(--warm)">toute la classe sur téléphone</span></h1><p style="color:var(--muted);font-size:1.12em;margin:0">Audrey projette cet écran. Les élèves scannent le QR code, choisissent un pseudo et leur trinôme, puis répondent sur leur téléphone.</p></div>
       <div class="pick"><button class="gcard" data-g="quiz"><span class="em">🧠</span><h3>${GAMES.quiz.name}</h3><p>12 questions, 4 réponses, 20 secondes. Plus on répond vite et juste, plus on marque de points.</p><span class="btn" style="justify-self:start">Créer la partie →</span></button>
-      <button class="gcard" data-g="tri" style="animation-delay:.1s"><span class="em">🗂️</span><h3>${GAMES.tri.name}</h3><p>3 manches, 21 cartes : chacun trie sur son téléphone, les jetons tombent dans les colonnes. Bonus de série 🔥.</p><span class="btn" style="justify-self:start">Créer la partie →</span></button></div>`;
+      <button class="gcard" data-g="tri" style="animation-delay:.1s"><span class="em">🗂️</span><h3>${GAMES.tri.name}</h3><p>3 manches, 21 cartes : chacun trie sur son téléphone, les jetons tombent dans les colonnes. Bonus de série 🔥.</p><span class="btn" style="justify-self:start">Créer la partie →</span></button>
+      <button class="gcard" data-g="sinner" style="animation-delay:.2s"><span class="em">⭕</span><h3>${GAMES.sinner.name}</h3><p>Chacun sur son téléphone, à son rythme : 4 missions de nettoyage, 26 jetons, un « pourquoi ? » à justifier. Puis correction projetée avec les recettes de la classe.</p><span class="btn" style="justify-self:start">Créer la partie →</span></button></div>`;
     $$('.gcard').forEach(b=>b.onclick=()=>create(b.dataset.g)); }
   async function create(g){ H.game=g; const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789'; H.code=''; for(let i=0;i<4;i++) H.code+=A[Math.floor(Math.random()*A.length)];
     V.innerHTML=`<div style="text-align:center;font:800 1.6em var(--fd)">Connexion…</div>`;
@@ -269,7 +326,7 @@ function host(){
     $('#hmode').innerHTML=mode==='online'?'<span class="pill ok"><span class="d"></span>En ligne</span>':'<span class="pill warn"><span class="d"></span>Mode test</span>';
     $('#hcode').hidden=false; $('#hcode').innerHTML=`Code <b style="color:var(--warm);letter-spacing:.1em">${H.code}</b>`;
     build(); lobby(); clearInterval(H.hb); H.hb=setInterval(broadcast,2000); }
-  function build(){ H.items=[];
+  function build(){ H.items=[]; if(H.game==='sinner'){ H.sres=new Map(); H.qi=-1; H.res={}; H.players.forEach(p=>{ p.score=0; p.streak=0; }); return; }
     if(H.game==='quiz') QUIZ.forEach(q=>{ const idx=shuffle([0,1,2,3]); H.items.push({kind:'q',q:q.q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a),x:q.x}); });
     else TRI.forEach((c,ci)=>{ H.items.push({kind:'cat',ci}); shuffle(c.cards.slice()).forEach(cd=>H.items.push({kind:'card',ci,...cd})); });
     H.qi=-1; H.res={}; H.players.forEach(p=>{ p.score=0; p.streak=0; }); }
@@ -288,6 +345,7 @@ function host(){
     if(m.t==='join'){ const name=String(m.name||'').trim().slice(0,16)||'Joueur', team=Number.isInteger(m.team)&&m.team>=0&&m.team<6?m.team:-1; const ex=H.players.get(id);
       if(ex){ ex.name=name; ex.team=team; } else { H.players.set(id,{id,name,team,score:0,streak:0}); Snd.join(); } renderPlayers(); broadcast(); }
     else if(m.t==='hello') broadcast();
+    else if(m.t==='sm'){ if(H.game==='sinner') onSinner(id,m); }
     else if(m.t==='ans'){ if(H.ph!=='q'||m.n!==H.qi||!H.players.has(id)||H.answers.has(id)) return; const it=H.items[H.qi], max=it.kind==='q'?4:TRI[it.ci].cols.length, a=Number(m.a);
       if(!(a>=0&&a<max)) return; H.answers.set(id,{a,ms:Date.now()-H.qStart}); Snd.ans(); updAnswered(); broadcast();
       if(H.answers.size>=H.players.size) setTimeout(()=>{ if(H.ph==='q') close(); },500); } }
@@ -296,10 +354,11 @@ function host(){
     if(it&&it.kind==='card'){ s.kind='card'; s.q=it.t; s.cols=TRI[it.ci].cols.map(c=>({n:c.n,e:c.e,c:c.c})); }
     if(it&&it.kind==='cat'){ s.kind='cat'; s.q=TRI[it.ci].title; }
     if(H.ph==='q'){ s.left=Math.max(0,(H.deadline-Date.now())/1000); s.limit=GAMES[H.game].limit; s.got=[...H.answers.keys()]; }
+    if(H.game==='sinner'&&H.sres){ s.prog={}; H.sres.forEach((a,k)=>s.prog[k]=a.length); if(H.ph==='corr') s.cm=H.cm; }
     if(H.ph==='rev'||H.ph==='board'||H.ph==='end'){ s.res=H.res; if(it&&it.kind!=='cat') s.good=it.kind==='q'?it.o[it.a]:TRI[it.ci].cols[it.a].n; }
     return s; }
   function broadcast(){ if(H.code&&H.ph!=='pick') Net.send({t:'st',s:pub()}); }
-  function start(){ build(); Snd.go(); next(); }
+  function start(){ build(); Snd.go(); if(H.game==='sinner') return sBrief(); next(); }
   function next(){ H.qi++; if(H.qi>=H.items.length) return end(); const it=H.items[H.qi]; if(it.kind==='cat') return cat(it); ask(it); }
   function cat(it){ H.ph='cat'; const c=TRI[it.ci], n=TRI.slice(0,it.ci).length+1;
     V.innerHTML=`<div class="cat"><span class="eyebrow">Manche ${n} sur ${TRI.length}</span><h1>${esc(c.title)}</h1><div class="catcols" style="--n:${c.cols.length}">${c.cols.map((k,i)=>`<div style="--c:${k.c};animation-delay:${.15+i*.12}s"><span>${k.e}</span><b>${esc(k.n)}</b><small>${esc(k.d)}</small></div>`).join('')}</div><div class="actions"><button class="btn big" id="hnx">C'est parti ▶</button></div></div>`;
@@ -353,8 +412,40 @@ function host(){
       <div class="actions"><button class="btn" id="hre">↺ Rejouer (mêmes joueurs)</button><button class="btn ghost" id="hpk">Changer de jeu</button></div>`;
     $$('.board .rank .rk .p').forEach((el,i)=>el.textContent=i+4);
     requestAnimationFrame(()=>requestAnimationFrame(()=>$$('.rk .b').forEach(b=>b.style.width=b.dataset.w+'%')));
-    $('#hre').onclick=()=>{ build(); lobby(); }; $('#hpk').onclick=()=>{ H.game=H.game==='quiz'?'tri':'quiz'; build(); lobby(); };
+    $('#hre').onclick=()=>{ build(); lobby(); }; $('#hpk').onclick=()=>{ pick(); };
     setTimeout(()=>{ Snd.win(); Confetti.burst(); },1300); broadcast(); }
+
+  /* ---- La recette du nettoyage : écrans animateur ---- */
+  function sBrief(){ H.ph='brief'; H.sres=new Map(); H.players.forEach(p=>{ p.score=0; });
+    V.innerHTML=`<div class="cat"><span class="eyebrow">⭕ La recette du nettoyage · règles du jeu</span><h1>Le cercle de Sinner</h1>
+      <div class="catcols" style="--n:4">${SFAC.map((f,i)=>`<div style="--c:${f.c};animation-delay:${.1+i*.1}s"><span>${f.e}</span><b>${f.n}</b><small>${f.d}</small></div>`).join('')}</div>
+      <div class="srules">${[['🔎','4 missions, 4 salissures','Lisez l\'indice : il dit quelle recette il faut.'],['🪙','26 jetons pour les 4 missions','Ni trop, ni trop peu sur chaque facteur. Les jetons dépensés ne reviennent pas !'],['🤔','Un « pourquoi ? » à chaque fois','Après le nettoyage, justifiez la recette : +25 points.']].map((r,i)=>`<div style="animation-delay:${.5+i*.12}s"><span>${r[0]}</span><b>${r[1]}</b><small>${r[2]}</small></div>`).join('')}</div>
+      <div class="actions"><button class="btn big" id="hnx">▶ Lancer les missions sur les téléphones</button></div></div>`;
+    $('#hnx').onclick=sPlay; Snd.whoosh(); broadcast(); }
+  function sPlay(){ H.ph='play'; H.t0=Date.now(); renderPlay(); clearInterval(H.clk); H.clk=setInterval(()=>{ const c=$('#hclk'); if(c&&H.ph==='play'){ const s=Math.floor((Date.now()-H.t0)/1000); c.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); } },500); Snd.go(); broadcast(); }
+  let rpT=0; function renderPlayLater(){ clearTimeout(rpT); rpT=setTimeout(renderPlay,150); }
+  function renderPlay(){ if(H.ph!=='play') return; const list=[...H.players.values()].sort((a,b)=>b.score-a.score||((H.sres.get(b.id)||[]).length-(H.sres.get(a.id)||[]).length));
+    const done=list.filter(p=>(H.sres.get(p.id)||[]).length>=4).length, col=v=>v>=95?'#8cffb4':v>=75?'#ffc94a':'#ff7a8a';
+    V.innerHTML=`<div class="qhead"><span class="n">⭕ La recette du nettoyage · en cours</span><div class="prog"><i style="width:${list.length?done/list.length*100:0}%"></i></div><div class="answered">✅ <b>${done}</b> / ${list.length} ont terminé</div><span class="pill">⏱ <b id="hclk">0:00</b></span></div>
+      <div class="stable"><div class="sr sh"><span>Joueur</span>${SMIS.map((m,i)=>`<span>${m.em} ${i+1}</span>`).join('')}<span>Points</span></div>
+      ${list.map((p,i)=>{ const a=H.sres.get(p.id)||[]; return `<div class="sr" style="--c:${tcol(p.team)};animation-delay:${Math.min(i,10)*.03}s"><span class="nm"><i></i>${esc(p.name)}</span>${SMIS.map((m,k)=>{ const r=a[k]; return r?`<span class="cell" style="--v:${col(r.pct)}"><b>${r.pct}%</b>${r.why?'✓':'✗'}</span>`:k===a.length?'<span class="cell cur">⏳</span>':'<span class="cell">·</span>'; }).join('')}<span class="pts">${p.score}</span></div>`; }).join('')||'<p style="color:var(--muted)">Aucun joueur.</p>'}</div>
+      <div class="actions"><button class="btn big${done&&done===list.length?' pulse':''}" id="hcorr">⏹ Arrêter et corriger ensemble</button></div>`;
+    $('#hcorr').onclick=()=>{ clearInterval(H.clk); sCorr(0); }; const c=$('#hclk'); if(c){ const s=Math.floor((Date.now()-H.t0)/1000); c.textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0'); } }
+  function sCorr(i){ H.ph='corr'; H.cm=i; H.res={}; const m=SMIS[i], rows=[...H.players.values()].map(p=>(H.sres.get(p.id)||[])[i]).filter(Boolean), n=rows.length;
+    const ok=rows.filter(r=>r.pct===100).length, avg=n?Math.round(rows.reduce((s,r)=>s+r.pct,0)/n):0, wok=rows.filter(r=>r.why).length;
+    V.innerHTML=`<div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap"><span class="eyebrow">Correction · mission ${i+1} sur 4</span></div><h1 style="font-size:clamp(28px,3.4vw,50px)">${m.em} ${esc(m.name)}</h1><div class="expl" style="text-align:left">🔎 ${esc(m.hint)}</div>
+      <div class="corr">${SFAC.map(f=>{ const [lo,hi]=m.r[f.k], cnt=[0,0,0,0,0,0]; rows.forEach(r=>cnt[r.x[f.k]||0]++); const av=n?rows.reduce((s,r)=>s+(r.x[f.k]||0),0)/n:0, mx=Math.max(1,...cnt);
+        return `<div class="cf" style="--c:${f.c}"><span class="e">${f.e}</span><div><b>${f.n}</b><small>bonne recette : <b style="color:var(--uv)">${sRange(m.r[f.k])}</b>${m.lock[f.k]!=null?' · bloqué':''}</small></div><div class="trk">${cnt.map((c,v)=>`<span class="${v>=lo&&v<=hi?'in':''}"><i style="--s:${c?(.35+.65*c/mx).toFixed(2):0}">${c||''}</i><em>${v}</em></span>`).join('')}<span class="av" style="left:${((av+.5)/6*100).toFixed(1)}%" title="moyenne de la classe">▼</span></div></div>`; }).join('')}</div>
+      <div class="sstats"><div><b>${avg} %</b><small>propreté moyenne</small></div><div><b>${ok}/${n}</b><small>recettes parfaites</small></div><div><b>${wok}/${n}</b><small>« pourquoi » justes</small></div></div>
+      <div class="expl">🤔 <b>${esc(m.why.q)}</b><br>✅ ${esc(m.why.o[m.why.a])}. ${esc(m.why.x)}</div>
+      <div class="actions">${i>0?'<button class="btn ghost" id="hprev">← Mission précédente</button>':''}<button class="btn big" id="hnx">${i<3?'Mission suivante →':'🏁 Podium'}</button></div>`;
+    if($('#hprev')) $('#hprev').onclick=()=>sCorr(i-1);
+    $('#hnx').onclick=()=>{ if(i<3) sCorr(i+1); else { H.res={}; end(); } }; Snd.reveal(); broadcast(); }
+  function onSinner(id,m){ if(H.ph!=='play'||!H.players.has(id)) return; const a=H.sres.get(id)||[], k=Number(m.m); if(k!==a.length||k<0||k>3) return;
+    const mis=SMIS[k], x={}; let tot=0; SFAC.forEach(f=>{ let v=Math.max(0,Math.min(5,Math.round(Number(m.x&&m.x[f.k])||0))); if(mis.lock[f.k]!=null) v=Math.min(v,mis.lock[f.k]); x[f.k]=v; tot+=v; });
+    const spent=a.reduce((s,r)=>s+r.used,0); if(spent+tot>SBUDGET) return;
+    const sc=sScore(mis,x); a.push({x,pct:sc.pct,why:Number(m.w)===mis.why.a,used:tot}); H.sres.set(id,a);
+    const p=H.players.get(id); p.score=a.reduce((s,r)=>s+r.pct+(r.why?25:0),0); Snd.ans(); renderPlayLater(); broadcast(); }
   const hash=(location.hash||'').slice(1);
   if(GAMES[hash]) create(hash); else pick();
 }
@@ -384,6 +475,7 @@ function player(){
     if(!s){ view('wait0',`<div class="big-ic"><span class="floaty">📡</span></div><h1>Connexion…</h1><p>En attente de l'écran d'Audrey.</p>`); return; }
     const inGame=s.ids&&s.ids.includes(id), r=s.res&&s.res[id];
     if(!inGame&&s.ph!=='end'){ view('pend',`<div class="big-ic"><span class="floaty">⏳</span></div><h1>Inscription…</h1><p>Encore une seconde.</p>`); return; }
+    if(s.g==='sinner') return renderSinner(s);
     if(s.ph==='lobby') return view('lobby',`<div class="big-ic"><span class="floaty">🦠</span></div><h1>C'est bon, ${esc(name)} !</h1><p>Regarde l'écran : la partie va commencer.</p>`);
     if(s.ph==='cat') return view('cat'+s.n,`<div class="big-ic">🗂️</div><p>Nouvelle manche</p><h1>${esc(s.q)}</h1><p>Regarde l'écran 👀</p>`);
     if(s.ph==='q'){ const mine=P.myAns[s.n];
@@ -398,7 +490,47 @@ function player(){
     if(s.ph==='end'){ const rk=r?r.rk:null;
       return view('end',`<div class="big-ic">${rk===1?'🏆':rk===2?'🥈':rk===3?'🥉':'🎉'}</div><h1>${rk?`${rk}ᵉ sur ${r.of}`:'Partie terminée'}</h1><p style="font-size:1.2em;color:var(--ink)">${r?r.tot+' points':''}</p><p>Merci d'avoir joué !</p>`); }
     view('wait'+s.ph+s.n,`<div class="big-ic"><span class="floaty">👀</span></div><h1>Regarde l'écran</h1>`); }
+
+  /* ---- La recette du nettoyage : téléphone ---- */
+  const SK='sm_s_'+JOIN;
+  let S=null; try{ S=JSON.parse(localStorage.getItem(SK)||'null'); }catch(e){}
+  if(!S||!Array.isArray(S.res)) S={mi:0,x:{chim:0,meca:0,temp:0,temps:0},stage:'set',res:[],last:null};
+  const sSave=()=>{ try{ localStorage.setItem(SK,JSON.stringify(S)); }catch(e){} };
+  const sSpent=()=>S.res.reduce((s,r)=>s+r.used,0), sUsed=()=>SFAC.reduce((s,f)=>s+(S.x[f.k]||0),0), sLeft=()=>SBUDGET-sSpent()-sUsed();
+  function sSend(k){ const r=S.res[k]; if(r) Net.send({t:'sm',id,m:k,x:r.x,w:r.w}); }
+  function sRenderCtl(){ const m=SMIS[S.mi], L=sLeft(), box=$('#sfacs'); if(!box) return;
+    box.innerHTML=SFAC.map(f=>{ const cp=m.lock[f.k]!=null?m.lock[f.k]:5, v=S.x[f.k]||0; return `<div class="sf${v?' hot':''}" style="--c:${f.c}"><span class="e">${f.e}</span><div class="n">${f.n}<small>${m.lockWhy&&m.lockWhy[f.k]?'🔒 '+m.lockWhy[f.k]:f.d}</small><div class="pips">${[0,1,2,3,4].map(i=>`<i class="${i<v?'on':i>=cp?'lock':''}"></i>`).join('')}</div></div><button data-k="${f.k}" data-d="-1" ${v<=0?'disabled':''} aria-label="Moins">−</button><button data-k="${f.k}" data-d="1" ${v>=cp||L<=0?'disabled':''} aria-label="Plus">+</button></div>`; }).join('');
+    box.querySelectorAll('button').forEach(b=>b.onclick=()=>{ S.x[b.dataset.k]=(S.x[b.dataset.k]||0)+(+b.dataset.d); try{ navigator.vibrate&&navigator.vibrate(12); }catch(e){} sSave(); sRenderCtl(); });
+    $('#sleft').textContent=L; $('#sleftw').textContent=`jeton${L>1?'s':''} pour ${4-S.mi} mission${4-S.mi>1?'s':''}`; $('#sgo').disabled=sUsed()===0; }
+  function sMission(){ const m=SMIS[S.mi];
+    if(S.stage==='set'){ if(view('s'+S.mi+'set',`<div class="smh"><span class="tg">Mission ${S.mi+1}/4</span><b>${m.em} ${esc(m.name)}</b></div><div class="hintbox">🔎 ${esc(m.hint)}</div><div class="budget">🪙 <b id="sleft"></b> <span id="sleftw"></span></div><div id="sfacs" style="display:grid;gap:8px"></div><button class="btn big" id="sgo">🧽 Nettoyer !</button>`)){
+        $('#sgo').onclick=()=>{ if(!sUsed()) return; const sc=sScore(m,S.x); S.last={pct:sc.pct,notes:sc.notes.map(n=>({k:n.f.k,s:n.s,t:n.t})),ord:shuffle([0,1,2])}; S.stage='res'; sSave(); try{ navigator.vibrate&&navigator.vibrate([20,40,20]); }catch(e){} P.key=''; render(); }; }
+      sRenderCtl(); return; }
+    const L=S.last, fe=k=>SFAC.find(f=>f.k===k).e;
+    if(S.stage==='res'){ if(view('s'+S.mi+'res',`<div class="smh"><span class="tg">Mission ${S.mi+1}/4</span><b>${m.em} ${esc(m.name)}</b></div><div class="${L.pct>=95?'ok':'ko'}" style="text-align:center"><div class="pts">${L.pct} %</div><p>propre</p></div>
+        <div class="snotes">${L.notes.filter(n=>n.s!=='ok').map(n=>`<div><b>${fe(n.k)} ${n.s==='low'?'↑ Pas assez':'↓ Trop'}</b> · ${esc(n.t)}</div>`).join('')||'<div class="good"><b>✓ Recette juste sur les 4 facteurs !</b></div>'}</div>
+        <h3 style="font-size:1.15em">🤔 ${esc(m.why.q)}</h3><div class="pans">${L.ord.map(i=>`<button data-i="${i}" style="--c:#2a2160;color:var(--ink);min-height:64px;border:2px solid var(--line)"><span>${esc(m.why.o[i])}</span></button>`).join('')}</div>`)){
+        $$('.pans button').forEach(b=>b.onclick=()=>{ const w=+b.dataset.i; S.res[S.mi]={x:{...S.x},pct:L.pct,w,why:w===m.why.a,used:sUsed()}; S.stage='why'; sSave(); sSend(S.mi); P.key=''; render(); }); }
+      return; }
+    if(S.stage==='why'){ const r=S.res[S.mi], last=S.mi>=3;
+      if(view('s'+S.mi+'why',`<div class="smh"><span class="tg">Mission ${S.mi+1}/4</span><b>${m.em} ${esc(m.name)}</b></div><div class="${r.why?'ok':'ko'}" style="text-align:center"><div class="big-ic" style="font-size:64px">${r.why?'🧠':'🤔'}</div><div class="pts" style="font-size:30px">${r.why?'Bien vu ! +25':'Pas tout à fait'}</div></div>
+        <div class="snotes"><div class="good"><b>✅ ${esc(m.why.o[m.why.a])}</b><br>${esc(m.why.x)}</div><div><b>La bonne recette :</b> ${SFAC.map(f=>`${f.e} ${sRange(m.r[f.k])}`).join(' · ')}</div><div><b>Ta recette :</b> ${SFAC.map(f=>`${f.e} ${r.x[f.k]||0}`).join(' · ')} → ${r.pct} %</div></div>
+        <button class="btn big" id="snx">${last?'🏁 Terminer':'Mission suivante →'}</button>`)){
+        $('#snx').onclick=()=>{ if(last){ S.stage='done'; } else { S.mi++; S.x={chim:0,meca:0,temp:0,temps:0}; S.stage='set'; S.last=null; } sSave(); P.key=''; render(); }; }
+      return; }
+    const pts=S.res.reduce((s,r)=>s+r.pct+(r.why?25:0),0);
+    view('sdone',`<div class="big-ic">🏁</div><h1>Terminé !</h1><p style="font-size:1.3em;color:var(--ink)"><b>${pts}</b> / 500 points</p><div class="snotes">${S.res.map((r,i)=>`<div>${SMIS[i].em} <b>${r.pct} %</b> · pourquoi ${r.why?'✓':'✗'}</div>`).join('')}</div><p>Regarde l'écran : on corrige ensemble 👀</p>`); }
+  function renderSinner(s){ const r=s.res&&s.res[id];
+    if(s.ph==='lobby') return view('lobby',`<div class="big-ic"><span class="floaty">⭕</span></div><h1>C'est bon, ${esc(name)} !</h1><p>Regarde l'écran : Audrey va expliquer les règles.</p>`);
+    if(s.ph==='brief') return view('brief',`<div class="big-ic"><span class="floaty">👂</span></div><h1>Écoute bien les règles</h1><p>4 missions · 26 jetons au total · un « pourquoi ? » à chaque fois.</p>`);
+    if(s.ph==='play') return sMission();
+    if(s.ph==='corr'){ const k=s.cm|0, mine=S.res[k], m=SMIS[k];
+      return view('corr'+k,`<div class="big-ic">${m.em}</div><p>Correction à l'écran</p><h1>${esc(m.name)}</h1>${mine?`<div class="snotes"><div><b>Ta recette :</b> ${SFAC.map(f=>`${f.e} ${mine.x[f.k]||0}`).join(' · ')}</div><div><b>${mine.pct} %</b> propre · pourquoi ${mine.why?'✓':'✗'}</div></div>`:'<p>Tu n\'as pas joué cette mission.</p>'}`); }
+    if(s.ph==='end'){ const rk=r?r.rk:null; return view('end',`<div class="big-ic">${rk===1?'🏆':rk===2?'🥈':rk===3?'🥉':'🎉'}</div><h1>${rk?`${rk}ᵉ sur ${r.of}`:'Partie terminée'}</h1><p style="font-size:1.2em;color:var(--ink)">${r?r.tot+' points':''}</p><p>Merci d'avoir joué !</p>`); }
+    view('w'+s.ph,`<div class="big-ic"><span class="floaty">👀</span></div><h1>Regarde l'écran</h1>`); }
   function onMsg(m){ if(!m||m.t!=='st'||!m.s) return; P.st=m.s; P.lastSeen=Date.now();
+    if(m.s.g==='sinner'){ if(m.s.ph==='brief'&&(S.res.length||S.mi||S.stage!=='set')){ S={mi:0,x:{chim:0,meca:0,temp:0,temps:0},stage:'set',res:[],last:null}; sSave(); P.key=''; }
+      if(m.s.ph==='play'&&m.s.prog){ for(let k=(m.s.prog[id]||0);k<S.res.length;k++) sSend(k); } }
     if(P.joined&&!(m.s.ids||[]).includes(id)&&m.s.ph!=='end') Net.send({t:'join',id,name,team});
     if(m.s.ph==='q'&&P.myAns[m.s.n]!=null&&!(m.s.got||[]).includes(id)) Net.send({t:'ans',id,n:m.s.n,a:P.myAns[m.s.n]});
     if(m.s.ph==='q'&&P.myAns[m.s.n]==null){ P.deadline=Date.now()+(m.s.left||0)*1000; P.limit=m.s.limit||20; }

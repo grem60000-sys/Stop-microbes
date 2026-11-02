@@ -1,11 +1,11 @@
 # Stop microbes · CAP AEPE
 
-Six jeux à projeter pour les modules **bionettoyage** et **ergonomie-soins** (séances 1 et 2).
+Jeux à projeter pour les modules **bionettoyage** et **ergonomie-soins** (séances 1 et 2).
 
 | Fichier | Contenu |
 |---|---|
 | `index.html` | Accueil + 4 jeux où les élèves manipulent (Casser la chaîne, Scanner UV, La recette du nettoyage, Le coin change) |
-| `live.html` | 2 jeux en direct présentés par Audrey, les élèves répondent sur téléphone (Grand quiz, Tri express) |
+| `live.html` | 3 jeux en direct présentés par Audrey, les élèves répondent sur téléphone (Grand quiz, Tri express, La recette du nettoyage) |
 | `config.js` | Les 2 informations Supabase à coller (seulement pour les jeux en direct) |
 | `lib/qrcode.js` | Générateur de QR code (ne pas modifier) |
 
@@ -46,6 +46,9 @@ La clé *anon public* est faite pour être visible dans une page web. Ne jamais 
 - Le son se coupe avec 🔊, et ⛶ passe en plein écran.
 
 **Jeux en direct (`live.html`)** : Audrey projette, les élèves jouent sur téléphone.
+
+*La recette du nettoyage* se joue à son rythme : après le briefing, chaque élève fait les 4 missions sur son téléphone, Audrey suit l'avancement en direct, puis clique sur **Arrêter et corriger ensemble** pour projeter la correction mission par mission.
+
 1. Ouvrir `live.html` sur l'ordinateur relié au vidéoprojecteur, puis choisir le jeu.
 2. Les élèves scannent le QR code (ou tapent l'adresse avec le code), saisissent un pseudo et leur trinôme.
 3. Cliquer sur **Lancer la partie**. Le temps s'arrête tout seul quand tout le monde a répondu.
