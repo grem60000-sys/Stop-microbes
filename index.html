@@ -118,6 +118,8 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
 .pp .rktag{opacity:0;transition:opacity .3s}
 .scene.sol .pp.rk .rktag{opacity:1}
 .pp .ghostsoap,.gap .gg{opacity:0}
+.evt{pointer-events:none}
+.scene.uv .evt{opacity:.5}
 .scene.sol .pp.best .ghostsoap,.scene.sol .gap.best .gg{opacity:1;animation:bob 1.1s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-6px)}}
 .gap{cursor:pointer}
@@ -457,7 +459,7 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
           <div class="legend" style="margin-top:10px">
             <span>🧼 <span><b>Savon</b> : glissez-le sur une professionnelle. Elle se lave les mains <b>avant</b> de prendre le jouet.</span></span>
             <span>🧽 <span><b>Éponge</b> : glissez-la sur un point de la route. Le jouet y est nettoyé.</span></span>
-            <span>⚠️ <span><b>Attention</b> : au départ, le jouet sort tout juste de la bouche d'Inès.</span></span>
+            <span>⚠️ <span><b>Attention, le jouet se salit en route</b> (panneau rose) : <span id="cevt"></span></span></span>
             <span>👆 <span>Au TBI, touchez simplement la personne ou le point.</span></span>
           </div>
           <div class="row" style="margin-top:12px"><button class="btn big" id="cgo" style="flex:1">🔦 Lancer le jouet</button></div>
@@ -664,7 +666,9 @@ const Chain=(()=>{
   const ROAD='M30 205 L1080 205 C1186 205 1186 415 1080 415 L120 415 C14 415 14 625 120 625 L1170 625';
   const scene=$('#cscene'), svg=$('#csvg'), cv=$('#cfx'), cx=cv.getContext('2d'), duckEl=$('#cduck');
   let road=null, TOT=0, SL=[], GL=[];
-  let people=[], wash=new Set(), sponge=-1, phase='place', team=0, recorded=false, speed=1;
+  let people=[], wash=new Set(), sponge=-1, phase='place', team=0, recorded=false, speed=1, ev=0, evT=null;
+  const EVTS=[['👄','Inès le met','à la bouche','Inès met le jouet à la bouche !'],['👄','Lina le met','à la bouche','Lina met le jouet à la bouche !'],['⬇️','Il tombe dans','le bac à couches','Le jouet tombe dans le bac à couches !'],['🤧','Noah éternue','dessus','Noah éternue sur le jouet !']];
+  const evLen=()=>ev===0?0:GL[ev]-34;
   let H_=[], disp=[], D=0, dispD=0, duckL=0, duckHop=0, runState=null, contaminated=0, t=0;
   let fly=[], mist=[], sparks=[], floats=[], chronoOn=false, chronoT=0, lastSec=0, flashT=0, flashMsg='';
   const scores=TEAMS.map(()=>[]);
@@ -724,9 +728,10 @@ const Chain=(()=>{
   function deal(){
     const r=shuffle(RISK.slice()).slice(0,4).map(t=>({risk:true,e:t[0],a:t[1],b:t[2]})), s=shuffle(SAFE.slice()).slice(0,14).map(t=>({risk:false,e:t[0],a:t[1],b:t[2]}));
     people=shuffle(r.concat(s)); people.forEach(p=>p.look={sk:SK[rnd(SK.length)],hr:HR[rnd(HR.length)],bl:BL[rnd(BL.length)],st:rnd(4)});
-    wash=new Set(); sponge=-1; recorded=false;
+    wash=new Set(); sponge=-1; recorded=false; ev=Math.random()<.25?0:1+Math.floor(Math.random()*13); evT=ev===0?['🦠','Sort de la bouche','d\'Inès','Le jouet sort de la bouche d\'Inès !']:EVTS[Math.floor(Math.random()*EVTS.length)];
     $('#cpeople').innerHTML=people.map((p,i)=>avatar(i,p)).join('');
-    $('#cgaps').innerHTML=GL.map((l,i)=>{ const [x,y]=at(l); return gapSvg(i,x,y); }).join('');
+    $('#cgaps').innerHTML=GL.map((l,i)=>{ const [x,y]=at(l); return gapSvg(i,x,y); }).join('')+(()=>{ const [x,y]=at(ev===0?0:evLen()); return `<g class="evt" transform="translate(${x.toFixed(1)} ${y.toFixed(1)})"><circle r="23" fill="#fff3c4" stroke="#ff5c8a" stroke-width="3.5"><animate attributeName="r" values="23;27;23" dur="1.4s" repeatCount="indefinite"/></circle><text y="8" font-size="23" text-anchor="middle">${evT[0]}</text></g>`; })();
+    $('#cevt').innerHTML=`${evT[0]} <b>${evT[3].replace(' !','')}</b>, ${ev===0?'dès le départ':`entre la personne ${ev} et la ${ev+1}`}.`;
     resetRun(); startChrono();
   }
   function refresh(){ $$('#cpeople .pp').forEach(g=>g.classList.toggle('w',wash.has(+g.dataset.i))); $$('#cgaps .gap').forEach(g=>g.classList.toggle('on',+g.dataset.i===sponge)); drawTokens(); updPhase(); }
@@ -771,11 +776,12 @@ const Chain=(()=>{
     placeDuck(); $('#cgo').disabled=false; refresh(); }
   function launch(){ if(phase!=='place') return; phase='run'; chronoOn=false; scene.classList.add('uv'); Snd.lamp();
     $('#chud').hidden=false; $('#cgo').disabled=true; $('#cexpl').hidden=true; scene.classList.remove('sol');
-    H_=people.map((p,i)=>p.risk&&!wash.has(i)?100:0); contaminated=0; D=100; duckL=0; floats.push({x:60,y:120,txt:'🦠 Le jouet sort de la bouche d\'Inès !',c:'#ffc94a',t:0});
+    H_=people.map((p,i)=>p.risk&&!wash.has(i)?100:0); contaminated=0; D=ev===0?100:0; duckL=0; if(ev===0) floats.push({x:110,y:150,txt:'🦠 '+evT[3],c:'#ffc94a',t:0});
     runState={k:'intro',t:0,i:0}; updPhase(); }
   function stepRun(dt){ const rs=runState; rs.t+=dt;
     if(rs.k==='intro'){ if(rs.t>1.5){ rs.k='move'; rs.t=0; scene.classList.add('running'); people.forEach((p,i)=>{ if(H_[i]>0){ const [x,y]=handPos(i); floats.push({x,y:y-110,txt:'🦠 Mains sales !',c:'#ffc94a',t:0}); } }); } return; }
     if(rs.k==='move'){ const target=rs.i<18?SL[rs.i]:TOT, prev=duckL; duckL=Math.min(target,duckL+300*speed*dt);
+      if(ev>0&&prev<evLen()&&duckL>=evLen()){ D+=100; const [ex,ey]=duckPos(); floats.push({x:ex,y:ey-50,txt:evT[0]+' '+evT[3],c:'#ffc94a',t:0}); Snd.splat(); }
       if(sponge>=0&&prev<GL[sponge]&&duckL>=GL[sponge]) doSponge();
       if(duckL>=target){ if(rs.i<18){ rs.k='hold'; rs.t=0; rs.done=false; } else { rs.k='end'; rs.t=0; scene.classList.remove('running'); } }
       return; }
@@ -803,8 +809,8 @@ const Chain=(()=>{
   function finish(){ phase='end'; const k=contaminated, st=k===0?3:k<=2?2:k<=6?1:0, miss=people.filter((p,i)=>p.risk&&!wash.has(i)).length;
     if(!recorded){ scores[team].push(k); recorded=true; board(); }
     const titles=['Les microbes ont gagné…','Peut mieux faire','Très bien !','Chaîne cassée !'];
-    let msg; if(k===0) msg='Parfait : le jouet a été nettoyé dès le départ et toutes les mains sales ont été lavées.';
-    else { const why=[]; if(sponge!==0) why.push('le jouet sortait de la bouche d\'Inès : il fallait le nettoyer dès le départ'); if(miss) why.push(`${miss} personne${miss>1?'s':''} à risque n'${miss>1?'ont':'a'} pas lavé ${miss>1?'leurs':'ses'} mains`); msg=(why.join(', et ')||'le jouet a transporté les microbes')+'.'; msg=msg.charAt(0).toUpperCase()+msg.slice(1); }
+    let msg; if(k===0) msg='Parfait : le jouet a été nettoyé au bon moment et toutes les mains sales ont été lavées.';
+    else { const why=[]; if(sponge!==ev) why.push(sponge<0?'le jouet s\'est sali ('+evT[3].replace(' !','').toLowerCase()+') et personne ne l\'a nettoyé':sponge<ev?'l\'éponge est passée trop tôt : le jouet s\'est sali après':'l\'éponge est passée trop tard : le jouet sale a eu le temps de voyager'); if(miss) why.push(`${miss} personne${miss>1?'s':''} à risque n'${miss>1?'ont':'a'} pas lavé ${miss>1?'leurs':'ses'} mains`); msg=(why.join(', et ')||'le jouet a transporté les microbes')+'.'; msg=msg.charAt(0).toUpperCase()+msg.slice(1); }
     const res=$('#cres'); res.hidden=false;
     res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n}</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.25+s*.22}s">★</span>`).join('')}</div><h3 style="font-size:1.7em">${titles[st]}</h3><div><span class="n" id="cresn">0</span> <span style="color:var(--muted)">main${k>1?'s':''} contaminée${k>1?'s':''} sur 18</span></div><p>${msg}</p><p style="font-size:.84em">Score parfait : 0 main contaminée.</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="sol">🔍 Voir la correction</button><button class="btn ghost" data-a="retry">↺ Rejouer</button><button class="btn ghost" data-a="next">Trinôme suivant →</button></div></div>`;
     let n=0; const ct=setInterval(()=>{ if(n>=k){ clearInterval(ct); return; } n++; $('#cresn').textContent=n; Snd.count(); },45);
@@ -813,9 +819,9 @@ const Chain=(()=>{
     res.querySelector('[data-a="next"]').onclick=()=>pickTeam((team+1)%6); updPhase(); }
   function showSol(){ if(runState) return; $('#cres').hidden=true; scene.classList.remove('uv'); scene.classList.add('sol');
     people.forEach((p,i)=>{ if(p.risk) svg.querySelector(`.pp[data-i="${i}"]`).classList.add('best'); });
-    svg.querySelector('.gap[data-i="0"]').classList.add('best');
+    svg.querySelector(`.gap[data-i="${ev}"]`).classList.add('best');
     const ex=$('#cexpl'); ex.hidden=false;
-    ex.innerHTML=`<h3>🔍 Correction</h3><p class="hint" style="color:var(--ink)">Les <b style="color:var(--hot)">cercles rouges</b> montrent les 4 gestes à risque : selles, urine, vomi ou nez qui coule. Ces mains-là se lavent tout de suite.</p><p class="hint" style="color:var(--ink);margin-top:8px">Les <b style="color:var(--warm)">pointillés jaunes</b> montrent le placement parfait : l'éponge tout au départ (le jouet sort de la bouche d'Inès) et un savon pour chacune des 4 personnes à risque.</p><p class="hint" style="margin-top:8px">À retenir : se laver les mains avant de toucher un jouet sale ne protège pas les suivantes. Seul le nettoyage du jouet arrête son voyage.</p>`;
+    ex.innerHTML=`<h3>🔍 Correction</h3><p class="hint" style="color:var(--ink)">Les <b style="color:var(--hot)">cercles rouges</b> montrent les 4 gestes à risque : selles, urine, vomi ou nez qui coule. Ces mains-là se lavent tout de suite.</p><p class="hint" style="color:var(--ink);margin-top:8px">Les <b style="color:var(--warm)">pointillés jaunes</b> montrent le placement parfait : l'éponge juste après le moment où le jouet se salit (le panneau rose sur la route) et un savon pour chacune des 4 personnes à risque.</p><p class="hint" style="margin-top:8px">À retenir : se laver les mains avant de toucher un jouet sale ne protège pas les suivantes. Seul le nettoyage du jouet arrête son voyage.</p>`;
     Snd.pop(); updPhase(); }
   function board(){ drawBoard($('#cboard'),scores,team,'low',v=>`${v} main${v>1?'s':''}<span class="stars">${'★'.repeat(v===0?3:v<=2?2:v<=6?1:0)}</span>`); }
   function pickTeam(i){ if(runState) return; team=i; drawTeams($('#cteams'),team,pickTeam); board(); deal(); Snd.pop(); }
