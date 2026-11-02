@@ -143,7 +143,8 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
 .phase .dot{flex:none;width:10px;height:10px;border-radius:50%;background:var(--warm);box-shadow:0 0 10px var(--warm)}
 .phase.run .dot{background:var(--uv);box-shadow:0 0 12px var(--uv);animation:pulse 1s infinite}
 .phase.alert{background:#ff5c8ae6}
-.res{position:absolute;inset:0;display:grid;place-items:center;background:#0b0720b0;z-index:4;animation:fadeup .35s both}
+.res{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;overflow-y:auto;padding:14px 0;background:#0b0720b0;z-index:4;animation:fadeup .35s both;overscroll-behavior:contain}
+.res>.rescard{margin:auto;flex:none}
 .rescard{background:linear-gradient(160deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:26px;padding:22px 26px;text-align:center;max-width:480px;width:calc(100% - 32px);display:grid;gap:8px;justify-items:center;animation:pop .5s both;box-shadow:0 30px 80px -20px #000a}
 .bigstars{font-size:2.7em;letter-spacing:6px;line-height:1}
 .bigstars span{display:inline-block;color:#ffffff22}
@@ -456,6 +457,7 @@ button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
           <div class="legend" style="margin-top:10px">
             <span>🧼 <span><b>Savon</b> : glissez-le sur une professionnelle. Elle se lave les mains <b>avant</b> de prendre le jouet.</span></span>
             <span>🧽 <span><b>Éponge</b> : glissez-la sur un point de la route. Le jouet y est nettoyé.</span></span>
+            <span>⚠️ <span><b>Attention</b> : au départ, le jouet sort tout juste de la bouche d'Inès.</span></span>
             <span>👆 <span>Au TBI, touchez simplement la personne ou le point.</span></span>
           </div>
           <div class="row" style="margin-top:12px"><button class="btn big" id="cgo" style="flex:1">🔦 Lancer le jouet</button></div>
@@ -706,11 +708,11 @@ const Chain=(()=>{
 <g class="flag" transform="translate(30 205)"><circle r="23" fill="#fff" stroke="#e2c8a6" stroke-width="3"/><text y="8" font-size="23" text-anchor="middle">🧸</text><text y="-31" text-anchor="middle">DÉPART</text></g>
 <g class="flag" transform="translate(1170 625)"><circle r="23" fill="#fff" stroke="#e2c8a6" stroke-width="3"/><text y="8" font-size="23" text-anchor="middle">🏁</text><text y="-31" text-anchor="middle">ARRIVÉE</text></g>
 <rect class="uvshade" width="1200" height="720"/>
-<g id="cgaps"></g><g id="cpeople"></g>`;
+<g id="cpeople"></g><g id="cgaps"></g>`;
     road=svg.querySelector('#croad'); TOT=road.getTotalLength();
     const pts=[]; for(let l=0;l<=TOT;l+=2){ const p=road.getPointAtLength(l); pts.push([l,p.x,p.y]); }
     SL=ST.map(([x,y])=>{ let best=0,bd=1e12; for(const [l,px,py] of pts){ const d=(px-x)*(px-x)+(py-y)*(py-y); if(d<bd){ bd=d; best=l; } } return best; });
-    GL=[null]; for(let i=1;i<18;i++) GL.push((SL[i-1]+SL[i])/2);
+    GL=[SL[0]*.32]; for(let i=1;i<18;i++) GL.push((SL[i-1]+SL[i])/2);
   }
   const at=l=>{ const p=road.getPointAtLength(Math.max(0,Math.min(TOT,l))); return [p.x,p.y]; };
   const handPos=i=>[ST[i][0],ST[i][1]-16];
@@ -720,11 +722,11 @@ const Chain=(()=>{
     duckEl.style.left=(x/W*100)+'%'; duckEl.style.top=((y-duckHop)/H*100)+'%'; duckEl.classList.toggle('flip',lastDX<0); }
   /* --- donne / affichage --- */
   function deal(){
-    const r=shuffle(RISK.slice()).slice(0,5).map(t=>({risk:true,e:t[0],a:t[1],b:t[2]})), s=shuffle(SAFE.slice()).slice(0,13).map(t=>({risk:false,e:t[0],a:t[1],b:t[2]}));
+    const r=shuffle(RISK.slice()).slice(0,4).map(t=>({risk:true,e:t[0],a:t[1],b:t[2]})), s=shuffle(SAFE.slice()).slice(0,14).map(t=>({risk:false,e:t[0],a:t[1],b:t[2]}));
     people=shuffle(r.concat(s)); people.forEach(p=>p.look={sk:SK[rnd(SK.length)],hr:HR[rnd(HR.length)],bl:BL[rnd(BL.length)],st:rnd(4)});
     wash=new Set(); sponge=-1; recorded=false;
     $('#cpeople').innerHTML=people.map((p,i)=>avatar(i,p)).join('');
-    $('#cgaps').innerHTML=GL.map((l,i)=>{ if(!i) return ''; const [x,y]=at(l); return gapSvg(i,x,y); }).join('');
+    $('#cgaps').innerHTML=GL.map((l,i)=>{ const [x,y]=at(l); return gapSvg(i,x,y); }).join('');
     resetRun(); startChrono();
   }
   function refresh(){ $$('#cpeople .pp').forEach(g=>g.classList.toggle('w',wash.has(+g.dataset.i))); $$('#cgaps .gap').forEach(g=>g.classList.toggle('on',+g.dataset.i===sponge)); drawTokens(); updPhase(); }
@@ -769,12 +771,12 @@ const Chain=(()=>{
     placeDuck(); $('#cgo').disabled=false; refresh(); }
   function launch(){ if(phase!=='place') return; phase='run'; chronoOn=false; scene.classList.add('uv'); Snd.lamp();
     $('#chud').hidden=false; $('#cgo').disabled=true; $('#cexpl').hidden=true; scene.classList.remove('sol');
-    H_=people.map((p,i)=>p.risk&&!wash.has(i)?100:0); contaminated=0; D=0; duckL=0;
+    H_=people.map((p,i)=>p.risk&&!wash.has(i)?100:0); contaminated=0; D=100; duckL=0; floats.push({x:60,y:120,txt:'🦠 Le jouet sort de la bouche d\'Inès !',c:'#ffc94a',t:0});
     runState={k:'intro',t:0,i:0}; updPhase(); }
   function stepRun(dt){ const rs=runState; rs.t+=dt;
     if(rs.k==='intro'){ if(rs.t>1.5){ rs.k='move'; rs.t=0; scene.classList.add('running'); people.forEach((p,i)=>{ if(H_[i]>0){ const [x,y]=handPos(i); floats.push({x,y:y-110,txt:'🦠 Mains sales !',c:'#ffc94a',t:0}); } }); } return; }
     if(rs.k==='move'){ const target=rs.i<18?SL[rs.i]:TOT, prev=duckL; duckL=Math.min(target,duckL+300*speed*dt);
-      if(sponge>0&&prev<GL[sponge]&&duckL>=GL[sponge]) doSponge();
+      if(sponge>=0&&prev<GL[sponge]&&duckL>=GL[sponge]) doSponge();
       if(duckL>=target){ if(rs.i<18){ rs.k='hold'; rs.t=0; rs.done=false; } else { rs.k='end'; rs.t=0; scene.classList.remove('running'); } }
       return; }
     if(rs.k==='hold'){ const dur=.7/speed, p=Math.min(1,rs.t/dur); duckHop=Math.sin(Math.PI*p)*40;
@@ -798,26 +800,24 @@ const Chain=(()=>{
     for(let k=0;k<50;k++){ const a=Math.random()*7, v=40+Math.random()*140; mist.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-30,life:0,max:.9+Math.random()*.5,r:6+Math.random()*12}); }
     dispD=0; burstSpark(x,y,'#ffffff'); floats.push({x,y:y-60,txt:'Pschitt ! Jouet nettoyé',c:'#ffffff',t:0}); Snd.spray(); setTimeout(()=>Snd.sparkle(),180); }
   function burstSpark(x,y,c){ for(let k=0;k<16;k++){ const a=k/16*Math.PI*2, v=60+Math.random()*90; sparks.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:0,max:.55+Math.random()*.3,c}); } }
-  function finish(){ phase='end'; const k=contaminated, st=k<=1?3:k<=4?2:k<=9?1:0, miss=people.filter((p,i)=>p.risk&&!wash.has(i)).length;
+  function finish(){ phase='end'; const k=contaminated, st=k===0?3:k<=2?2:k<=6?1:0, miss=people.filter((p,i)=>p.risk&&!wash.has(i)).length;
     if(!recorded){ scores[team].push(k); recorded=true; board(); }
     const titles=['Les microbes ont gagné…','Peut mieux faire','Très bien !','Chaîne cassée !'];
-    let msg; if(k===0) msg='Aucune main contaminée : toutes les mains sales ont été lavées.';
-    else if(k===1) msg='Une seule main touchée : l\'éponge a arrêté le jouet juste à temps.';
-    else msg=`${miss} personne${miss>1?'s':''} à risque n'${miss>1?'ont':'a'} pas lavé ${miss>1?'leurs':'ses'} mains, et le jouet a transporté les microbes.`;
+    let msg; if(k===0) msg='Parfait : le jouet a été nettoyé dès le départ et toutes les mains sales ont été lavées.';
+    else { const why=[]; if(sponge!==0) why.push('le jouet sortait de la bouche d\'Inès : il fallait le nettoyer dès le départ'); if(miss) why.push(`${miss} personne${miss>1?'s':''} à risque n'${miss>1?'ont':'a'} pas lavé ${miss>1?'leurs':'ses'} mains`); msg=(why.join(', et ')||'le jouet a transporté les microbes')+'.'; msg=msg.charAt(0).toUpperCase()+msg.slice(1); }
     const res=$('#cres'); res.hidden=false;
-    res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n}</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.25+s*.22}s">★</span>`).join('')}</div><h3 style="font-size:1.7em">${titles[st]}</h3><div><span class="n" id="cresn">0</span> <span style="color:var(--muted)">main${k>1?'s':''} contaminée${k>1?'s':''} sur 18</span></div><p>${msg}</p><p style="font-size:.84em">Meilleur score possible : 1 main (ou 0).</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="sol">🔍 Voir la correction</button><button class="btn ghost" data-a="retry">↺ Rejouer</button><button class="btn ghost" data-a="next">Trinôme suivant →</button></div></div>`;
+    res.innerHTML=`<div class="rescard"><span class="eyebrow" style="color:${TEAMS[team].c}">${TEAMS[team].n}</span><div class="bigstars">${[0,1,2].map(s=>`<span class="${s<st?'on':''}" style="animation-delay:${.25+s*.22}s">★</span>`).join('')}</div><h3 style="font-size:1.7em">${titles[st]}</h3><div><span class="n" id="cresn">0</span> <span style="color:var(--muted)">main${k>1?'s':''} contaminée${k>1?'s':''} sur 18</span></div><p>${msg}</p><p style="font-size:.84em">Score parfait : 0 main contaminée.</p><div class="row" style="justify-content:center;margin-top:6px"><button class="btn" data-a="sol">🔍 Voir la correction</button><button class="btn ghost" data-a="retry">↺ Rejouer</button><button class="btn ghost" data-a="next">Trinôme suivant →</button></div></div>`;
     let n=0; const ct=setInterval(()=>{ if(n>=k){ clearInterval(ct); return; } n++; $('#cresn').textContent=n; Snd.count(); },45);
     if(st===3){ Snd.win(); setTimeout(()=>Confetti.burst(),300); } else if(st===2) Snd.good(); else Snd.fail();
     res.querySelector('[data-a="sol"]').onclick=showSol; res.querySelector('[data-a="retry"]').onclick=()=>resetRun();
     res.querySelector('[data-a="next"]').onclick=()=>pickTeam((team+1)%6); updPhase(); }
   function showSol(){ if(runState) return; $('#cres').hidden=true; scene.classList.remove('uv'); scene.classList.add('sol');
-    const rk=people.map((p,i)=>p.risk?i:-1).filter(i=>i>=0), last=rk[rk.length-1];
-    rk.forEach(i=>{ if(i!==last) svg.querySelector(`.pp[data-i="${i}"]`).classList.add('best'); });
-    if(last<17) svg.querySelector(`.gap[data-i="${last+1}"]`).classList.add('best');
+    people.forEach((p,i)=>{ if(p.risk) svg.querySelector(`.pp[data-i="${i}"]`).classList.add('best'); });
+    svg.querySelector('.gap[data-i="0"]').classList.add('best');
     const ex=$('#cexpl'); ex.hidden=false;
-    ex.innerHTML=`<h3>🔍 Correction</h3><p class="hint" style="color:var(--ink)">Les <b style="color:var(--hot)">cercles rouges</b> montrent les 5 gestes à risque : selles, urine, vomi ou nez qui coule. Ces mains-là se lavent tout de suite.</p><p class="hint" style="color:var(--ink);margin-top:8px">Les <b style="color:var(--warm)">pointillés jaunes</b> montrent le meilleur placement : 4 savons sur 4 personnes à risque, et l'éponge juste après la 5ᵉ.</p><p class="hint" style="margin-top:8px">À retenir : se laver les mains avant de toucher un jouet sale ne protège pas les suivantes. Seul le nettoyage du jouet arrête son voyage.</p>`;
+    ex.innerHTML=`<h3>🔍 Correction</h3><p class="hint" style="color:var(--ink)">Les <b style="color:var(--hot)">cercles rouges</b> montrent les 4 gestes à risque : selles, urine, vomi ou nez qui coule. Ces mains-là se lavent tout de suite.</p><p class="hint" style="color:var(--ink);margin-top:8px">Les <b style="color:var(--warm)">pointillés jaunes</b> montrent le placement parfait : l'éponge tout au départ (le jouet sort de la bouche d'Inès) et un savon pour chacune des 4 personnes à risque.</p><p class="hint" style="margin-top:8px">À retenir : se laver les mains avant de toucher un jouet sale ne protège pas les suivantes. Seul le nettoyage du jouet arrête son voyage.</p>`;
     Snd.pop(); updPhase(); }
-  function board(){ drawBoard($('#cboard'),scores,team,'low',v=>`${v} main${v>1?'s':''}<span class="stars">${'★'.repeat(v<=1?3:v<=4?2:v<=9?1:0)}</span>`); }
+  function board(){ drawBoard($('#cboard'),scores,team,'low',v=>`${v} main${v>1?'s':''}<span class="stars">${'★'.repeat(v===0?3:v<=2?2:v<=6?1:0)}</span>`); }
   function pickTeam(i){ if(runState) return; team=i; drawTeams($('#cteams'),team,pickTeam); board(); deal(); Snd.pop(); }
   /* --- rendu canvas --- */
   let scale=1;

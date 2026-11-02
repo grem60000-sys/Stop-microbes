@@ -15,6 +15,7 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%;margin:0}
+#root{height:100%}
 body{background:var(--bg);color:var(--ink);font:400 clamp(15px,1.1vw,19px)/1.45 var(--fb);-webkit-font-smoothing:antialiased;overflow:hidden}
 body::before{content:"";position:fixed;inset:0;background:radial-gradient(900px 600px at 85% -10%,#4a2a7e 0%,transparent 60%),radial-gradient(800px 520px at -10% 110%,#0e403c 0%,transparent 60%);pointer-events:none}
 button,input{font:inherit;color:inherit}
@@ -133,7 +134,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--cyan);outline-o
 .warnbox a{color:var(--warm)}
 #confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60}
 /* ===== Joueur (téléphone) ===== */
-.player{height:100%;overflow:auto;display:flex;flex-direction:column;padding:16px max(16px,env(safe-area-inset-left)) calc(16px + env(safe-area-inset-bottom))}
+.player{height:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;padding:16px max(16px,env(safe-area-inset-left)) calc(16px + env(safe-area-inset-bottom))}
 .player .ph{display:flex;align-items:center;gap:8px;font:800 1em/1 var(--fd);margin-bottom:10px}
 .player .ph .me{margin-left:auto;display:flex;gap:6px;align-items:center;font:700 .85em/1 var(--fb);color:var(--muted)}
 .player .ph .me i{width:14px;height:14px;border-radius:50%;background:var(--c)}
@@ -192,6 +193,13 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--cyan);outline-o
 .sf button:active{transform:scale(.92)}.sf button:disabled{opacity:.25}
 .snotes{display:grid;gap:6px}.snotes div{background:#ffffff0a;border-radius:12px;padding:9px 11px;font-size:.92em;color:var(--muted)}.snotes div b{color:var(--ink)}.snotes .good b{color:var(--uv)}
 @media (max-width:900px){.srules,.sstats{grid-template-columns:1fr}.cf{grid-template-columns:40px 1fr}.cf .trk{grid-column:1/-1}.sr{grid-template-columns:minmax(90px,1.4fr) repeat(4,minmax(0,1fr)) 54px;font-size:.85em}}
+
+.achips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.achips span{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1.5px solid var(--line);border-radius:99px;padding:4px 10px 4px 4px;font:700 .8em/1 var(--fb);opacity:.35;filter:grayscale(1);transition:opacity .3s,filter .3s}
+.achips span i{width:20px;height:20px;border-radius:50%;background:var(--c);display:grid;place-items:center;font:800 .7em/1 var(--fd);color:#120d2b;font-style:normal}
+.achips span.on{opacity:1;filter:none;border-color:var(--c);animation:pop .4s both}
+.chosen{background:var(--c);color:#14102e;border-radius:22px;padding:22px;display:flex;flex-direction:column;align-items:center;gap:8px;font:800 1.3em/1.2 var(--fd);text-align:center;animation:pop .4s both}
+.chosen .sh{font-size:2em}
 </style>
 </head>
 <body>
@@ -347,7 +355,7 @@ function host(){
     else if(m.t==='hello') broadcast();
     else if(m.t==='sm'){ if(H.game==='sinner') onSinner(id,m); }
     else if(m.t==='ans'){ if(H.ph!=='q'||m.n!==H.qi||!H.players.has(id)||H.answers.has(id)) return; const it=H.items[H.qi], max=it.kind==='q'?4:TRI[it.ci].cols.length, a=Number(m.a);
-      if(!(a>=0&&a<max)) return; H.answers.set(id,{a,ms:Date.now()-H.qStart}); Snd.ans(); updAnswered(); broadcast();
+      if(!(a>=0&&a<max)) return; H.answers.set(id,{a,ms:Date.now()-H.qStart}); Snd.ans(); updAnswered(); try{ const c=document.querySelector('#hach [data-id="'+CSS.escape(id)+'"]'); if(c) c.classList.add('on'); }catch(e){} broadcast();
       if(H.answers.size>=H.players.size) setTimeout(()=>{ if(H.ph==='q') close(); },500); } }
   function pub(){ const it=H.items[H.qi]||null, s={g:H.game,title:GAMES[H.game].name,ph:H.ph,n:H.qi,num:qNum(),total:nQ(),ids:[...H.players.keys()],code:H.code};
     if(it&&it.kind==='q'){ s.kind='q'; s.q=it.q; s.opts=it.o; }
@@ -365,8 +373,9 @@ function host(){
     $('#hnx').onclick=next; Snd.whoosh(); broadcast(); }
   function ask(it){ H.ph='q'; H.answers=new Map(); const lim=GAMES[H.game].limit; H.qStart=Date.now(); H.deadline=H.qStart+lim*1000;
     const head=`<div class="qhead"><span class="n">${it.kind==='q'?'Question':'Carte'} ${qNum()} / ${nQ()}</span><div class="prog"><i style="width:${qNum()/nQ()*100}%"></i></div><div class="answered">📱 <b id="hans">0</b> / <span id="hpn">${H.players.size}</span> réponses</div><div class="ring" id="hring"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="42"/><circle class="fg" id="hrfg" cx="50" cy="50" r="42"/></svg><div class="t" id="hrt">${lim}</div></div></div>`;
-    if(it.kind==='q') V.innerHTML=head+`<div class="qtext">${esc(it.q)}</div><div class="opts" id="hopts">${it.o.map((o,i)=>`<div class="opt" style="--c:${OPTC[i]};animation-delay:${.1+i*.08}s"><span class="bar"></span><span class="sh">${SHAPES[i]}</span><span class="lbl">${esc(o)}</span><span class="cnt" id="hc${i}">0</span></div>`).join('')}</div><div class="actions"><button class="btn ghost" id="hstop">⏹ Arrêter le temps</button></div>`;
-    else { const c=TRI[it.ci]; V.innerHTML=head+`<div class="tbar"><i id="htb"></i></div><div class="card"><span class="e">${it.e}</span><p>${esc(it.t)}</p></div><div class="zone" id="hzone"><div class="cols" style="--n:${c.cols.length}">${c.cols.map((k,i)=>`<div class="col" data-i="${i}" style="--c:${k.c}"><h3>${k.e} ${esc(k.n)}</h3><span class="num" id="hc${i}">0</span></div>`).join('')}</div></div><div class="actions"><button class="btn ghost" id="hstop">⏹ Arrêter le temps</button></div>`; }
+    const chips=`<div class="achips" id="hach">${[...H.players.values()].map(p=>`<span data-id="${esc(p.id)}" style="--c:${tcol(p.team)}"><i>${init(p.name)}</i>${esc(p.name)}</span>`).join('')}</div>`;
+    if(it.kind==='q') V.innerHTML=head+chips+`<div class="qtext">${esc(it.q)}</div><div class="opts" id="hopts">${it.o.map((o,i)=>`<div class="opt" style="--c:${OPTC[i]};animation-delay:${.1+i*.08}s"><span class="bar"></span><span class="sh">${SHAPES[i]}</span><span class="lbl">${esc(o)}</span><span class="cnt" id="hc${i}">0</span></div>`).join('')}</div><div class="actions"><button class="btn ghost" id="hstop">⏹ Arrêter le temps</button></div>`;
+    else { const c=TRI[it.ci]; V.innerHTML=head+chips+`<div class="tbar"><i id="htb"></i></div><div class="card"><span class="e">${it.e}</span><p>${esc(it.t)}</p></div><div class="zone" id="hzone"><div class="cols" style="--n:${c.cols.length}">${c.cols.map((k,i)=>`<div class="col" data-i="${i}" style="--c:${k.c}"><h3>${k.e} ${esc(k.n)}</h3><span class="num" id="hc${i}">0</span></div>`).join('')}</div></div><div class="actions"><button class="btn ghost" id="hstop">⏹ Arrêter le temps</button></div>`; }
     $('#hstop').onclick=close; Snd.go(); broadcast(); cancelAnimationFrame(H.timer); let lastS=lim;
     const tick=()=>{ if(H.ph!=='q') return; const left=Math.max(0,(H.deadline-Date.now())/1000), s=Math.ceil(left), fg=$('#hrfg');
       if(fg){ fg.style.strokeDashoffset=(263.9*(1-left/lim)).toFixed(1); $('#hrt').textContent=s; $('#hring').classList.toggle('warn',left<=5); }
@@ -394,6 +403,7 @@ function host(){
     const isLast=H.qi>=H.items.length-1;
     V.querySelector('.actions').outerHTML=`<div class="expl">✅ <b>${esc(good)}</b> · ${it.x}<br><span style="color:var(--muted);font-size:.85em">${okN} bonne${okN>1?'s':''} réponse${okN>1?'s':''} sur ${H.players.size}</span></div><div class="actions"><button class="btn ghost" id="hbd">🏆 Classement</button><button class="btn big" id="hnx">${isLast?'🏁 Résultats finaux':'Suivant →'}</button></div>`;
     $('#hbd').onclick=board; $('#hnx').onclick=()=>{ if(isLast) end(); else next(); };
+    setTimeout(()=>{ const b=$('#hnx'); if(b) b.scrollIntoView({behavior:'smooth',block:'nearest'}); },600);
     Snd.reveal(); broadcast(); }
   function rankHtml(list,max){ return list.map((p,i)=>`<div class="rk" style="--c:${tcol(p.team)};animation-delay:${i*.06}s"><span class="b" data-w="${max?p.score/max*100:0}"></span><span class="p">${['🥇','🥈','🥉'][i]||i+1}</span><span class="nm"><i></i><span>${esc(p.name)}</span>${H.res[p.id]&&H.res[p.id].st>2?' 🔥':''}</span><span class="sc">${p.score}</span></div>`).join(''); }
   function teamsHtml(){ const t=TEAMS.map((tm,i)=>{ const m=[...H.players.values()].filter(p=>p.team===i); return {tm,n:m.length,avg:m.length?Math.round(m.reduce((s,p)=>s+p.score,0)/m.length):0}; }).filter(x=>x.n).sort((a,b)=>b.avg-a.avg);
@@ -446,6 +456,7 @@ function host(){
     const spent=a.reduce((s,r)=>s+r.used,0); if(spent+tot>SBUDGET) return;
     const sc=sScore(mis,x); a.push({x,pct:sc.pct,why:Number(m.w)===mis.why.a,used:tot}); H.sres.set(id,a);
     const p=H.players.get(id); p.score=a.reduce((s,r)=>s+r.pct+(r.why?25:0),0); Snd.ans(); renderPlayLater(); broadcast(); }
+  document.addEventListener('keydown',e=>{ if(e.target.closest&&e.target.closest('input,textarea,button,a')) return; if([' ','Enter','ArrowRight','PageDown'].includes(e.key)){ const b=$('#hnx')||$('#hgo')||$('#hcorr'); if(b&&!b.disabled){ e.preventDefault(); b.click(); } } });
   const hash=(location.hash||'').slice(1);
   if(GAMES[hash]) create(hash); else pick();
 }
@@ -479,14 +490,14 @@ function player(){
     if(s.ph==='lobby') return view('lobby',`<div class="big-ic"><span class="floaty">🦠</span></div><h1>C'est bon, ${esc(name)} !</h1><p>Regarde l'écran : la partie va commencer.</p>`);
     if(s.ph==='cat') return view('cat'+s.n,`<div class="big-ic">🗂️</div><p>Nouvelle manche</p><h1>${esc(s.q)}</h1><p>Regarde l'écran 👀</p>`);
     if(s.ph==='q'){ const mine=P.myAns[s.n];
-      if(mine!=null) return view('sent'+s.n,`<div class="big-ic">📨</div><h1>Réponse envoyée</h1><p>Attends la révélation à l'écran…</p>`);
       const opts=s.kind==='q'?s.opts.map((o,i)=>({t:o,c:OPTC[i],sh:SHAPES[i]})):s.cols.map(c=>({t:c.n,c:c.c,sh:c.e}));
+      if(mine!=null){ const o=opts[mine]||{t:'',c:'#888',sh:'?'}; return view('sent'+s.n,`<p style="font-weight:700;color:var(--ink)">${s.kind==='q'?'Question':'Carte'} ${s.num} / ${s.total}</p><p>Ta réponse :</p><div class="chosen" style="--c:${o.c}"><span class="sh">${o.sh}</span><span>${esc(o.t)}</span></div><h1>Réponse envoyée ✓</h1><p>Regarde l'écran pour la révélation 👀</p>`); }
       if(view('q'+s.n,`<p style="font-weight:700;color:var(--ink)">${s.kind==='q'?'Question':'Carte'} ${s.num} / ${s.total}</p><div class="ptimer"><i id="ptb"></i></div><p style="font-size:.95em">${esc(s.q)}</p><div class="pans ${opts.length===4?'q4':''}">${opts.map((o,i)=>`<button data-a="${i}" style="--c:${o.c}"><span class="sh">${o.sh}</span><span>${esc(o.t)}</span></button>`).join('')}</div>`)){
         P.deadline=Date.now()+(s.left||0)*1000; P.limit=s.limit||20;
         $$('.pans button').forEach(b=>b.onclick=()=>{ const a=+b.dataset.a; P.myAns[s.n]=a; try{ navigator.vibrate&&navigator.vibrate(30); }catch(e){} Net.send({t:'ans',id,n:s.n,a}); P.key=''; render(); }); }
       return; }
     if((s.ph==='rev'||s.ph==='board')&&r){ const ok=r.ok, ans=r.ans;
-      return view('rev'+s.n+s.ph,`<div class="${ok?'ok':'ko'}" style="display:grid;gap:10px"><div class="big-ic">${ok?'✅':ans<0?'⏰':'❌'}</div><div class="pts">${ok?'+'+r.pts:ans<0?'Trop tard !':'Raté'}</div>${ok?(r.st>1&&s.g==='tri'?`<p>🔥 Série de ${r.st} !</p>`:''):`<p>La bonne réponse : <b style="color:var(--uv)">${esc(s.good||'')}</b></p>`}<p style="font-size:1.1em;color:var(--ink)">${r.tot} points · <b>${r.rk}ᵉ</b> sur ${r.of}</p></div>`); }
+      return view('rev'+s.n+s.ph,`<div class="${ok?'ok':'ko'}" style="display:grid;gap:10px"><div class="big-ic">${ok?'✅':ans<0?'⏰':'❌'}</div><div class="pts">${ok?'+'+r.pts:ans<0?'Trop tard !':'Raté'}</div>${ok?(r.st>1&&s.g==='tri'?`<p>🔥 Série de ${r.st} !</p>`:''):`<p>${ans>=0?`Tu as répondu : <b style="color:var(--hot)">${esc(s.kind==='q'?(s.opts||[])[ans]||'':((s.cols||[])[ans]||{}).n||'')}</b><br>`:''}La bonne réponse : <b style="color:var(--uv)">${esc(s.good||'')}</b></p>`}<p style="font-size:1.1em;color:var(--ink)">${r.tot} points · <b>${r.rk}ᵉ</b> sur ${r.of}</p></div>`); }
     if(s.ph==='end'){ const rk=r?r.rk:null;
       return view('end',`<div class="big-ic">${rk===1?'🏆':rk===2?'🥈':rk===3?'🥉':'🎉'}</div><h1>${rk?`${rk}ᵉ sur ${r.of}`:'Partie terminée'}</h1><p style="font-size:1.2em;color:var(--ink)">${r?r.tot+' points':''}</p><p>Merci d'avoir joué !</p>`); }
     view('wait'+s.ph+s.n,`<div class="big-ic"><span class="floaty">👀</span></div><h1>Regarde l'écran</h1>`); }
