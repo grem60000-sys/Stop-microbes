@@ -1,0 +1,589 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'></head><body><title>Chez Sophie · Séance 1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+
+/* Module 1 : « eau claire » — sarcelle profonde, fond gris-bleuté ; une séquence en lumière noire (UV) pour l'expérience. */
+:root{
+  --bg:#f2f7f6;--surface:#ffffff;--surface2:#e3eeec;--ink:#0f2a2d;--muted:#4b6467;--line:#d2e1df;--line-strong:#9db7b5;
+  --accent:#0b7a75;--accent-soft:#c9ece8;--accent-ink:#075a56;--on-accent:#ffffff;
+  --r:#d9412b;--o:#e8a317;--v:#2f9a5a;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c191b;--surface:#122528;--surface2:#183034;--ink:#e2efee;--muted:#9bb5b4;--line:#22403f;--line-strong:#3d6261;
+  --accent:#3fc1b5;--accent-soft:#154440;--accent-ink:#86e3d9;--on-accent:#04221f;--r:#ff6b55;--o:#ffc24a;--v:#5fd38b;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c191b;--surface:#122528;--surface2:#183034;--ink:#e2efee;--muted:#9bb5b4;--line:#22403f;--line-strong:#3d6261;
+  --accent:#3fc1b5;--accent-soft:#154440;--accent-ink:#86e3d9;--on-accent:#04221f;--r:#ff6b55;--o:#ffc24a;--v:#5fd38b;color-scheme:dark}
+
+
+/* Layout : une scène plein écran, une diapositive visible à la fois, barre de pilotage en bas. */
+:root{
+  --font-display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible","Inter",system-ui,sans-serif;
+  --ok:#1f8a5b;--ok-soft:#dff3e8;--no:#c2410c;--no-soft:#fde8dc;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ok:#5fd39a;--ok-soft:#163a2a;--no:#ff9466;--no-soft:#3e2318;color-scheme:dark}}
+:root[data-theme="dark"]{--ok:#5fd39a;--ok-soft:#163a2a;--no:#ff9466;--no-soft:#3e2318;color-scheme:dark}
+html,body{height:100%}
+body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 clamp(16px,1.25vw,20px)/1.5 var(--font-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+.stage{position:relative;height:100%;display:flex;flex-direction:column}
+.slides{position:relative;flex:1;min-height:0}
+.slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-block:clamp(20px,4vh,56px) 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease,visibility 0s .45s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease}
+.inner{max-width:1100px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.2vh,26px)}
+.rv{opacity:1;transform:none}
+.slide.active .rv{animation:rise .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms + 120ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide.active{transition:none;transform:none}.slide.active .rv{animation:none}}
+.eyebrow{font:700 .78em/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3{font-family:var(--font-display);line-height:1.04;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,6.4vw,92px);font-weight:800}
+h2{font-size:clamp(28px,3.8vw,56px);font-weight:800}
+h3{font-size:clamp(19px,1.7vw,26px);font-weight:700;letter-spacing:-.01em}
+p{margin:0;max-width:62ch}
+.lead{font-size:1.18em;color:var(--muted);max-width:56ch}
+.big{font-size:clamp(20px,2vw,30px);line-height:1.35}
+strong{font-weight:700}
+.hl{background:linear-gradient(transparent 60%,var(--accent-soft) 60%);padding:0 .1em}
+.row{display:flex;gap:clamp(12px,1.6vw,22px);flex-wrap:wrap}
+.grid{display:grid;gap:clamp(12px,1.6vw,22px)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(14px,1.6vw,22px);min-width:0}
+.tile h3{margin-bottom:6px}
+.tile p{color:var(--muted);font-size:.95em}
+.tag{display:inline-block;font:700 .72em/1 var(--font-body);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent-ink)}
+.btn{font:700 .95em/1 var(--font-body);border:0;border-radius:99px;padding:13px 20px;background:var(--accent);color:var(--on-accent);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong)}
+.btn:focus-visible,.opt:focus-visible,.navbtn:focus-visible,.flip:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* quiz */
+.quiz{display:grid;gap:12px}
+.quiz .q{font:700 clamp(19px,1.8vw,27px)/1.25 var(--font-display)}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:transform .15s,border-color .15s,background .2s}
+.opt:hover{transform:translateX(3px);border-color:var(--accent)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--surface2);font-weight:700}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}.opt.ok .k{background:var(--ok);color:#fff}
+.opt.no{background:var(--no-soft);border-color:var(--no)}.opt.no .k{background:var(--no);color:#fff}
+.opt[disabled]{cursor:default;transform:none}
+.fb{border-radius:14px;padding:12px 16px;background:var(--surface2)}
+.fb b{color:var(--accent-ink)}
+.qprog{display:flex;gap:6px}.qprog i{height:6px;flex:1;border-radius:3px;background:var(--line)}.qprog i.on{background:var(--accent)}
+/* flip cards */
+.flip{display:block;width:100%;perspective:900px;cursor:pointer;min-height:170px;border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left}
+.flip .fi{position:relative;width:100%;height:100%;min-height:inherit;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .fi{transform:rotateY(180deg)}
+.flip .fa,.flip .fbk{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.flip .fa{background:var(--surface);border:1px solid var(--line)}
+.flip .fbk{background:var(--accent);color:var(--on-accent);transform:rotateY(180deg)}
+.flip .fa small{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.flip .fi{transition:none}}
+/* timeline / steps */
+.steps{display:grid;gap:10px;counter-reset:st}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+.step::before{counter-increment:st;content:counter(st);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font:800 1em var(--font-display)}
+.step b{display:block}
+/* controls */
+.bar{display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--line);background:var(--bg)}
+.navbtn{font:700 14px/1 var(--font-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.navbtn.primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.prog{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:40px}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+.count{font:700 13px/1 var(--font-body);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.overview{position:absolute;inset:0;background:var(--bg);z-index:5;overflow:auto;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.overview .og{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.overview button{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+.overview button span{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.overview button.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.hide-sm{display:inline}
+.pmq{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pmq .tile{padding:10px 14px}.pmq b{font-size:.92em}.pmo{display:grid;gap:3px;margin-top:6px;font-size:.85em}.pmo i{font-style:normal;font-weight:700;color:var(--accent-ink);margin-right:8px}
+@media (max-width:760px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .hide-sm{display:none}
+  body{overflow:hidden}
+}
+
+
+.hero h1{max-width:12ch}
+.blobs{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.blobs i{position:absolute;border-radius:50%;background:var(--accent);opacity:.10;animation:drift 18s ease-in-out infinite alternate}
+.blobs i:nth-child(2){background:var(--o);opacity:.12;animation-duration:22s}
+.blobs i:nth-child(3){background:var(--v);opacity:.10;animation-duration:26s}
+@keyframes drift{to{transform:translate(40px,-30px) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){.blobs i{animation:none}}
+.hero .inner>*:not(.blobs){position:relative;z-index:1}
+.kid{display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:center}
+.av{width:64px;height:64px;border-radius:20px;display:grid;place-items:center;font:800 28px var(--font-display);color:var(--on-accent);background:var(--accent)}
+.av.o{background:var(--o);color:#2b1c00}.av.v{background:var(--v)}.av.r{background:var(--r)}
+.uv{--bg:#160f33;--surface:#22195080;--ink:#efeaff;--muted:#b9b0e3;--line:#3a2f74;--accent:#8cffb4;--accent-ink:#8cffb4;--on-accent:#0b2a17;--accent-soft:#2b4b3a;
+  background:radial-gradient(ellipse at 70% 20%,#2c1f6b 0%,#160f33 60%);color:var(--ink)}
+.uv .tile{background:#22195099;border-color:#3a2f74}
+.glow{color:#8cffb4;text-shadow:0 0 18px #8cffb4aa,0 0 42px #8cffb455}
+.toyscene svg{width:100%;height:auto;max-height:46vh;display:block}
+.toyscene .palm{fill:#3a2f74;stroke:#6f63b8;stroke-width:2.5;transition:fill .6s}
+.toyscene text{fill:#b9b0e3;font:700 15px var(--font-body);text-anchor:middle}
+.toyscene .dbody{fill:#f6c945;transition:fill .6s}.toyscene .beak{fill:#f08a24}.toyscene .eye{fill:#1b1340}.toyscene .wing{fill:none;stroke:#d9a520;stroke-width:4;stroke-linecap:round}
+.toyscene .germ{fill:#8cffb4;opacity:0;transition:opacity .8s;filter:drop-shadow(0 0 6px #8cffb4)}
+.toyscene .beam{opacity:0;transition:opacity .8s}
+.toyscene.lit .germ{opacity:.95}.toyscene.lit .beam{opacity:1}
+.toyscene.lit .palm{fill:#241b52}.toyscene.lit .dbody{fill:#5a4a20}
+.toyscene .toy{animation:pass 8s ease-in-out infinite}
+.toyscene.manual .toy{animation:none;transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+.pcount{color:#b9b0e3;font-weight:700;margin-right:6px}.pcount b{color:#8cffb4;font-variant-numeric:tabular-nums}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.chips span{font-size:.82em;border:1px solid #6f63b8;border-radius:99px;padding:3px 10px;color:#efeaff}
+.pulse{animation:pls 1.2s ease-in-out infinite}@keyframes pls{50%{box-shadow:0 0 0 10px #8cffb433}}
+.toyscene.lit .toy{animation-play-state:paused}
+@keyframes pass{0%,12%{transform:translate(70px,110px)}25%,37%{transform:translate(210px,130px)}50%,62%{transform:translate(350px,130px)}75%,87%{transform:translate(490px,110px)}100%{transform:translate(70px,110px)}}
+.toyscene .hands g:nth-child(2) .germ{transition-delay:.2s}.toyscene .hands g:nth-child(3) .germ{transition-delay:.4s}.toyscene .hands g:nth-child(4) .germ{transition-delay:.6s}
+@media (prefers-reduced-motion:reduce){.toyscene .toy{animation:none;transform:translate(280px,120px)}}
+.scale{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.counter{font:800 clamp(44px,7vw,110px)/1 var(--font-display);font-variant-numeric:tabular-nums;color:var(--accent);letter-spacing:-.03em}
+.clock{font:700 1.1em var(--font-body);color:var(--muted);font-variant-numeric:tabular-nums}
+.dots{display:flex;flex-wrap:wrap;gap:3px;max-width:520px}
+.dots b{width:10px;height:10px;border-radius:50%;background:var(--accent);animation:pop .3s both}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.mcard{min-height:470px}
+.mcard .fbk{font-size:.86em;line-height:1.38}
+.mcard .fbk h4{margin:0;font:700 1.15em var(--font-display)}
+.mcard .where{margin-top:auto}
+.mcard .where,.mcard .prot{color:inherit;max-width:none}
+.mcard .fa{justify-content:flex-start;gap:6px;border-top:6px solid var(--accent)}
+.mcard .mtop{display:flex;justify-content:space-between;align-items:center}
+.mcard .turn{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);font-weight:800}
+.mcard .mic{width:100%;max-width:150px;height:auto;margin:2px auto 0;display:block}
+.mcard .c1{fill:#9fd8cf;stroke:var(--accent);stroke-width:3}.mcard .c2{fill:#f7d27a;stroke:#c48a10;stroke-width:3}.mcard .c3{fill:#e7b9d6;stroke:#a24a83;stroke-width:3}
+.mcard .fl{fill:none;stroke:var(--accent);stroke-width:3;stroke-linecap:round}
+.mcard .sp line{stroke:#c48a10;stroke-width:3}.mcard .sp circle{fill:#c48a10}
+.mcard .dot{fill:#ffffffaa}
+.mcard p{font-size:.92em}
+.msize{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center;font-size:.85em;margin-top:auto}
+.msize span{color:var(--muted)}.msize i{grid-column:1/-1;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--accent) var(--w),var(--line) var(--w))}
+.mcard .fbk{justify-content:flex-start;gap:8px}
+.mcard .fbk ul{margin:0;padding-left:20px}.mcard .fbk li{margin:3px 0}
+.mcard .tag.back{background:#ffffff33;color:inherit;align-self:flex-start}
+.mcard .prot{opacity:.95}
+.balance{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
+.balance .vs{align-self:center;font:800 1.6em var(--font-display);color:var(--muted)}
+.chain{display:flex;align-items:center;gap:0;flex-wrap:wrap;justify-content:center}
+.link{min-width:150px;flex:1;max-width:230px;text-align:center;border:3px solid var(--accent);border-radius:999px;padding:14px 12px;background:var(--surface);position:relative;transition:transform .5s,opacity .5s,border-color .3s}
+.link b{display:block;font:800 1.05em var(--font-display)}
+.link small{display:block;color:var(--muted);font-size:.82em;line-height:1.3;margin-top:4px}
+.joint{width:34px;height:6px;background:var(--accent);border-radius:3px;transition:opacity .4s}
+.chain.broken .link.cut{transform:translateY(18px) rotate(-6deg);border-color:var(--r);border-style:dashed}
+.chain.broken .joint.cut{opacity:0}
+.voie .ic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);color:var(--accent-ink);font:800 20px var(--font-display);margin-bottom:8px}
+.track{display:grid;gap:10px}
+.track .st{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--r);border-radius:14px;padding:12px 16px}
+.track .st span{font:800 1.3em var(--font-display);color:var(--r)}
+/* plan de l'appartement */
+.planwrap{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:16px;align-items:start}
+.planbox{background:#fbf8f2;border-radius:16px;padding:10px;border:1px solid var(--line)}
+.aplan .mk{cursor:pointer}
+.aplan .mk circle{transition:fill .2s}
+.aplan .mk.c1 circle{fill:#2f9a5a;stroke:#1d5e37}.aplan .mk.c2 circle{fill:#e8a317;stroke:#8a5f00}.aplan .mk.c3 circle{fill:#d9412b;stroke:#7d2014}
+.aplan .mk.c1 text,.aplan .mk.c3 text{fill:#fff}
+.aplan .mk:focus-visible circle{stroke:#0b7a75;stroke-width:5}
+.spots{display:grid;gap:6px}
+.spot{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;text-align:left;font:700 .85em/1.2 var(--font-body);border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:6px 10px;cursor:pointer}
+.spot b{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font-size:.9em}
+.spot.c1{border-color:var(--v)}.spot.c1 b{background:var(--v);color:#fff}
+.spot.c2{border-color:var(--o)}.spot.c2 b{background:var(--o);color:#2b1c00}
+.spot.c3{border-color:var(--r)}.spot.c3 b{background:var(--r);color:#fff}
+.plan-check .spot::after{content:attr(data-mark);font-size:.85em;color:var(--muted)}
+
+.aplan{width:100%;height:auto;display:block}
+.aplan .fl{fill:var(--floor,#fbf8f2)}
+.aplan .tile{stroke:var(--tile,#e7e2d8);stroke-width:1}
+.aplan .wall{fill:none;stroke:var(--wallc,#29343a);stroke-width:10;stroke-linejoin:miter}
+.aplan .wi{stroke:var(--wallc,#29343a);stroke-width:6}
+.aplan .win{stroke:var(--floor,#fbf8f2);stroke-width:10}.aplan .win2{stroke:var(--wallc,#29343a);stroke-width:2.5}
+.aplan .door{fill:none;stroke:var(--wallc,#29343a);stroke-width:2;stroke-dasharray:5 4}
+.aplan .fur{fill:var(--furn,#e4e7e8);stroke:var(--furs,#7d8a90);stroke-width:2}
+.aplan .fur2{fill:var(--floor,#fbf8f2);stroke:var(--furs,#7d8a90);stroke-width:1.5}
+.aplan .fur3{fill:none;stroke:var(--furs,#7d8a90);stroke-width:2}.aplan .fur3l{stroke:var(--furs,#7d8a90);stroke-width:2}
+.aplan .mat{fill:var(--matc,#f3dfe8);stroke:var(--furs,#7d8a90);stroke-width:1.5}
+.aplan .arch{fill:none;stroke:var(--furs,#7d8a90);stroke-width:4}
+.aplan .toy{fill:var(--toyc,#f6c945);stroke:var(--furs,#7d8a90);stroke-width:1}
+.aplan .bar{stroke:var(--furs,#7d8a90);stroke-width:1}
+.aplan .sw{fill:var(--wallc,#29343a)}
+.aplan .room{font:700 14px var(--font-body,sans-serif);letter-spacing:.08em;fill:var(--roomc,#55636b);text-anchor:middle}
+.aplan .small{font:700 11px var(--font-body,sans-serif);fill:var(--roomc,#55636b);text-anchor:middle}
+.aplan .mk circle{fill:#fff;stroke:var(--wallc,#29343a);stroke-width:3}
+.aplan .mk text{font:800 18px var(--font-body,sans-serif);text-anchor:middle;fill:#17222a}
+
+.legend3{display:flex;gap:14px;flex-wrap:wrap;font-size:.9em;color:var(--muted)}
+.legend3 i{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:-2px;margin-right:6px}
+.riskcol{border-top:8px solid var(--c)}
+.do{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.do .tile{text-align:left}
+.do .n{font:800 2em var(--font-display);color:var(--accent);line-height:1}
+.retenir li{margin:8px 0;font-size:1.08em}
+.defi{border:2px dashed var(--accent);border-radius:22px;padding:clamp(18px,2.4vw,32px);background:var(--surface)}
+@media (max-width:760px){
+  .mcard{min-height:430px}
+  .planwrap{grid-template-columns:1fr}
+  .balance{grid-template-columns:1fr}.balance .vs{justify-self:center}
+  .do{grid-template-columns:1fr}.link{min-width:0;max-width:none;width:100%}.joint{width:6px;height:22px}
+  .chain{flex-direction:column}
+}
+
+</style>
+<div class="stage">
+  <div class="slides">
+<section class="slide hero" data-title="Titre"><div class="inner">
+<div class="blobs" aria-hidden="true"><i style="width:340px;height:340px;right:-60px;top:-40px"></i><i style="width:220px;height:220px;right:22%;bottom:8%"></i><i style="width:160px;height:160px;left:-40px;bottom:-30px"></i></div>
+<div class="rv " style="--i:0;"><span class="eyebrow">CAP AEPE · Module bionettoyage · Séance 1</span></div>
+<div class="rv " style="--i:1;"><h1>Invisibles, mais partout.</h1></div>
+<div class="rv " style="--i:2;"><p class="lead">Pourquoi le ménage chez une assistante maternelle n'est pas un ménage comme les autres : les microbes, comment ils voyagent, et où ils se cachent.</p></div>
+<div class="rv " style="--i:3;"><div class="row"><span class="tag">Bloc 3 · UP3</span><span class="tag">Compétence RS4</span><span class="tag">1 h 45</span></div></div>
+</div></section>
+<section class="slide uv" data-title="Expérience : le jouet voyageur"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Tour de présentation · et expérience secrète</span></div>
+<div class="rv " style="--i:1;"><h2>Le jouet <span class="glow">voyageur</span>.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Celui qui tient le canard se présente, puis le passe à son voisin. Sans le savoir, vous faites aussi une expérience…</p></div>
+<div class="grid g2" style="align-items:center">
+<div class="steps">
+<div class="rv step" style="--i:3;"><div><b>Je prends le canard et je me présente</b><span class="chips"><span>Mon prénom</span><span>Où je travaille : crèche, école, assistante maternelle</span><span>L'âge des enfants que j'accompagne</span><span>Le jouet préféré de mon enfance</span></span></div></div>
+<div class="rv step" style="--i:4;"><div><b>Je le passe à mon voisin</b><span style="color:var(--muted)">Comme des enfants qui se prêtent un jouet. Chacun le tient, le tourne, le regarde.</span></div></div>
+<div class="rv step" style="--i:5;"><div><b>Quand tout le monde s'est présenté…</b><span style="color:var(--muted)">On éteint la lumière, on allume la lampe UV. Surprise.</span></div></div>
+</div>
+<div class="rv " style="--i:5;"><div class="toyscene" id="toyscene">
+<svg viewBox="0 0 560 340" role="img" aria-label="Un canard en plastique passe de main en main ; sous la lampe UV, les traces de gel apparaissent">
+ <defs><radialGradient id="uvg" cx="50%" cy="40%" r="60%"><stop offset="0" stop-color="#8cffb4" stop-opacity=".22"/><stop offset="1" stop-color="#8cffb4" stop-opacity="0"/></radialGradient></defs>
+ <rect class="beam" x="0" y="0" width="560" height="340" fill="url(#uvg)"/>
+ <g class="hands">
+  <g transform="translate(70 230)"><path class="palm" d="M-34 0 Q-38 -46 -18 -52 L-18 -92 Q-12 -102 -6 -92 L-6 -60 L-6 -104 Q0 -114 6 -104 L6 -60 L6 -100 Q12 -110 18 -100 L18 -58 L18 -84 Q24 -92 30 -84 L32 -20 Q30 18 0 22 Q-30 20 -34 0Z"/><circle class="germ" cx="-2" cy="-30" r="9"/><circle class="germ" cx="14" cy="-70" r="6"/><text x="0" y="56">Main 1</text></g>
+  <g transform="translate(210 250)"><path class="palm" d="M-34 0 Q-38 -46 -18 -52 L-18 -92 Q-12 -102 -6 -92 L-6 -60 L-6 -104 Q0 -114 6 -104 L6 -60 L6 -100 Q12 -110 18 -100 L18 -58 L18 -84 Q24 -92 30 -84 L32 -20 Q30 18 0 22 Q-30 20 -34 0Z"/><circle class="germ" cx="4" cy="-24" r="8"/><circle class="germ" cx="-12" cy="-80" r="6"/><text x="0" y="56">Main 2</text></g>
+  <g transform="translate(350 250)"><path class="palm" d="M-34 0 Q-38 -46 -18 -52 L-18 -92 Q-12 -102 -6 -92 L-6 -60 L-6 -104 Q0 -114 6 -104 L6 -60 L6 -100 Q12 -110 18 -100 L18 -58 L18 -84 Q24 -92 30 -84 L32 -20 Q30 18 0 22 Q-30 20 -34 0Z"/><circle class="germ" cx="-6" cy="-34" r="7"/><circle class="germ" cx="24" cy="-60" r="5"/><text x="0" y="56">Main 3</text></g>
+  <g transform="translate(490 230)"><path class="palm" d="M-34 0 Q-38 -46 -18 -52 L-18 -92 Q-12 -102 -6 -92 L-6 -60 L-6 -104 Q0 -114 6 -104 L6 -60 L6 -100 Q12 -110 18 -100 L18 -58 L18 -84 Q24 -92 30 -84 L32 -20 Q30 18 0 22 Q-30 20 -34 0Z"/><circle class="germ" cx="2" cy="-28" r="8"/><text x="0" y="56">Main 4</text></g>
+ </g>
+ <g class="toy"><g class="duck" transform="translate(-34 -40)">
+  <ellipse cx="34" cy="48" rx="34" ry="22" class="dbody"/><circle cx="52" cy="20" r="16" class="dbody"/>
+  <path d="M66 18 L84 22 L66 28 Z" class="beak"/><circle cx="56" cy="16" r="3" class="eye"/>
+  <path d="M10 44 Q26 30 40 46" class="wing"/>
+  <circle class="germ" cx="20" cy="52" r="7"/><circle class="germ" cx="48" cy="54" r="5"/><circle class="germ" cx="52" cy="14" r="4"/>
+ </g></g>
+</svg>
+<div class="row" style="justify-content:center;align-items:center"><span class="pcount" id="pcount">Présentés : <b>0</b> / 18</span><button class="btn ghost" id="pnext">Apprenti suivant</button><button class="btn" id="toybtn">Allumer la lampe UV</button></div>
+<p class="glow big" style="margin:4px auto 0;text-align:center" id="toycap">Le canard passe de main en main…</p>
+</div></div>
+</div></div></section>
+<section class="slide uv" data-title="Ce que montre l'expérience"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Ce qu'on vient de voir</span></div>
+<div class="rv " style="--i:1;"><h2>En quelques minutes, <span class="glow">tout le monde</span> en avait.</h2></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:2;"><h3 class="glow">Invisibles</h3><p>Avant la lampe, personne ne voyait rien. Les microbes, c'est pareil.</p></div>
+<div class="rv tile" style="--i:3;"><h3 class="glow">Voyageurs</h3><p>Ils passent par les mains et par les objets, sans qu'on s'en rende compte.</p></div>
+<div class="rv tile" style="--i:4;"><h3 class="glow">Rapides</h3><p>Un seul canard, et le gel est sur les 18 paires de mains du groupe.</p></div>
+</div>
+<div class="rv " style="--i:5;"><button class="btn" data-reveal="#uvq" data-once>Et chez une assistante maternelle, avec trois enfants ?</button><p id="uvq" class="big" hidden style="margin-top:12px">Un jouet passe dans la bouche d'un bébé, puis dans les mains d'un autre enfant, puis d'un troisième… <strong class="glow">L'entretien sert à casser ce voyage.</strong></p></div>
+</div></section>
+<section class="slide " data-title="Bienvenue chez Sophie"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Notre fil rouge toute l'année</span></div>
+<div class="rv " style="--i:1;"><h2>Bienvenue chez Sophie.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Sophie est assistante maternelle. Elle accueille trois enfants chez elle, dans son appartement. À chaque séance, on entretient une partie de son logement.</p></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:3;"><div class="kid"><div class="av">I</div><div><h3>Inès, 5 mois</h3><p style="color:var(--muted)">Passe ses journées sur le tapis d'éveil. Elle porte <strong>tout</strong> à la bouche.</p></div></div></div>
+<div class="rv tile" style="--i:4;"><div class="kid"><div class="av o">N</div><div><h3>Noah, 20 mois</h3><p style="color:var(--muted)">Il marche partout, touche tout. Et cette semaine, il couve une gastro…</p></div></div></div>
+<div class="rv tile" style="--i:5;"><div class="kid"><div class="av v">L</div><div><h3>Lina, 3 ans</h3><p style="color:var(--muted)">Elle apprend la propreté et mange seule à la chaise haute.</p></div></div></div>
+</div>
+<div class="rv " style="--i:6;"><p>Vous tiendrez un classeur : <strong>« L'entretien chez Sophie »</strong>. Il servira à préparer votre examen.</p></div>
+</div></section>
+<section class="slide " data-title="Ce module dans l'année"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le module en bref</span></div>
+<div class="rv " style="--i:1;"><h2>17 séances pour savoir entretenir le domicile d'un tout-petit.</h2></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:2;"><span class="tag">Ce que dit le diplôme</span><h3 style="margin-top:10px">Compétence RS4</h3><p>« Assurer les opérations d'entretien du logement et des espaces réservés à l'enfant. »</p></div>
+<div class="rv tile" style="--i:3;"><span class="tag">À l'examen</span><h3 style="margin-top:10px">Épreuve EP3</h3><p>Un oral de 25 minutes. Vous présentez comment vous organisez l'accueil d'un enfant à domicile, ménage compris, et vous justifiez vos choix.</p></div>
+<div class="rv tile" style="--i:4;"><span class="tag">Comment on travaille</span><h3 style="margin-top:10px">On fait, on observe, on comprend</h3><p>Des expériences, des TP avec du vrai matériel, des jeux, et un défi à tester en entreprise entre deux regroupements.</p></div>
+</div></div></section>
+<section class="slide " data-title="Objectifs du jour"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Aujourd'hui</span></div>
+<div class="rv " style="--i:1;"><h2>À la fin de la séance, vous saurez…</h2></div>
+<div class="steps">
+<div class="rv step" style="--i:2;"><div><b>Expliquer pourquoi l'entretien protège l'enfant</b><span style="color:var(--muted)">Ce qu'il risque, et pourquoi il est plus fragile qu'un adulte.</span></div></div>
+<div class="rv step" style="--i:3;"><div><b>Citer les voies de transmission des microbes</b><span style="color:var(--muted)">Par où ils passent d'une personne à l'autre.</span></div></div>
+<div class="rv step" style="--i:4;"><div><b>Repérer les zones à risque d'un logement</b><span style="color:var(--muted)">Et les classer : risque fort, moyen, faible.</span></div></div>
+</div></div></section>
+<section class="slide " data-title="Quiz de départ"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Quiz de départ · non noté</span></div>
+<div class="rv " style="--i:1;"><h2>Qu'est-ce que vous savez déjà ?</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">10 questions pour faire le point. Pas de note : on part de ce que vous savez.</p></div>
+<div class="rv " style="--i:3;"><div class="qseq"><script type="application/json">{"qs": [{"q": "Les microbes sont-ils tous dangereux ?", "o": ["Oui, tous rendent les enfants malades", "Non, certains sont même utiles", "Oui, sauf ceux qui vivent dans l'eau"], "a": 1, "e": "Beaucoup de microbes sont inoffensifs, et certains nous aident : ceux de notre intestin participent à la digestion."}, {"q": "Par quoi les microbes passent-ils le plus souvent d'un enfant à l'autre ?", "o": ["Par les cheveux et les vêtements", "Par la lumière et la chaleur", "Par les mains"], "a": 2, "e": "Les mains sont la première voie de transmission : elles touchent tout, puis la bouche, le nez, les yeux."}, {"q": "Nettoyer et désinfecter, c'est la même chose ?", "o": ["Non : nettoyer enlève la saleté, désinfecter tue les microbes", "Oui : ce sont deux mots différents pour un seul et même geste", "Non : désinfecter consiste simplement à rincer à l'eau claire"], "a": 0, "e": "Nettoyer enlève la saleté visible. Désinfecter détruit les microbes. On verra en séance 2 qu'on fait souvent les deux."}, {"q": "Pourquoi un bébé de 5 mois comme Inès est-il très exposé ?", "o": ["Parce qu'il dort beaucoup dans la journée", "Parce qu'il ne sait pas encore parler", "Parce qu'il porte tout à la bouche"], "a": 2, "e": "Vers cet âge, le bébé découvre le monde avec sa bouche : tout ce qu'il touche finit souvent dedans."}, {"q": "Chez Sophie, où trouve-t-on le plus de microbes dangereux ?", "o": ["Sur l'étagère haute du salon", "Sur le plan de change", "Sur le rebord de la fenêtre"], "a": 1, "e": "Le plan de change est en contact avec les selles et l'urine : c'est une zone à risque fort."}, {"q": "Comment se transmet surtout une gastro-entérite ?", "o": ["Par les selles et les vomissements, puis les mains", "Par les piqûres de moustiques et d'insectes", "Par la poussière qui se soulève quand on balaie le sol"], "a": 0, "e": "Les microbes de la gastro sont dans les selles et les vomissements. Ils passent par les mains et les objets, puis arrivent à la bouche."}, {"q": "Un jouet qui a l'air propre est-il forcément sans microbes ?", "o": ["Oui, s'il n'y a aucune tache visible dessus", "Oui, à condition qu'il ait été bien rangé", "Non, les microbes sont invisibles"], "a": 2, "e": "Les microbes sont invisibles à l'œil nu. « Propre à l'œil » ne veut pas dire « sain »."}, {"q": "Combien de temps faut-il frotter ses mains avec du savon, au minimum ?", "o": ["30 secondes", "15 secondes", "5 minutes"], "a": 0, "e": "Il faut frotter au moins 30 secondes, partout : paumes, dos des mains, entre les doigts, pouces, ongles, poignets."}, {"q": "Un enfant a avalé un produit ménager. Que faire ?", "o": ["Le faire vomir tout de suite pour vider l'estomac", "Appeler le centre antipoison ou le 15", "Lui faire boire un grand verre de lait"], "a": 1, "e": "On ne fait pas vomir et on ne donne rien à boire. On appelle le centre antipoison ou le 15, le flacon à la main."}, {"q": "Mélanger de l'eau de Javel et un détartrant, c'est…", "o": ["Dangereux : un gaz toxique se dégage", "Plus efficace pour enlever le calcaire", "Sans effet, les deux produits s'annulent"], "a": 0, "e": "Javel + produit acide = gaz toxique. On ne mélange jamais les produits. On le verra en détail en séance 3."}], "end": "C'est votre point de départ. On en reparle en fin de séance, et vous verrez le chemin parcouru."}</script><div class="qbody"></div></div></div>
+</div></section>
+<section class="slide " data-title="Les micro-organismes"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Les micro-organismes</span></div>
+<div class="rv " style="--i:1;"><h2>Trois grandes familles. Touchez une carte.</h2></div>
+<div class="grid g3"><div class="rv " style="--i:2;"><button class="flip mcard" aria-label="Les bactéries : retourner la carte"><div class="fi">
+<div class="fa"><div class="mtop"><span class="tag">Famille 1</span><span class="turn" aria-hidden="true">↻</span></div><svg viewBox="0 0 120 90" class="mic"><rect x="22" y="28" width="70" height="34" rx="17" class="c1"/><path d="M92 45 q12 -10 24 0 q-12 10 -24 0" class="fl"/><path d="M22 40 q-10 -8 -18 -2 M22 52 q-10 6 -18 2" class="fl"/><circle cx="44" cy="40" r="4" class="dot"/><circle cx="66" cy="50" r="5" class="dot"/></svg><h3>Les bactéries</h3><p>Des êtres vivants d'une seule cellule. Elles se multiplient seules, très vite. Beaucoup sont utiles.</p>
+<div class="msize"><span>Taille</span><b>≈ 1 millième de mm</b><i style="--w:40%"></i></div><small>Touchez la carte : exemples chez le tout-petit</small></div>
+<div class="fbk"><span class="tag back">Les bactéries</span><h4>Chez le tout-petit, ça donne…</h4><ul><li><b>L'impétigo</b> – croûtes jaunes autour du nez et de la bouche ; très contagieux par les mains et le linge.</li><li><b>Une gastro par aliment</b> – biberon de lait resté à température ambiante, frigo mal tenu : les bactéries s'y multiplient.</li><li><b>Certaines otites et angines</b> – fièvre, douleur ; le médecin peut donner des antibiotiques, qui n'agissent que sur les bactéries.</li></ul>
+<p class="where"><b>Où ils se cachent chez Sophie :</b> restes de repas, biberons, réfrigérateur, serviettes partagées.</p><p class="prot"><b>Mon réflexe pro :</b> mains lavées, biberon jamais laissé hors du frigo, une serviette par enfant, surfaces nettoyées.</p></div></div></button></div><div class="rv " style="--i:3;"><button class="flip mcard" aria-label="Les virus : retourner la carte"><div class="fi">
+<div class="fa"><div class="mtop"><span class="tag">Famille 2</span><span class="turn" aria-hidden="true">↻</span></div><svg viewBox="0 0 120 90" class="mic"><g class="sp"><line x1="60" y1="45" x2="98.0" y2="45.0"/><circle cx="100.0" cy="45.0" r="4"/><line x1="60" y1="45" x2="92.9" y2="64.0"/><circle cx="94.6" cy="65.0" r="4"/><line x1="60" y1="45" x2="79.0" y2="77.9"/><circle cx="80.0" cy="79.6" r="4"/><line x1="60" y1="45" x2="60.0" y2="83.0"/><circle cx="60.0" cy="85.0" r="4"/><line x1="60" y1="45" x2="41.0" y2="77.9"/><circle cx="40.0" cy="79.6" r="4"/><line x1="60" y1="45" x2="27.1" y2="64.0"/><circle cx="25.4" cy="65.0" r="4"/><line x1="60" y1="45" x2="22.0" y2="45.0"/><circle cx="20.0" cy="45.0" r="4"/><line x1="60" y1="45" x2="27.1" y2="26.0"/><circle cx="25.4" cy="25.0" r="4"/><line x1="60" y1="45" x2="41.0" y2="12.1"/><circle cx="40.0" cy="10.4" r="4"/><line x1="60" y1="45" x2="60.0" y2="7.0"/><circle cx="60.0" cy="5.0" r="4"/><line x1="60" y1="45" x2="79.0" y2="12.1"/><circle cx="80.0" cy="10.4" r="4"/><line x1="60" y1="45" x2="92.9" y2="26.0"/><circle cx="94.6" cy="25.0" r="4"/></g><circle cx="60" cy="45" r="26" class="c2"/><circle cx="52" cy="40" r="5" class="dot"/><circle cx="68" cy="52" r="4" class="dot"/></svg><h3>Les virus</h3><p>Ils ne vivent qu'en entrant dans nos cellules. Les antibiotiques ne marchent pas sur eux.</p>
+<div class="msize"><span>Taille</span><b>100 fois plus petits</b><i style="--w:18%"></i></div><small>Touchez la carte : exemples chez le tout-petit</small></div>
+<div class="fbk"><span class="tag back">Les virus</span><h4>Chez le tout-petit, ça donne…</h4><ul><li><b>Le rhume</b> – nez qui coule : la maladie la plus fréquente chez les petits accueillis à plusieurs.</li><li><b>La bronchiolite</b> – en hiver, avant 2 ans : l'enfant tousse et respire mal. Elle passe par les mains et les jouets.</li><li><b>La gastro-entérite</b> – vomissements et diarrhée ; le virus reste plusieurs jours sur les jouets et le plan de change.</li></ul>
+<p class="where"><b>Où ils se cachent chez Sophie :</b> jouets portés à la bouche, poignées, plan de change, mouchoirs.</p><p class="prot"><b>Mon réflexe pro :</b> mains lavées après chaque mouchage et chaque change, jouets nettoyés chaque jour, pièce aérée.</p></div></div></button></div><div class="rv " style="--i:4;"><button class="flip mcard" aria-label="Les champignons : retourner la carte"><div class="fi">
+<div class="fa"><div class="mtop"><span class="tag">Famille 3</span><span class="turn" aria-hidden="true">↻</span></div><svg viewBox="0 0 120 90" class="mic"><ellipse cx="48" cy="50" rx="24" ry="20" class="c3"/><ellipse cx="78" cy="34" rx="15" ry="12" class="c3"/><ellipse cx="94" cy="22" rx="8" ry="7" class="c3"/><circle cx="44" cy="48" r="6" class="dot"/></svg><h3>Les champignons</h3><p>Levures et moisissures. Ils aiment la chaleur et l'humidité : plis de peau, couches, salle de bain.</p>
+<div class="msize"><span>Taille</span><b>de 3 à 10 millièmes de mm</b><i style="--w:90%"></i></div><small>Touchez la carte : exemples chez le tout-petit</small></div>
+<div class="fbk"><span class="tag back">Les champignons</span><h4>Chez le tout-petit, ça donne…</h4><ul><li><b>Le muguet</b> – dépôts blancs dans la bouche du bébé ; favorisé par des tétines et biberons mal entretenus.</li><li><b>L'érythème fessier à levures</b> – rougeurs vives dans les plis, sous une couche humide gardée trop longtemps.</li><li><b>La teigne</b> – plaques sans cheveux sur le crâne ; se transmet par les bonnets, brosses et peignes.</li></ul>
+<p class="where"><b>Où ils se cachent chez Sophie :</b> tétines, biberons, couches humides, salle de bain mal aérée.</p><p class="prot"><b>Mon réflexe pro :</b> change dès que la couche est mouillée, plis bien séchés, tétines et biberons lavés, objets personnels non partagés.</p></div></div></button></div></div>
+<div class="rv " style="--i:5;"><div class="row"><button class="btn ghost" id="flipall">Retourner toutes les cartes</button></div></div>
+</div></section>
+<section class="slide " data-title="Ils se multiplient"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Pourquoi ça va vite</span></div>
+<div class="rv " style="--i:1;"><h2>Une bactérie peut se diviser en deux toutes les 20 minutes.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Quand il fait chaud, humide, et qu'il y a de quoi « manger » (restes de repas, salive, selles). Lancez le chrono.</p></div>
+<div class="grid g2" style="align-items:center">
+<div class="rv " style="--i:3;"><div><div class="clock" id="mclock">Temps écoulé : 0 h 00</div><div class="counter" id="mcount">1</div><p style="color:var(--muted)">bactérie(s)</p><div class="row" style="margin-top:14px"><button class="btn" id="mgo">Lancer le chrono</button><button class="btn ghost" id="mreset">Remettre à zéro</button></div></div></div>
+<div class="rv " style="--i:4;"><div class="dots" id="mdots" aria-hidden="true"><b></b></div></div>
+</div>
+<div class="rv " style="--i:5;"><p>Au bout de 7 heures, une journée d'accueil : <strong class="hl">plus de 2 millions</strong>. D'où l'importance de nettoyer <strong>tous les jours</strong>.</p></div>
+</div></section>
+<section class="slide " data-title="Pas tous méchants"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Attention aux idées reçues</span></div>
+<div class="rv " style="--i:1;"><h2>La plupart des microbes ne sont pas nos ennemis.</h2></div>
+<div class="balance">
+<div class="rv tile" style="--i:2;"><span class="tag" style="background:var(--ok-soft);color:var(--ok)">Utiles ou sans danger</span><h3 style="margin-top:10px">Les flores</h3><p>Des milliards de bactéries vivent sur notre peau et dans notre intestin. Elles nous protègent et aident à digérer. Le corps en abrite à peu près autant que de cellules.</p></div>
+<div class="rv vs" style="--i:3;"><span>et</span></div>
+<div class="rv tile" style="--i:4;"><span class="tag" style="background:var(--no-soft);color:var(--no)">Dangereux</span><h3 style="margin-top:10px">Les microbes pathogènes</h3><p>Une petite partie des microbes rend malade : ils provoquent gastro, rhume, bronchiolite, infections. Ce sont eux qu'on veut empêcher de passer d'un enfant à l'autre.</p></div>
+</div>
+<div class="rv " style="--i:5;"><p class="big">Le but n'est pas de tout stériliser. Le but : un logement <strong class="hl">propre et sain</strong>.</p></div>
+</div></section>
+<section class="slide " data-title="Les tout-petits, plus fragiles"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Pourquoi c'est différent avec des bébés</span></div>
+<div class="rv " style="--i:1;"><h2>Quatre raisons qui changent tout.</h2></div>
+<div class="grid g4">
+<div class="rv tile" style="--i:2;"><h3>Défenses en construction</h3><p>Le système immunitaire du jeune enfant apprend encore à se défendre. Il tombe malade plus souvent.</p></div>
+<div class="rv tile" style="--i:3;"><h3>Tout à la bouche</h3><p>Comme Inès : jouets, doigts, tapis… c'est sa façon de découvrir.</p></div>
+<div class="rv tile" style="--i:4;"><h3>Au ras du sol</h3><p>Il rampe, se traîne, s'assoit par terre. Le sol, c'est son terrain de jeu.</p></div>
+<div class="rv tile" style="--i:5;"><h3>Couches et contacts</h3><p>Les selles, la salive, le nez qui coule, les câlins : beaucoup d'occasions d'échanger des microbes.</p></div>
+</div></div></section>
+<section class="slide " data-title="La chaîne de transmission"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Comment un microbe passe d'un enfant à l'autre</span></div>
+<div class="rv " style="--i:1;"><h2>La chaîne de transmission.</h2></div>
+<div class="rv " style="--i:2;"><div class="chain" id="chain">
+  <div class="link"><b>1. La source</b><small>Un enfant malade, une surface sale, une couche</small></div><span class="joint"></span>
+  <div class="link"><b>2. La sortie</b><small>Selles, vomissements, toux, nez qui coule, salive</small></div><span class="joint cut"></span>
+  <div class="link cut"><b>3. Le transport</b><small>Les mains, les objets, les surfaces, l'air</small></div><span class="joint cut"></span>
+  <div class="link"><b>4. L'entrée</b><small>La bouche, le nez, les yeux d'un autre enfant</small></div>
+</div></div>
+<div class="rv " style="--i:3;"><div class="row" style="justify-content:center"><button class="btn" id="cut">Casser la chaîne</button></div><p id="cutmsg" hidden class="big" style="text-align:center;margin:0 auto">Il suffit de casser <strong>un seul maillon</strong> pour arrêter le microbe. L'entretien et le lavage des mains cassent le maillon n°3 : <strong class="hl">le transport</strong>.</p></div>
+</div></section>
+<section class="slide " data-title="Les voies de transmission"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le maillon « transport »</span></div>
+<div class="rv " style="--i:1;"><h2>Cinq chemins pour voyager.</h2></div>
+<div class="grid g3">
+<div class="rv tile voie" style="--i:2;"><div class="ic">1</div><h3>Les mains</h3><p>Le chemin n°1. Elles touchent tout, puis la bouche, le nez, les yeux, ou un autre enfant.</p></div>
+<div class="rv tile voie" style="--i:3;"><div class="ic">2</div><h3>Les objets et surfaces</h3><p>Jouets, poignées, plan de change, chaise haute. Certains virus y survivent plusieurs jours.</p></div>
+<div class="rv tile voie" style="--i:4;"><div class="ic">3</div><h3>Les gouttelettes</h3><p>Toux, éternuements, postillons. Elles retombent autour de l'enfant, sur les objets.</p></div>
+<div class="rv tile voie" style="--i:5;"><div class="ic">4</div><h3>Le circuit selles → bouche</h3><p>Des selles aux mains, des mains à la bouche. C'est ainsi que voyage la gastro.</p></div>
+<div class="rv tile voie" style="--i:6;"><div class="ic">5</div><h3>Les aliments</h3><p>Un biberon mal conservé, un frigo sale, un plan de travail souillé.</p></div>
+<div class="rv tile voie" style="--i:7;"><div class="ic">?</div><h3>Les portes d'entrée</h3><p>Bouche, nez, yeux, et la peau abîmée (une écorchure, des fesses irritées).</p></div>
+</div></div></section>
+<section class="slide " data-title="Suivez le microbe : la gastro de Noah"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Cas pratique</span></div>
+<div class="rv " style="--i:1;"><h2>Suivez le microbe de la gastro de Noah.</h2></div>
+<div class="grid g2">
+<div class="track">
+<div class="rv " style="--i:2;"><div class="st"><span>1</span><div>Noah a la gastro. Le virus est dans ses <strong>selles</strong> et ses <strong>vomissements</strong>.</div></div></div>
+<div class="st" id="t2" hidden><span>2</span><div>Sophie le change. Ses <strong>mains</strong> touchent la couche, puis le plan de change.</div></div>
+<div class="st" id="t3" hidden><span>3</span><div>Elle n'a pas encore lavé ses mains : elle ouvre la <strong>porte</strong> et donne un <strong>jouet</strong> à Lina.</div></div>
+<div class="st" id="t4" hidden><span>4</span><div>Lina met le jouet à sa <strong>bouche</strong>. Deux jours plus tard, Lina a la gastro.</div></div>
+<div class="rv " style="--i:3;"><div class="row"><button class="btn" id="tnext">Étape suivante</button></div></div>
+</div>
+<div class="rv " style="--i:4;"><div class="quiz" data-single><div class="q">À quel moment Sophie pouvait-elle casser la chaîne le plus simplement ?</div><div class="opts"><button class="opt"><span class="k">A</span><span>En fermant les fenêtres pendant le change de Noah</span></button><button class="opt" data-ok=1><span class="k">B</span><span>En se lavant les mains juste après le change</span></button><button class="opt"><span class="k">C</span><span>En donnant à Lina un jouet tout neuf du placard</span></button></div><div class="fb" hidden><b>Exactement.</b> Se laver les mains après chaque change, et nettoyer-désinfecter le plan de change : deux gestes qui arrêtent le microbe au maillon « transport ».</div></div></div>
+</div></div></section>
+<section class="slide " data-title="Activité : visite de l'appartement"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Activité en binômes · 25 min</span></div>
+<div class="rv " style="--i:1;"><h2>Visitez l'appartement de Sophie.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Touchez un numéro sur le plan, ou dans la liste. Un toucher = vert, deux = orange, trois = rouge. Puis comparez avec la correction.</p></div>
+<div class="rv " style="--i:3;"><div class="legend3"><span><i style="background:var(--v)"></i>Risque faible</span><span><i style="background:var(--o)"></i>Risque moyen</span><span><i style="background:var(--r)"></i>Risque fort</span></div></div>
+<div class="rv " style="--i:4;"><div class="planwrap" id="aptplan"><div class="planbox"><svg class="aplan" viewBox="0 0 1000 640" role="img" aria-label="Plan de l'appartement de Sophie avec 13 éléments numérotés"><rect class="fl" x="20" y="20" width="310" height="280"/><rect class="fl" x="330" y="20" width="650" height="280"/><rect class="fl" x="20" y="300" width="230" height="170"/><rect class="fl" x="20" y="470" width="230" height="150"/><rect class="fl" x="250" y="300" width="220" height="320"/><rect class="fl" x="470" y="300" width="260" height="320"/><rect class="fl" x="730" y="300" width="250" height="320"/><line class="tile" x1="20" y1="300" x2="20" y2="470"/><line class="tile" x1="46" y1="300" x2="46" y2="470"/><line class="tile" x1="72" y1="300" x2="72" y2="470"/><line class="tile" x1="98" y1="300" x2="98" y2="470"/><line class="tile" x1="124" y1="300" x2="124" y2="470"/><line class="tile" x1="150" y1="300" x2="150" y2="470"/><line class="tile" x1="176" y1="300" x2="176" y2="470"/><line class="tile" x1="202" y1="300" x2="202" y2="470"/><line class="tile" x1="228" y1="300" x2="228" y2="470"/><line class="tile" x1="20" y1="300" x2="250" y2="300"/><line class="tile" x1="20" y1="326" x2="250" y2="326"/><line class="tile" x1="20" y1="352" x2="250" y2="352"/><line class="tile" x1="20" y1="378" x2="250" y2="378"/><line class="tile" x1="20" y1="404" x2="250" y2="404"/><line class="tile" x1="20" y1="430" x2="250" y2="430"/><line class="tile" x1="20" y1="456" x2="250" y2="456"/><line class="tile" x1="20" y1="470" x2="20" y2="620"/><line class="tile" x1="46" y1="470" x2="46" y2="620"/><line class="tile" x1="72" y1="470" x2="72" y2="620"/><line class="tile" x1="98" y1="470" x2="98" y2="620"/><line class="tile" x1="124" y1="470" x2="124" y2="620"/><line class="tile" x1="150" y1="470" x2="150" y2="620"/><line class="tile" x1="176" y1="470" x2="176" y2="620"/><line class="tile" x1="202" y1="470" x2="202" y2="620"/><line class="tile" x1="228" y1="470" x2="228" y2="620"/><line class="tile" x1="20" y1="470" x2="250" y2="470"/><line class="tile" x1="20" y1="496" x2="250" y2="496"/><line class="tile" x1="20" y1="522" x2="250" y2="522"/><line class="tile" x1="20" y1="548" x2="250" y2="548"/><line class="tile" x1="20" y1="574" x2="250" y2="574"/><line class="tile" x1="20" y1="600" x2="250" y2="600"/><line class="wi" x1="330" y1="20" x2="330" y2="90"/><line class="wi" x1="330" y1="230" x2="330" y2="300"/><line class="wi" x1="20" y1="300" x2="340" y2="300"/><line class="wi" x1="460" y1="300" x2="880" y2="300"/><line class="wi" x1="940" y1="300" x2="980" y2="300"/><line class="wi" x1="20" y1="470" x2="250" y2="470"/><line class="wi" x1="250" y1="300" x2="250" y2="340"/><line class="wi" x1="250" y1="400" x2="250" y2="520"/><line class="wi" x1="250" y1="580" x2="250" y2="620"/><line class="wi" x1="470" y1="300" x2="470" y2="520"/><line class="wi" x1="470" y1="580" x2="470" y2="620"/><line class="wi" x1="730" y1="300" x2="730" y2="620"/><path class="wall" d="M400 620 H980 V20 H20 V620 H320"/><line class="win" x1="100" y1="20" x2="220" y2="20"/><line class="win2" x1="100" y1="20" x2="220" y2="20"/><line class="win" x1="520" y1="20" x2="760" y2="20"/><line class="win2" x1="520" y1="20" x2="760" y2="20"/><line class="win" x1="540" y1="620" x2="660" y2="620"/><line class="win2" x1="540" y1="620" x2="660" y2="620"/><line class="win" x1="980" y1="420" x2="980" y2="520"/><line class="win2" x1="980" y1="420" x2="980" y2="520"/><line class="win" x1="20" y1="340" x2="20" y2="420"/><line class="win2" x1="20" y1="340" x2="20" y2="420"/><line class="win" x1="820" y1="620" x2="920" y2="620"/><line class="win2" x1="820" y1="620" x2="920" y2="620"/><path class="door" d="M320 620 A80 80 0 0 1 400 540 L400 620"/><path class="door" d="M250 340 A60 60 0 0 1 190 400 L250 400"/><path class="door" d="M250 520 A60 60 0 0 0 190 580 L250 580"/><path class="door" d="M470 520 A60 60 0 0 1 530 580 L470 580"/><path class="door" d="M880 300 A60 60 0 0 0 940 360 L940 300"/><path class="fur" d="M28 28 H322 V84 H84 V200 H28 Z"/><rect class="fur2" x="150" y="38" width="64" height="36" rx="6"/><circle class="fur3" cx="182" cy="56" r="10"/><circle class="fur3" cx="258" cy="48" r="11"/><circle class="fur3" cx="290" cy="48" r="11"/><circle class="fur3" cx="258" cy="70" r="7"/><circle class="fur3" cx="290" cy="70" r="7"/><rect class="fur" x="28" y="212" width="62" height="80" rx="4"/><text class="small" x="59" y="288">frigo</text><circle class="fur" cx="200" cy="215" r="42"/><rect class="fur" x="264" y="178" width="36" height="36" rx="5"/><line class="fur3l" x1="264" y1="190" x2="300" y2="190"/><rect class="fur" x="690" y="34" width="220" height="70" rx="12"/><rect class="fur2" x="700" y="44" width="200" height="20" rx="6"/><rect class="fur" x="735" y="140" width="130" height="60" rx="6"/><rect class="mat" x="420" y="110" width="190" height="150" rx="22"/><path class="arch" d="M440 230 Q515 110 590 230"/><circle class="toy" cx="545" cy="215" r="9"/><circle class="toy" cx="582" cy="198" r="7"/><circle class="toy" cx="468" cy="210" r="8"/><circle class="toy" cx="520" cy="240" r="7"/><rect class="toy" x="552" y="234" width="14" height="14" rx="2"/><rect class="fur" x="950" y="60" width="22" height="210"/><rect class="fur" x="28" y="308" width="82" height="152" rx="18"/><rect class="fur2" x="38" y="318" width="62" height="132" rx="14"/><rect class="fur" x="166" y="308" width="76" height="44" rx="6"/><ellipse class="fur2" cx="204" cy="330" rx="24" ry="13"/><rect class="fur" x="166" y="386" width="76" height="76" rx="6"/><rect class="mat" x="176" y="396" width="56" height="56" rx="10"/><rect class="fur" x="28" y="540" width="26" height="54" rx="4"/><ellipse class="fur" cx="84" cy="567" rx="30" ry="21"/><ellipse class="fur2" cx="88" cy="567" rx="18" ry="12"/><rect class="fur" x="190" y="490" width="32" height="32" rx="5"/><circle class="fur" cx="188" cy="596" r="15"/><circle class="fur2" cx="188" cy="596" r="8"/><rect class="sw" x="251" y="413" width="10" height="14" rx="2"/><rect class="sw" x="251" y="499" width="10" height="14" rx="2"/><rect class="sw" x="459" y="493" width="10" height="14" rx="2"/><rect class="sw" x="399" y="599" width="10" height="14" rx="2"/><rect class="fur" x="410" y="330" width="50" height="22" rx="4"/><rect class="fur" x="488" y="318" width="66" height="112" rx="5"/><rect class="fur2" x="494" y="324" width="54" height="100" rx="3"/><line class="bar" x1="503" y1="324" x2="503" y2="424"/><line class="bar" x1="512" y1="324" x2="512" y2="424"/><line class="bar" x1="521" y1="324" x2="521" y2="424"/><line class="bar" x1="530" y1="324" x2="530" y2="424"/><line class="bar" x1="539" y1="324" x2="539" y2="424"/><rect class="fur" x="568" y="318" width="66" height="112" rx="5"/><rect class="fur2" x="574" y="324" width="54" height="100" rx="3"/><line class="bar" x1="583" y1="324" x2="583" y2="424"/><line class="bar" x1="592" y1="324" x2="592" y2="424"/><line class="bar" x1="601" y1="324" x2="601" y2="424"/><line class="bar" x1="610" y1="324" x2="610" y2="424"/><line class="bar" x1="619" y1="324" x2="619" y2="424"/><rect class="fur" x="648" y="318" width="66" height="112" rx="5"/><rect class="fur2" x="654" y="324" width="54" height="100" rx="3"/><line class="bar" x1="663" y1="324" x2="663" y2="424"/><line class="bar" x1="672" y1="324" x2="672" y2="424"/><line class="bar" x1="681" y1="324" x2="681" y2="424"/><line class="bar" x1="690" y1="324" x2="690" y2="424"/><line class="bar" x1="699" y1="324" x2="699" y2="424"/><rect class="fur" x="600" y="566" width="116" height="44" rx="4"/><rect class="fur" x="778" y="318" width="160" height="200" rx="8"/><rect class="fur2" x="790" y="328" width="62" height="34" rx="8"/><rect class="fur2" x="864" y="328" width="62" height="34" rx="8"/><rect class="fur" x="742" y="574" width="120" height="38" rx="4"/><text class="room" x="212" y="284">CUISINE</text><text class="room" x="650" y="284">SÉJOUR</text><text class="room" x="118" y="380">SALLE DE BAIN</text><text class="room" x="118" y="514">TOILETTES</text><text class="room" x="360" y="330">ENTRÉE</text><text class="room" x="600" y="520">CHAMBRE DES ENFANTS</text><text class="room" x="858" y="552">CHAMBRE DE SOPHIE</text><g class="mk" tabindex="0" role="button" data-i="0" aria-label="Élément 1"><circle cx="60" cy="252" r="19"/><text x="60" y="258">1</text></g><g class="mk" tabindex="0" role="button" data-i="1" aria-label="Élément 2"><circle cx="282" cy="196" r="19"/><text x="282" y="202">2</text></g><g class="mk" tabindex="0" role="button" data-i="2" aria-label="Élément 3"><circle cx="118" cy="56" r="19"/><text x="118" y="62">3</text></g><g class="mk" tabindex="0" role="button" data-i="3" aria-label="Élément 4"><circle cx="452" cy="140" r="19"/><text x="452" y="146">4</text></g><g class="mk" tabindex="0" role="button" data-i="4" aria-label="Élément 5"><circle cx="566" cy="226" r="19"/><text x="566" y="232">5</text></g><g class="mk" tabindex="0" role="button" data-i="5" aria-label="Élément 6"><circle cx="930" cy="160" r="19"/><text x="930" y="166">6</text></g><g class="mk" tabindex="0" role="button" data-i="6" aria-label="Élément 7"><circle cx="205" cy="425" r="19"/><text x="205" y="431">7</text></g><g class="mk" tabindex="0" role="button" data-i="7" aria-label="Élément 8"><circle cx="205" cy="330" r="19"/><text x="205" y="336">8</text></g><g class="mk" tabindex="0" role="button" data-i="8" aria-label="Élément 9"><circle cx="85" cy="566" r="19"/><text x="85" y="572">9</text></g><g class="mk" tabindex="0" role="button" data-i="9" aria-label="Élément 10"><circle cx="205" cy="505" r="19"/><text x="205" y="511">10</text></g><g class="mk" tabindex="0" role="button" data-i="10" aria-label="Élément 11"><circle cx="298" cy="446" r="19"/><text x="298" y="452">11</text></g><g class="mk" tabindex="0" role="button" data-i="11" aria-label="Élément 12"><circle cx="615" cy="470" r="19"/><text x="615" y="476">12</text></g><g class="mk" tabindex="0" role="button" data-i="12" aria-label="Élément 13"><circle cx="948" cy="590" r="19"/><text x="948" y="596">13</text></g></svg></div><div class="spots"><button class="spot" data-i="0" data-truth="o"><b>1</b><span>Réfrigérateur</span></button><button class="spot" data-i="1" data-truth="o"><b>2</b><span>Chaise haute</span></button><button class="spot" data-i="2" data-truth="o"><b>3</b><span>Plan de travail</span></button><button class="spot" data-i="3" data-truth="o"><b>4</b><span>Tapis d'éveil d'Inès</span></button><button class="spot" data-i="4" data-truth="r"><b>5</b><span>Jouets d'Inès</span></button><button class="spot" data-i="5" data-truth="v"><b>6</b><span>Étagère haute</span></button><button class="spot" data-i="6" data-truth="r"><b>7</b><span>Plan de change</span></button><button class="spot" data-i="7" data-truth="o"><b>8</b><span>Lavabo</span></button><button class="spot" data-i="8" data-truth="r"><b>9</b><span>Toilettes et pot de Lina</span></button><button class="spot" data-i="9" data-truth="r"><b>10</b><span>Poubelle à couches</span></button><button class="spot" data-i="10" data-truth="o"><b>11</b><span>Poignées et interrupteurs</span></button><button class="spot" data-i="11" data-truth="o"><b>12</b><span>Lits des enfants</span></button><button class="spot" data-i="12" data-truth="v"><b>13</b><span>Chambre de Sophie</span></button></div></div></div>
+<div class="rv " style="--i:5;"><div class="row"><button class="btn" id="pcheck">Comparer avec la correction</button><button class="btn ghost" id="preset">Recommencer</button><span id="pscore" class="big" style="align-self:center"></span></div><div id="pexpl" class="grid g2" hidden></div></div>
+</div></section>
+<section class="slide " data-title="Comment classer une zone"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">La règle pour classer</span></div>
+<div class="rv " style="--i:1;"><h2>Trois questions à se poser.</h2></div>
+<div class="grid g3">
+<div class="rv tile riskcol" style="--i:2;--c:var(--r)"><h3>Y a-t-il des liquides du corps ?</h3><p>Selles, urine, vomissements, salive, nez qui coule. Si oui, le risque monte.</p></div>
+<div class="rv tile riskcol" style="--i:3;--c:var(--o)"><h3>L'enfant le met-il à la bouche ?</h3><p>Jouets, tétines, cuillères, tapis. Si oui, le risque monte.</p></div>
+<div class="rv tile riskcol" style="--i:4;--c:var(--v)"><h3>Beaucoup de mains le touchent ?</h3><p>Poignées, interrupteurs, lavabo. Plus c'est touché, plus on nettoie souvent.</p></div>
+</div>
+<div class="rv " style="--i:5;"><p class="big">Plus il y a de « oui », plus on nettoie <strong class="hl">souvent</strong> et plus on <strong class="hl">désinfecte</strong>.</p></div>
+</div></section>
+<section class="slide " data-title="Casser la chaîne au quotidien"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Les gestes qui protègent</span></div>
+<div class="rv " style="--i:1;"><h2>Cinq gestes pour casser la chaîne.</h2></div>
+<div class="do">
+<div class="rv tile" style="--i:2;"><div class="n">1</div><h3>Se laver les mains</h3><p>Et laver celles des enfants. Avant les repas, après chaque change, après les toilettes.</p></div>
+<div class="rv tile" style="--i:3;"><div class="n">2</div><h3>Entretenir surfaces et objets</h3><p>Avec la bonne technique et le bon produit. C'est tout ce module.</p></div>
+<div class="rv tile" style="--i:4;"><div class="n">3</div><h3>Aérer chaque jour</h3><p>10 minutes, fenêtres ouvertes, enfants hors de la pièce.</p></div>
+<div class="rv tile" style="--i:5;"><div class="n">4</div><h3>Gérer le linge et les déchets</h3><p>Linge sale à part, couches dans une poubelle fermée, vidée chaque jour.</p></div>
+<div class="rv tile" style="--i:6;"><div class="n">5</div><h3>Ranger et organiser</h3><p>Un plan d'entretien : quoi, quand, avec quoi. On le construira ensemble.</p></div>
+</div></div></section>
+<section class="slide " data-title="Ni trop, ni trop peu"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le bon dosage</span></div>
+<div class="rv " style="--i:1;"><h2>Ni trop, ni trop peu.</h2></div>
+<div class="grid g2">
+<div class="rv tile" style="--i:2;"><span class="tag" style="background:var(--no-soft);color:var(--no)">Pas assez</span><h3 style="margin-top:10px">Les microbes circulent</h3><p>Les enfants tombent malades plus souvent, les maladies passent de l'un à l'autre.</p></div>
+<div class="rv tile" style="--i:3;"><span class="tag" style="background:var(--no-soft);color:var(--no)">Trop</span><h3 style="margin-top:10px">Les produits deviennent un risque</h3><p>Trop de produits irrite la peau et les poumons des enfants, pollue, coûte cher. Désinfecter partout tout le temps ne sert à rien.</p></div>
+</div>
+<div class="rv " style="--i:4;"><p class="big">Le bon réflexe : <strong class="hl">adapter</strong> le geste à la zone. Fort risque = nettoyer puis désinfecter. Faible risque = nettoyer.</p></div>
+</div></section>
+<section class="slide " data-title="Quiz de fin"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Quiz de fin · 5 questions</span></div>
+<div class="rv " style="--i:1;"><h2>Vous avez retenu l'essentiel ?</h2></div>
+<div class="rv " style="--i:2;"><div class="qseq"><script type="application/json">{"qs": [{"q": "Quel est le maillon que l'entretien permet de casser ?", "o": ["La source du microbe", "L'entrée chez l'enfant", "Le transport"], "a": 2, "e": "L'entretien des surfaces et le lavage des mains empêchent les microbes de voyager : c'est le maillon « transport »."}, {"q": "Lequel de ces éléments est à risque fort chez Sophie ?", "o": ["Le plan de change", "L'étagère haute du séjour", "La chambre de Sophie"], "a": 0, "e": "Le plan de change est en contact avec les selles et l'urine : risque fort."}, {"q": "Pourquoi Inès est-elle particulièrement exposée ?", "o": ["Elle marche partout dans l'appartement", "Elle porte tout à la bouche", "Elle va déjà sur le pot toute seule"], "a": 1, "e": "À 5 mois, Inès découvre le monde avec sa bouche."}, {"q": "Comment voyage la gastro de Noah ?", "o": ["Des selles aux mains, puis à la bouche", "Par la lumière du soleil qui passe par la fenêtre", "Uniquement par l'air qu'on respire"], "a": 0, "e": "C'est le circuit selles → mains → bouche."}, {"q": "Que veut dire « propre et sain » ?", "o": ["Tout est stérilisé en permanence, sans exception", "Tout est rangé et ça sent bon le produit", "Sans saleté, ni trop de microbes dangereux"], "a": 2, "e": "On veut enlever la saleté et réduire les microbes dangereux, sans tout stériliser."}], "end": "Comparez avec votre quiz de départ : voilà ce que vous avez appris aujourd'hui."}</script><div class="qbody"></div></div></div>
+</div></section>
+<section class="slide " data-title="À retenir"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">À retenir</span></div>
+<div class="rv " style="--i:1;"><h2>Quatre idées à garder.</h2></div>
+<div class="rv " style="--i:2;"><ol class="retenir">
+<li>Les microbes sont <strong>invisibles</strong> : « propre à l'œil » ne veut pas dire « sain ».</li>
+<li>Les tout-petits sont <strong>plus fragiles</strong> et plus exposés : bouche, sol, couches.</li>
+<li>Les microbes voyagent surtout par <strong>les mains</strong> et <strong>les objets</strong>. Casser un maillon suffit.</li>
+<li>Les zones à <strong>risque fort</strong> : plan de change, toilettes et pot, poubelle à couches, jouets portés à la bouche.</li>
+</ol></div>
+</div></section>
+<section class="slide " data-title="Défi entreprise"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">D'ici le 2 décembre</span></div>
+<div class="rv " style="--i:1;"><div class="defi"><span class="tag">Défi entreprise</span><h2 style="margin-top:14px">Les 3 objets les plus touchés.</h2><p class="big" style="margin-top:12px">Dans votre structure, repérez les <strong>3 objets</strong> que les enfants touchent le plus. Pour chacun, notez <strong>comment</strong> et <strong>quand</strong> il est nettoyé.</p><p style="margin-top:10px;color:var(--muted)">Notez vos réponses dans votre livret, page « Défi entreprise ». On en parle en début de prochaine séance.</p></div></div>
+</div></section>
+<section class="slide hero" data-title="La prochaine fois"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Séance 2 · mercredi 2 décembre</span></div>
+<div class="rv " style="--i:1;"><h2>Nettoyer, désinfecter, bionettoyer : quelle différence ?</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">On fera des expériences sur des taches, et vous découvrirez la règle des 4 facteurs d'un nettoyage efficace : le cercle de Sinner.</p></div>
+</div></section>
+    <div class="overview" hidden><div class="og"></div></div>
+  </div>
+  <div class="bar">
+    <button class="navbtn" id="prev" aria-label="Diapositive précédente">←<span class="hide-sm"> Précédent</span></button>
+    <div class="prog" aria-hidden="true"><i></i></div>
+    <span class="count">1 / 22</span>
+    <button class="navbtn" id="plan" aria-label="Plan de la séance">Plan</button>
+    <button class="navbtn hide-sm" id="fs" aria-label="Plein écran">Plein écran</button>
+    <button class="navbtn primary" id="next" aria-label="Diapositive suivante"><span class="hide-sm">Suivant </span>→</button>
+  </div>
+</div>
+<script>
+window.__init=function(){
+  const ts=document.getElementById('toyscene'), tb=document.getElementById('toybtn'), tc=document.getElementById('toycap');
+  const POS=[[70,110],[210,130],[350,130],[490,110]]; let pc=0; const toy=ts.querySelector('.toy'), pn=document.getElementById('pnext');
+  pn.onclick=()=>{ if(pc>=18) return; pc++; ts.classList.add('manual'); const q=POS[pc%4]; toy.style.transform=`translate(${q[0]}px,${q[1]}px)`;
+    document.querySelector('#pcount b').textContent=pc;
+    if(pc===18){ pn.disabled=true; tc.textContent='Tout le monde s\'est présenté. On éteint la lumière ?'; tb.classList.add('pulse'); } else tc.textContent='Au tour de l\'apprenti n°'+(pc+1)+'…'; };
+  tb.onclick=()=>{ tb.classList.remove('pulse'); const on=ts.classList.toggle('lit'); tb.textContent=on?'Rallumer la lumière':'Allumer la lampe UV'; tc.textContent=on?'Le gel est partout : sur le canard et sur toutes les mains.':'Le canard passe de main en main…'; };
+  const fa=document.getElementById('flipall'); fa.onclick=()=>{ const cs=[...document.querySelectorAll('.mcard')]; const on=!cs.every(c=>c.classList.contains('on')); cs.forEach(c=>c.classList.toggle('on',on)); fa.textContent=on?'Revoir le recto':'Retourner toutes les cartes'; };
+  // chrono de multiplication
+  let t=0,n=1,timer=null; const c=document.getElementById('mcount'),cl=document.getElementById('mclock'),dots=document.getElementById('mdots');
+  const fmt=v=>v.toLocaleString('fr-FR');
+  const draw=()=>{ c.textContent=fmt(n); cl.textContent='Temps écoulé : '+Math.floor(t/60)+' h '+String(t%60).padStart(2,'0');
+    const shown=Math.min(n,128); if(dots.children.length<shown){ let h=''; for(let k=dots.children.length;k<shown;k++) h+='<b></b>'; dots.insertAdjacentHTML('beforeend',h);} };
+  document.getElementById('mgo').onclick=()=>{ if(timer) return; timer=setInterval(()=>{ t+=20; n*=2; draw(); if(t>=420){clearInterval(timer);timer=null;} },380); };
+  document.getElementById('mreset').onclick=()=>{ clearInterval(timer); timer=null; t=0; n=1; dots.innerHTML='<b></b>'; draw(); };
+  // chaîne
+  document.getElementById('cut').onclick=()=>{ document.getElementById('chain').classList.toggle('broken'); document.getElementById('cutmsg').hidden=false; };
+  // piste gastro
+  let st=2; document.getElementById('tnext').onclick=e=>{ const el=document.getElementById('t'+st); if(el){el.hidden=false; el.style.animation='rise .5s both';} st++; if(st>4) e.target.hidden=true; };
+  // plan
+  const plan=document.getElementById('aptplan'), spots=[...plan.querySelectorAll('.spot')], mks=[...plan.querySelectorAll('.mk')];
+  const code={v:1,o:2,r:3}, name={1:'faible',2:'moyen',3:'fort'};
+  const setc=(i,c)=>{ spots[i].dataset.c=c; spots[i].className='spot'+(c?' c'+c:''); mks[i].setAttribute('class','mk'+(c?' c'+c:'')); };
+  const tap=i=>{ if(plan.classList.contains('plan-check')) return; setc(i,(+spots[i].dataset.c+1)%4); };
+  spots.forEach((s,i)=>{ s.dataset.c=0; s.onclick=()=>tap(i); });
+  mks.forEach((m,i)=>{ m.addEventListener('click',()=>tap(i)); m.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();tap(i);} }); });
+  const expl=[["Réfrigérateur", "o", "Aliments et biberons y sont conservés : il doit rester propre pour éviter les intoxications."], ["Chaise haute", "o", "Restes de repas et salive de Lina : à nettoyer après chaque repas."], ["Plan de travail", "o", "On y prépare biberons et repas : il doit être propre avant chaque préparation."], ["Tapis d'éveil d'Inès", "o", "Inès y passe ses journées et y met la bouche : nettoyage fréquent."], ["Jouets d'Inès", "r", "Portés à la bouche toute la journée : risque fort, nettoyage quotidien."], ["Étagère haute", "v", "Personne n'y touche dans la journée : un dépoussiérage régulier suffit."], ["Plan de change", "r", "Contact avec les selles et l'urine : bionettoyage après chaque change."], ["Lavabo", "o", "Les mains sales y passent avant d'être lavées."], ["Toilettes et pot de Lina", "r", "Selles et urine : risque fort, entretien plusieurs fois par jour."], ["Poubelle à couches", "r", "Elle concentre les microbes : vidée chaque jour, couvercle fermé."], ["Poignées et interrupteurs", "o", "Touchés par toutes les mains, dont celles qui sortent des toilettes."], ["Lits des enfants", "o", "Salive, nez qui coule : draps changés régulièrement, lit nettoyé."], ["Chambre de Sophie", "v", "Les enfants n'y vont pas : entretien ménager classique."]];
+  document.getElementById('pcheck').onclick=()=>{
+    let ok=0; plan.classList.add('plan-check');
+    spots.forEach((s,i)=>{ const t=code[s.dataset.truth]; const good=+s.dataset.c===t; if(good) ok++; s.dataset.mark=good?'✓':'→ '+name[t]; setc(i,t); });
+    document.getElementById('pscore').textContent=ok+' / '+spots.length+' bien classés';
+    const ex=document.getElementById('pexpl'); ex.hidden=false;
+    ex.innerHTML=expl.map((e,k)=>`<div class="tile" style="border-left:6px solid var(--${e[1]})"><h3 style="font-size:1em">${k+1}. ${e[0]}</h3><p>${e[2]}</p></div>`).join('');
+  };
+  document.getElementById('preset').onclick=()=>{ plan.classList.remove('plan-check'); spots.forEach((s,i)=>setc(i,0)); document.getElementById('pscore').textContent=''; document.getElementById('pexpl').hidden=true; };
+};
+</script>
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+const prog=document.querySelector('.prog i'), count=document.querySelector('.count'), ov=document.querySelector('.overview');
+let cur=0;
+function go(i,push=true){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides[cur].classList.remove('active'); cur=i; slides[cur].classList.add('active');
+  slides[cur].scrollTop=0;
+  prog.style.width=((cur+1)/slides.length*100)+'%';
+  count.textContent=(cur+1)+' / '+slides.length;
+  if(push){try{history.replaceState(null,'','#s'+(cur+1));}catch(e){}}
+  slides[cur].dispatchEvent(new CustomEvent('enter'));
+}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('plan').onclick=()=>{ov.hidden=!ov.hidden; if(!ov.hidden) buildOv();};
+document.getElementById('fs').onclick=()=>{ try{ if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }catch(e){} };
+function buildOv(){ ov.querySelector('.og').innerHTML=slides.map((s,i)=>`<button data-i="${i}" class="${i===cur?'cur':''}"><span>${i+1}</span>${s.dataset.title||''}</button>`).join('');
+  ov.querySelectorAll('button').forEach(b=>b.onclick=()=>{ov.hidden=true;go(+b.dataset.i);}); }
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea')) return;
+  if(['ArrowRight','PageDown'].includes(e.key)||(e.key===' '&&!e.target.closest('button'))){e.preventDefault();go(cur+1);}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}
+  if(e.key==='o'||e.key==='O'){ov.hidden=!ov.hidden; if(!ov.hidden) buildOv();}
+  if(e.key==='Escape') ov.hidden=true;
+});
+let x0=null,y0=null;
+document.querySelector('.slides').addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+document.querySelector('.slides').addEventListener('touchend',e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5) go(cur+(dx<0?1:-1)); x0=null;},{passive:true});
+
+/* quiz à une question */
+document.querySelectorAll('.quiz[data-single]').forEach(q=>{
+  const fb=q.querySelector('.fb');
+  q.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    q.querySelectorAll('.opt').forEach(x=>{x.disabled=true; if(x.dataset.ok) x.classList.add('ok');});
+    if(!o.dataset.ok) o.classList.add('no');
+    if(fb) fb.hidden=false;
+  });
+});
+/* quiz en série */
+document.querySelectorAll('.qseq').forEach(box=>{
+  const data=JSON.parse(box.querySelector('script').textContent); let i=0, score=0;
+  if(window.__PM){ box.querySelector('.qbody').innerHTML='<div class="pmq">'+data.qs.map((q,k)=>`<div class="tile"><b>${k+1}. ${q.q}</b><div class="pmo">${q.o.map((t,j)=>`<span><i>${'ABCD'[j]}</i>${t}</span>`).join('')}</div></div>`).join('')+'</div>'; return; }
+  const render=()=>{
+    if(i>=data.qs.length){
+      box.querySelector('.qbody').innerHTML=`<div class="tile" style="text-align:center;padding:28px"><h3 style="font-size:clamp(28px,3vw,44px)">${score} / ${data.qs.length}</h3><p style="margin:10px auto 0;color:var(--muted)">${data.end}</p><div style="margin-top:18px"><button class="btn ghost" data-restart>Recommencer</button></div></div>`;
+      box.querySelector('[data-restart]').onclick=()=>{i=0;score=0;render();}; return;
+    }
+    const q=data.qs[i];
+    box.querySelector('.qbody').innerHTML=`<div class="qprog">${data.qs.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
+      <div class="quiz"><div class="eyebrow">Question ${i+1} sur ${data.qs.length}</div><div class="q">${q.q}</div>
+      <div class="opts">${q.o.map((t,k)=>`<button class="opt" data-k="${k}"><span class="k">${'ABCD'[k]}</span><span>${t}</span></button>`).join('')}</div>
+      <div class="fb" hidden><b>${''}</b><span>${q.e}</span></div>
+      <div><button class="btn" data-next hidden>${i+1<data.qs.length?'Question suivante':'Voir le résultat'} →</button></div></div>`;
+    box.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+      const k=+o.dataset.k; box.querySelectorAll('.opt').forEach(x=>{x.disabled=true; if(+x.dataset.k===q.a) x.classList.add('ok');});
+      if(k===q.a) score++; else o.classList.add('no');
+      const fb=box.querySelector('.fb'); fb.hidden=false; fb.querySelector('b').textContent=(k===q.a?'Exact. ':'Pas tout à fait. ');
+      box.querySelector('[data-next]').hidden=false;
+    });
+    box.querySelector('[data-next]').onclick=()=>{i++;render();};
+  };
+  render();
+});
+/* cartes à retourner */
+document.querySelectorAll('.flip').forEach(f=>f.addEventListener('click',()=>f.classList.toggle('on')));
+/* révélations */
+document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll(b.dataset.reveal).forEach(t=>{t.hidden=false; t.classList.add('rv'); t.style.animation='rise .5s both';});
+  if(b.dataset.once!==undefined) b.hidden=true;
+}));
+window.__go=go;
+const h=(location.hash||'').match(/^#s(\d+)$/);
+slides[0].classList.remove('active');
+go(h?(+h[1]-1):0,false);
+if(window.__init) window.__init();
+})();
+</script>
+</body></html>

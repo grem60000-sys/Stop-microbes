@@ -1,0 +1,487 @@
+<!doctype html><html lang='fr'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1,viewport-fit=cover'></head><body><title>Les Petits Pas · Séance 1</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+
+/* Module 2 : « salle de soin » — encre bleu nuit, framboise pour l'action, fond lavande très pâle. */
+:root{
+  --bg:#f6f4f9;--surface:#ffffff;--surface2:#ece8f3;--ink:#1d1a38;--muted:#5a5675;--line:#e0dbea;--line-strong:#aaa3c2;
+  --accent:#c0185a;--accent-soft:#f8dbe6;--accent-ink:#8d0f41;--on-accent:#ffffff;--calm:#3b5bdb;--calm-soft:#dfe6fd;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13111f;--surface:#1c1930;--surface2:#25213d;--ink:#ece9f7;--muted:#a9a4c6;--line:#312c4f;--line-strong:#57507e;
+  --accent:#ff5c95;--accent-soft:#3d1428;--accent-ink:#ff9cc0;--on-accent:#2a0514;--calm:#8ea5ff;--calm-soft:#1f2a55;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13111f;--surface:#1c1930;--surface2:#25213d;--ink:#ece9f7;--muted:#a9a4c6;--line:#312c4f;--line-strong:#57507e;
+  --accent:#ff5c95;--accent-soft:#3d1428;--accent-ink:#ff9cc0;--on-accent:#2a0514;--calm:#8ea5ff;--calm-soft:#1f2a55;color-scheme:dark}
+
+
+/* Layout : une scène plein écran, une diapositive visible à la fois, barre de pilotage en bas. */
+:root{
+  --font-display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --font-body:"Atkinson Hyperlegible","Inter",system-ui,sans-serif;
+  --ok:#1f8a5b;--ok-soft:#dff3e8;--no:#c2410c;--no-soft:#fde8dc;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--ok:#5fd39a;--ok-soft:#163a2a;--no:#ff9466;--no-soft:#3e2318;color-scheme:dark}}
+:root[data-theme="dark"]{--ok:#5fd39a;--ok-soft:#163a2a;--no:#ff9466;--no-soft:#3e2318;color-scheme:dark}
+html,body{height:100%}
+body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 clamp(16px,1.25vw,20px)/1.5 var(--font-body);overflow:hidden;-webkit-font-smoothing:antialiased}
+.stage{position:relative;height:100%;display:flex;flex-direction:column}
+.slides{position:relative;flex:1;min-height:0}
+.slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;padding-block:clamp(20px,4vh,56px) 24px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  opacity:0;visibility:hidden;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease,visibility 0s .45s}
+.slide.active{opacity:1;visibility:visible;transform:none;transition:opacity .45s ease,transform .45s ease}
+.inner{max-width:1100px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:clamp(14px,2.2vh,26px)}
+.rv{opacity:1;transform:none}
+.slide.active .rv{animation:rise .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--i,0) * 90ms + 120ms)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide,.slide.active{transition:none;transform:none}.slide.active .rv{animation:none}}
+.eyebrow{font:700 .78em/1 var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+h1,h2,h3{font-family:var(--font-display);line-height:1.04;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h1{font-size:clamp(38px,6.4vw,92px);font-weight:800}
+h2{font-size:clamp(28px,3.8vw,56px);font-weight:800}
+h3{font-size:clamp(19px,1.7vw,26px);font-weight:700;letter-spacing:-.01em}
+p{margin:0;max-width:62ch}
+.lead{font-size:1.18em;color:var(--muted);max-width:56ch}
+.big{font-size:clamp(20px,2vw,30px);line-height:1.35}
+strong{font-weight:700}
+.hl{background:linear-gradient(transparent 60%,var(--accent-soft) 60%);padding:0 .1em}
+.row{display:flex;gap:clamp(12px,1.6vw,22px);flex-wrap:wrap}
+.grid{display:grid;gap:clamp(12px,1.6vw,22px)}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(14px,1.6vw,22px);min-width:0}
+.tile h3{margin-bottom:6px}
+.tile p{color:var(--muted);font-size:.95em}
+.tag{display:inline-block;font:700 .72em/1 var(--font-body);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:99px;background:var(--accent-soft);color:var(--accent-ink)}
+.btn{font:700 .95em/1 var(--font-body);border:0;border-radius:99px;padding:13px 20px;background:var(--accent);color:var(--on-accent);cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line-strong)}
+.btn:focus-visible,.opt:focus-visible,.navbtn:focus-visible,.flip:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+/* quiz */
+.quiz{display:grid;gap:12px}
+.quiz .q{font:700 clamp(19px,1.8vw,27px)/1.25 var(--font-display)}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:transform .15s,border-color .15s,background .2s}
+.opt:hover{transform:translateX(3px);border-color:var(--accent)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:var(--surface2);font-weight:700}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}.opt.ok .k{background:var(--ok);color:#fff}
+.opt.no{background:var(--no-soft);border-color:var(--no)}.opt.no .k{background:var(--no);color:#fff}
+.opt[disabled]{cursor:default;transform:none}
+.fb{border-radius:14px;padding:12px 16px;background:var(--surface2)}
+.fb b{color:var(--accent-ink)}
+.qprog{display:flex;gap:6px}.qprog i{height:6px;flex:1;border-radius:3px;background:var(--line)}.qprog i.on{background:var(--accent)}
+/* flip cards */
+.flip{display:block;width:100%;perspective:900px;cursor:pointer;min-height:170px;border:0;background:none;padding:0;font:inherit;color:inherit;text-align:left}
+.flip .fi{position:relative;width:100%;height:100%;min-height:inherit;transition:transform .6s;transform-style:preserve-3d}
+.flip.on .fi{transform:rotateY(180deg)}
+.flip .fa,.flip .fbk{position:absolute;inset:0;backface-visibility:hidden;border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.flip .fa{background:var(--surface);border:1px solid var(--line)}
+.flip .fbk{background:var(--accent);color:var(--on-accent);transform:rotateY(180deg)}
+.flip .fa small{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.flip .fi{transition:none}}
+/* timeline / steps */
+.steps{display:grid;gap:10px;counter-reset:st}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px 16px}
+.step::before{counter-increment:st;content:counter(st);width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:var(--on-accent);font:800 1em var(--font-display)}
+.step b{display:block}
+/* controls */
+.bar{display:flex;align-items:center;gap:10px;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--line);background:var(--bg)}
+.navbtn{font:700 14px/1 var(--font-body);color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.navbtn.primary{background:var(--accent);color:var(--on-accent);border-color:transparent}
+.prog{flex:1;height:6px;background:var(--line);border-radius:3px;overflow:hidden;min-width:40px}
+.prog i{display:block;height:100%;width:0;background:var(--accent);transition:width .4s}
+.count{font:700 13px/1 var(--font-body);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.overview{position:absolute;inset:0;background:var(--bg);z-index:5;overflow:auto;padding-block:24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.overview .og{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.overview button{text-align:left;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer}
+.overview button span{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:4px}
+.overview button.cur{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.hide-sm{display:inline}
+.pmq{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pmq .tile{padding:10px 14px}.pmq b{font-size:.92em}.pmo{display:grid;gap:3px;margin-top:6px;font-size:.85em}.pmo i{font-style:normal;font-weight:700;color:var(--accent-ink);margin-right:8px}
+@media (max-width:760px){
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .hide-sm{display:none}
+  body{overflow:hidden}
+}
+
+
+.hero h1{max-width:13ch}
+.ring{position:absolute;right:-6vw;top:50%;transform:translateY(-50%);width:min(46vw,560px);aspect-ratio:1;border-radius:50%;border:clamp(18px,3vw,40px) solid var(--accent-soft);pointer-events:none}
+.ring::after{content:"";position:absolute;inset:18%;border-radius:50%;border:clamp(10px,1.6vw,22px) solid var(--calm-soft)}
+.hero .inner>*:not(.ring){position:relative;z-index:1}
+.baby{display:grid;grid-template-columns:56px 1fr;gap:12px;align-items:center}
+.bav{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:800 22px var(--font-display);background:var(--accent-soft);color:var(--accent-ink)}
+.roles .tile h3{color:var(--accent-ink)}
+.bars{display:grid;gap:12px}
+.barrow{display:grid;grid-template-columns:120px 1fr 70px;gap:12px;align-items:center}
+.barrow .tr{height:28px;background:var(--surface2);border-radius:8px;overflow:hidden}
+.barrow .tr i{display:block;height:100%;width:0;background:var(--accent);border-radius:8px;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+.slide.active .barrow .tr i{width:var(--w)}
+.barrow b{font-variant-numeric:tabular-nums}
+.stat{font:800 clamp(64px,10vw,150px)/.9 var(--font-display);color:var(--accent);letter-spacing:-.04em}
+.body{display:grid;grid-template-columns:minmax(220px,340px) 1fr;gap:clamp(16px,3vw,40px);align-items:center}
+.body svg{width:100%;height:auto;max-height:62vh}
+.body .sil{fill:var(--surface2);stroke:var(--line-strong);stroke-width:2}
+.hot{cursor:pointer}
+.hot circle.p{fill:var(--accent);opacity:.9;transition:r .2s}
+.hot circle.h{fill:var(--accent);opacity:.25;transform-origin:center;transform-box:fill-box;animation:pulse 1.8s ease-out infinite}
+.hot.on circle.p{fill:var(--calm)}
+.hot text{font:700 13px var(--font-body);fill:var(--ink)}
+@keyframes pulse{from{transform:scale(1);opacity:.35}to{transform:scale(2.4);opacity:0}}
+@media (prefers-reduced-motion:reduce){.hot circle.h{animation:none}}
+.panel{min-height:200px}
+.sit .tile{display:flex;flex-direction:column;gap:10px}
+.sit .ans{border-top:1px solid var(--line);padding-top:10px}
+.sit .ans p{color:var(--ink);font-size:.95em}
+.sit .ans b.k{color:var(--accent-ink)}
+.pose{display:grid;grid-template-columns:minmax(200px,320px) 1fr;gap:clamp(16px,3vw,40px);align-items:center}
+.pose svg{width:100%;height:auto;max-height:52vh}
+.pose .fig{fill:none;stroke:var(--ink);stroke-width:9;stroke-linecap:round;stroke-linejoin:round;transition:opacity .5s}
+.pose .head{fill:var(--ink)}
+.pose .good{opacity:0}.pose.ok .good{opacity:1}.pose.ok .bad{opacity:0}
+.pose .box{fill:var(--accent);transition:opacity .5s}
+.pose .bk{stroke:var(--accent);stroke-width:4;fill:none;stroke-dasharray:6 6}
+.prin{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.prin .tile .n{font:800 1.8em var(--font-display);color:var(--accent);line-height:1}
+.moments{display:flex;flex-wrap:wrap;gap:10px}
+.moments span{background:var(--surface);border:1.5px solid var(--line);border-radius:99px;padding:10px 16px;font-weight:700}
+.wash{display:grid;grid-template-columns:minmax(200px,300px) 1fr;gap:clamp(16px,3vw,40px);align-items:center}
+.clockring{position:relative;width:100%;aspect-ratio:1;max-width:300px}
+.clockring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.clockring .bg{fill:none;stroke:var(--surface2);stroke-width:16}
+.clockring .fg{fill:none;stroke:var(--accent);stroke-width:16;stroke-linecap:round;stroke-dasharray:603;stroke-dashoffset:603;transition:stroke-dashoffset .25s linear}
+.clockring .num{position:absolute;inset:0;display:grid;place-items:center;font:800 clamp(48px,6vw,84px) var(--font-display);font-variant-numeric:tabular-nums}
+.wsteps{display:grid;gap:8px;counter-reset:w}
+.wsteps li{list-style:none;display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:center;padding:9px 12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);transition:background .3s,border-color .3s,transform .3s}
+.wsteps li::before{counter-increment:w;content:counter(w);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--surface2);font-weight:800}
+.wsteps li.now{background:var(--accent-soft);border-color:var(--accent);transform:translateX(6px)}
+.wsteps li.now::before{background:var(--accent);color:var(--on-accent)}
+.yesno{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.yesno ul{margin:8px 0 0;padding-left:20px}.yesno li{margin:5px 0}
+.uv{--bg:#160f33;--surface:#22195099;--ink:#efeaff;--muted:#b9b0e3;--line:#3a2f74;--accent:#8cffb4;--accent-ink:#8cffb4;--on-accent:#0b2a17;--accent-soft:#2b4b3a;
+  background:radial-gradient(ellipse at 30% 20%,#2c1f6b 0%,#160f33 60%);color:var(--ink)}
+.glow{color:#8cffb4;text-shadow:0 0 18px #8cffb4aa,0 0 42px #8cffb455}
+.handsvg .hd{fill:#2a2160;stroke:#6f63b8;stroke-width:3}
+.handsvg .miss{fill:#8cffb4;opacity:0;filter:drop-shadow(0 0 10px #8cffb4)}
+.handsvg.show .miss{opacity:.9;transition:opacity .8s}
+.kit{display:flex;flex-wrap:wrap;gap:10px}
+.kit button{font:700 1em var(--font-body);color:var(--ink);background:var(--surface);border:2px solid var(--line);border-radius:16px;padding:12px 16px;cursor:pointer;transition:all .2s}
+.kit button.sel{border-color:var(--accent);background:var(--accent-soft)}
+.kit.check button.good{border-color:var(--ok);background:var(--ok-soft)}
+.kit.check button.bad.sel{border-color:var(--no);background:var(--no-soft);text-decoration:line-through}
+.kit.check button.good:not(.sel){outline:3px dashed var(--ok);outline-offset:2px}
+.gold{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.gold .tile{border-top:5px solid var(--accent)}
+.defi{border:2px dashed var(--accent);border-radius:22px;padding:clamp(18px,2.4vw,32px);background:var(--surface)}
+@media (max-width:760px){.body,.pose,.wash,.yesno,.prin,.gold{grid-template-columns:1fr}.barrow{grid-template-columns:90px 1fr 56px}.ring{opacity:.5}}
+
+</style>
+<div class="stage">
+  <div class="slides">
+<section class="slide hero" data-title="Titre"><div class="inner">
+<div class="ring" aria-hidden="true"></div>
+<div class="rv " style="--i:0;"><span class="eyebrow">CAP AEPE · Module ergonomie-soins · Séance 1</span></div>
+<div class="rv " style="--i:1;"><h1>Mon corps est mon outil de travail.</h1></div>
+<div class="rv " style="--i:2;"><p class="lead">Avant de prendre soin des enfants, on apprend à prendre soin de soi : protéger son dos, ses mains, et ne pas transporter les microbes.</p></div>
+<div class="rv " style="--i:3;"><div class="row"><span class="tag">Bloc 1 · UP1</span><span class="tag">Compétence T2</span><span class="tag">1 h 45</span></div></div>
+</div></section>
+<section class="slide " data-title="Bienvenue aux Petits Pas"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Notre fil rouge toute l'année</span></div>
+<div class="rv " style="--i:1;"><h2>Bienvenue à la crèche des Petits Pas.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Cette salle devient une section de crèche. Chaque trinôme adopte un poupon pour toute l'année : vous le retrouverez à chaque séance, avec sa fiche de rythme.</p></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:3;"><div class="baby"><div class="bav">L</div><div><h3>Léo <span style="font-weight:500;color:var(--muted);font-size:.8em">· 3 mois</span></h3><p>biberon toutes les 3 h environ, plusieurs siestes, porté avec maintien de la tête</p></div></div></div>
+<div class="rv tile" style="--i:4;"><div class="baby"><div class="bav">L</div><div><h3>Lou <span style="font-weight:500;color:var(--muted);font-size:.8em">· 5 mois</span></h3><p>biberons, découvre ses premières purées, attrape les objets et les porte à la bouche</p></div></div></div>
+<div class="rv tile" style="--i:5;"><div class="baby"><div class="bav">N</div><div><h3>Nino <span style="font-weight:500;color:var(--muted);font-size:.8em">· 9 mois</span></h3><p>tient assis seul, commence à ramper, mange des petits morceaux fondants</p></div></div></div>
+<div class="rv tile" style="--i:6;"><div class="baby"><div class="bav">J</div><div><h3>Jade <span style="font-weight:500;color:var(--muted);font-size:.8em">· 11 mois</span></h3><p>se déplace à quatre pattes, se met debout en s'agrippant, mange à la cuillère</p></div></div></div>
+<div class="rv tile" style="--i:7;"><div class="baby"><div class="bav">S</div><div><h3>Sacha <span style="font-weight:500;color:var(--muted);font-size:.8em">· 22 mois</span></h3><p>marche, dit ses premiers mots, une sieste après le repas</p></div></div></div>
+<div class="rv tile" style="--i:8;"><div class="baby"><div class="bav">M</div><div><h3>Maya <span style="font-weight:500;color:var(--muted);font-size:.8em">· 2 ans et demi</span></h3><p>apprend la propreté, veut tout faire seule</p></div></div></div>
+</div>
+<div class="rv " style="--i:9;"><p>6 trinômes, 6 poupons, de 3 mois à 2 ans et demi. À chaque séance, vous « prenez votre service » avec des transmissions orales, et vous le terminez en remplissant le cahier de transmission.</p></div>
+</div></section>
+<section class="slide " data-title="Ce module dans l'année"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le module en bref</span></div>
+<div class="rv " style="--i:1;"><h2>12 séances pour savoir prendre soin d'un jeune enfant.</h2></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:2;"><span class="tag">Ce que dit le diplôme</span><h3 style="margin-top:10px">Soins et santé</h3><p>RC3 : réaliser les soins du quotidien. RC4 : appliquer les protocoles de santé. T2 : adopter une posture professionnelle, dont la santé et la sécurité au travail.</p></div>
+<div class="rv tile" style="--i:3;"><span class="tag">À l'examen</span><h3 style="margin-top:10px">Épreuve EP1</h3><p>Un oral de 25 minutes à partir de deux fiches que vous rédigez, dont une sur un soin du quotidien. Ce module la prépare.</p></div>
+<div class="rv tile" style="--i:4;"><span class="tag">Comment on travaille</span><h3 style="margin-top:10px">En trinôme, rôles tournants</h3><p>L'un fait le soin, l'un observe avec une grille, l'un joue l'enfant ou le parent. Puis on change.</p></div>
+</div></div></section>
+<section class="slide " data-title="Objectifs du jour"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Aujourd'hui</span></div>
+<div class="rv " style="--i:1;"><h2>À la fin de la séance, vous saurez…</h2></div>
+<div class="steps">
+<div class="rv step" style="--i:2;"><div><b>Repérer les risques physiques du métier</b><span style="color:var(--muted)">Les gestes qui abîment le dos, les épaules, les genoux.</span></div></div>
+<div class="rv step" style="--i:3;"><div><b>Appliquer les principes de la démarche PRAP</b><span style="color:var(--muted)">Les bons réflexes pour porter, se baisser, s'organiser.</span></div></div>
+<div class="rv step" style="--i:4;"><div><b>Vous laver et désinfecter les mains correctement</b><span style="color:var(--muted)">Au bon moment, avec la bonne technique, et une tenue adaptée.</span></div></div>
+</div></div></section>
+<section class="slide " data-title="Quiz de départ"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Quiz de départ · non noté</span></div>
+<div class="rv " style="--i:1;"><h2>Qu'est-ce que vous savez déjà ?</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">10 questions pour faire le point. Pas de note : on part de ce que vous savez.</p></div>
+<div class="rv " style="--i:3;"><div class="qseq"><script type="application/json">{"qs": [{"q": "Quelle est la première cause de maladie professionnelle en France ?", "o": ["Les troubles musculo-squelettiques (TMS)", "Les allergies aux produits ménagers utilisés", "Les pertes d'audition liées au bruit des enfants"], "a": 0, "e": "Les TMS (douleurs du dos, des épaules, des poignets, des genoux) représentent la grande majorité des maladies professionnelles reconnues."}, {"q": "Pour ramasser un enfant assis par terre, je…", "o": ["me penche en gardant les jambes tendues", "le soulève en tirant sur ses deux bras", "plie les jambes, dos droit"], "a": 2, "e": "Ce sont les jambes qui travaillent, pas le dos. Et on ne tire jamais un enfant par les bras."}, {"q": "Combien pèse environ un enfant de 2 ans ?", "o": ["Environ 4 kg", "Environ 12 kg", "Environ 25 kg"], "a": 1, "e": "Environ 12 kg : c'est lourd quand on le porte de nombreuses fois par jour."}, {"q": "Combien de temps faut-il se frotter les mains au savon, au minimum ?", "o": ["10 secondes", "2 minutes", "30 secondes"], "a": 2, "e": "Au moins 30 secondes, en frottant toutes les zones des mains."}, {"q": "Porter des gants remplace-t-il le lavage des mains ?", "o": ["Non, on se lave les mains avant et après", "Oui, c'est justement à cela qu'ils servent", "Oui, à condition qu'ils soient neufs"], "a": 0, "e": "Les gants ne remplacent jamais le lavage des mains : on se lave les mains avant de les mettre et après les avoir retirés."}, {"q": "Pendant le service, peut-on garder sa montre et ses bagues ?", "o": ["Oui, s'ils sont petits et bien fixés", "Non, aucun bijou aux mains", "Seulement l'alliance et une montre fine"], "a": 1, "e": "Les bijoux gardent les microbes, empêchent un bon lavage et peuvent blesser l'enfant."}, {"q": "Le gel hydroalcoolique s'utilise sur des mains…", "o": ["propres et sèches", "visiblement sales ou tachées", "encore mouillées après le rinçage"], "a": 0, "e": "Si les mains sont sales ou mouillées, le gel ne marche pas bien : on se lave les mains à l'eau et au savon."}, {"q": "Lequel de ces moments est un moment clé pour se laver les mains ?", "o": ["Avant de lire une histoire aux enfants", "Après avoir rangé les livres d'images", "Avant et après un change"], "a": 2, "e": "Le change est un moment à risque : on se lave les mains avant ET après."}, {"q": "Pourquoi parler au bébé pendant un soin ?", "o": ["Pour l'occuper pendant qu'on prépare tout", "Pour le rassurer et nourrir son langage", "Pour qu'il s'endorme plus vite après"], "a": 1, "e": "Mettre des mots sur ce qu'on fait rassure l'enfant et nourrit son langage."}, {"q": "À quelle hauteur doit être le plan de change ?", "o": ["À hauteur des hanches", "Le plus bas possible, près du sol", "À hauteur des épaules de l'adulte"], "a": 0, "e": "Un plan réglé à hauteur des hanches évite de se pencher ou de lever les bras."}], "end": "C'est votre point de départ. On compare avec le quiz de fin tout à l'heure."}</script><div class="qbody"></div></div></div>
+</div></section>
+<section class="slide " data-title="Une journée à porter"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Ce que votre corps porte</span></div>
+<div class="rv " style="--i:1;"><h2>Porter, se pencher, s'accroupir : toute la journée.</h2></div>
+<div class="grid g2" style="align-items:center">
+<div class="rv " style="--i:2;"><div class="bars"><div class="barrow"><span>Léo, 3 mois</span><div class="tr"><i style="--w:43%"></i></div><b>≈ 6 kg</b></div><div class="barrow"><span>Jade, 1 an</span><div class="tr"><i style="--w:71%"></i></div><b>≈ 10 kg</b></div><div class="barrow"><span>Sacha, 2 ans</span><div class="tr"><i style="--w:86%"></i></div><b>≈ 12 kg</b></div><div class="barrow"><span>Maya, 3 ans</span><div class="tr"><i style="--w:100%"></i></div><b>≈ 14 kg</b></div></div><p style="color:var(--muted);margin-top:10px">Poids moyens approximatifs selon l'âge.</p></div>
+<div class="rv " style="--i:3;"><div class="tile"><h3>Et en plus…</h3><p style="margin-top:6px">On se penche sur la table à langer et sur le lit à barreaux. On s'assoit sur des chaises d'enfant. On s'agenouille au sol pour jouer. On porte un enfant d'un bras et on prépare un biberon de l'autre.</p></div></div>
+</div></div></section>
+<section class="slide " data-title="Les TMS"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le risque n°1 du métier</span></div>
+<div class="grid g2" style="align-items:center">
+<div class="rv " style="--i:1;"><div><div class="stat">9 sur 10</div><p class="big" style="margin-top:12px">Près de 9 maladies professionnelles reconnues sur 10 sont des <strong class="hl">TMS</strong>.</p></div></div>
+<div class="rv " style="--i:2;"><div class="tile"><h3>TMS : troubles musculo-squelettiques</h3><p style="margin-top:6px">Des douleurs dans les muscles, les tendons, les articulations : le dos, la nuque, les épaules, les poignets, les genoux. Elles arrivent petit à petit, à force de répéter de mauvais gestes. Et elles peuvent durer toute une vie.</p><p style="margin-top:10px;color:var(--ink)"><strong>Bonne nouvelle :</strong> on peut les éviter avec les bons gestes, dès le début du métier.</p></div></div>
+</div></div></section>
+<section class="slide " data-title="Les zones du corps à protéger"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Interactif</span></div>
+<div class="rv " style="--i:1;"><h2>Où ça fait mal, et pourquoi ?</h2></div>
+<div class="body">
+<div class="rv " style="--i:2;"><svg viewBox="0 0 300 470" role="img" aria-label="Silhouette du corps avec zones à risque">
+<circle class="sil" cx="150" cy="50" r="34"/>
+<path class="sil" d="M100 95 Q150 82 200 95 L218 235 Q205 245 192 238 L185 150 L182 250 L190 440 Q172 452 158 440 L152 300 L148 300 L142 440 Q128 452 110 440 L118 250 L115 150 L108 238 Q95 245 82 235 Z"/>
+<g class="hot" data-z="cou" tabindex="0" role="button" aria-label="Nuque et épaules"><circle class="h" cx="150" cy="92" r="14"/><circle class="p" cx="150" cy="92" r="11"/></g><g class="hot" data-z="dos" tabindex="0" role="button" aria-label="Bas du dos"><circle class="h" cx="150" cy="205" r="14"/><circle class="p" cx="150" cy="205" r="11"/></g><g class="hot" data-z="poi" tabindex="0" role="button" aria-label="Poignets"><circle class="h" cx="62" cy="232" r="14"/><circle class="p" cx="62" cy="232" r="11"/></g><g class="hot" data-z="gen" tabindex="0" role="button" aria-label="Genoux"><circle class="h" cx="132" cy="345" r="14"/><circle class="p" cx="132" cy="345" r="11"/></g></svg></div>
+<div class="rv " style="--i:3;"><div class="tile panel" id="zpanel"><span class="tag">Touchez un point rouge</span><h3 style="margin-top:12px">Quatre zones à protéger</h3><p style="margin-top:6px">Touchez chaque point sur la silhouette pour découvrir les gestes qui l'abîment, et le bon réflexe.</p></div></div>
+</div></div></section>
+<section class="slide " data-title="Activité : repérez la posture à risque"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Activité en trinômes · 25 min</span></div>
+<div class="rv " style="--i:1;"><h2>Repérez la posture à risque.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Pour chaque situation : quel est le risque ? Que proposez-vous ? Discutez, puis révélez l'analyse.</p></div>
+<div class="rv " style="--i:3;"><div class="grid g2 sit"><div class="tile"><span class="tag">Situation 1</span><h3>Ramasser Jade</h3><p>Jade (11 mois) est assise sur le tapis. Nadia se penche en avant, jambes tendues, et la soulève.</p>
+<button class="btn ghost" data-reveal="#sa0" data-once>Voir l'analyse</button>
+<div class="ans" id="sa0" hidden><p><b class="k">Le risque :</b> Le dos fait tout le travail : risque pour le bas du dos.</p><p style="margin-top:6px"><b class="k">Mieux faire :</b> Se mettre en fente avant ou s'accroupir, dos droit, rapprocher Jade de soi, puis se relever avec les jambes.</p></div></div><div class="tile"><span class="tag">Situation 2</span><h3>Changer Léo</h3><p>La table à langer est trop basse. Karim reste penché en avant pendant tout le change.</p>
+<button class="btn ghost" data-reveal="#sa1" data-once>Voir l'analyse</button>
+<div class="ans" id="sa1" hidden><p><b class="k">Le risque :</b> Dos et nuque fléchis plusieurs minutes : fatigue et douleurs.</p><p style="margin-top:6px"><b class="k">Mieux faire :</b> Régler la table à hauteur des hanches avant de commencer, préparer tout le matériel à portée de main.</p></div></div><div class="tile"><span class="tag">Situation 3</span><h3>Le repas de Sacha</h3><p>Léa s'assoit sur une petite chaise d'enfant pour faire manger Sacha. Ses genoux remontent, son dos s'arrondit.</p>
+<button class="btn ghost" data-reveal="#sa2" data-once>Voir l'analyse</button>
+<div class="ans" id="sa2" hidden><p><b class="k">Le risque :</b> Dos arrondi et genoux très pliés pendant tout le repas.</p><p style="margin-top:6px"><b class="k">Mieux faire :</b> Utiliser une chaise adulte basse adaptée, ou s'asseoir de côté, dos appuyé.</p></div></div><div class="tile"><span class="tag">Situation 4</span><h3>Biberon et Maya</h3><p>Chloé porte Maya sur sa hanche et prépare un biberon de l'autre main, en se tournant vers le plan de travail.</p>
+<button class="btn ghost" data-reveal="#sa3" data-once>Voir l'analyse</button>
+<div class="ans" id="sa3" hidden><p><b class="k">Le risque :</b> Charge d'un seul côté + torsion du dos : le geste le plus risqué.</p><p style="margin-top:6px"><b class="k">Mieux faire :</b> Poser Maya en sécurité (sol, transat) avant de préparer le biberon. Tourner avec les pieds, jamais avec le dos.</p></div></div></div></div>
+</div></section>
+<section class="slide " data-title="Se baisser : la bonne façon"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Démonstration</span></div>
+<div class="rv " style="--i:1;"><h2>Ce sont les jambes qui travaillent.</h2></div>
+<div class="pose" id="pose">
+<div class="rv " style="--i:2;"><svg viewBox="0 0 260 300" role="img" aria-label="Comparaison de deux façons de se baisser">
+<line class="bk" x1="20" y1="282" x2="240" y2="282"/>
+<g class="bad"><circle class="head" cx="192" cy="140" r="18"/><path class="fig" d="M100 172 L96 280 M100 172 L112 280 M100 172 L172 150 M172 152 L162 236"/></g>
+<g class="good"><circle class="head" cx="114" cy="118" r="18"/><path class="fig" d="M100 214 L150 234 L134 280 M100 214 L140 226 L112 280 M100 214 L110 140 M110 150 L150 236"/></g>
+<rect class="box" x="138" y="236" width="44" height="44" rx="10"/></svg></div>
+<div class="rv " style="--i:3;"><div class="tile"><h3 id="posetitle">Dos penché, jambes tendues</h3><p id="posetxt" style="margin-top:6px">Tout le poids passe par le bas du dos. Répété toute la journée, c'est la douleur assurée.</p><div style="margin-top:14px"><button class="btn" id="posebtn">Voir la bonne façon</button></div></div></div>
+</div></div></section>
+<section class="slide " data-title="Les 6 principes"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Démarche PRAP · Prévention des risques liés à l'activité physique</span></div>
+<div class="rv " style="--i:1;"><h2>Six principes pour économiser son corps.</h2></div>
+<div class="prin"><div class="rv tile" style="--i:2;"><div class="n">1</div><h3>Éviter de porter</h3><p>Faire monter l'enfant par le petit escalier de la table à langer, le faire marcher quand il sait.</p></div><div class="rv tile" style="--i:3;"><div class="n">2</div><h3>Rapprocher la charge</h3><p>Tenir l'enfant contre soi, jamais à bout de bras.</p></div><div class="rv tile" style="--i:4;"><div class="n">3</div><h3>Plier les jambes</h3><p>Dos droit, on se baisse en fléchissant les genoux ou en fente avant.</p></div><div class="rv tile" style="--i:5;"><div class="n">4</div><h3>Une base stable</h3><p>Pieds écartés, bien posés au sol.</p></div><div class="rv tile" style="--i:6;"><div class="n">5</div><h3>Pas de torsion</h3><p>On tourne avec les pieds, pas avec le dos.</p></div><div class="rv tile" style="--i:7;"><div class="n">6</div><h3>Régler et préparer</h3><p>Plan de change à hauteur des hanches, matériel prêt à portée de main.</p></div></div>
+</div></section>
+<section class="slide " data-title="La démarche PRAP"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">La démarche PRAP en 3 temps</span></div>
+<div class="rv " style="--i:1;"><h2>Observer, analyser, améliorer.</h2></div>
+<div class="steps">
+<div class="rv step" style="--i:2;"><div><b>Observer sa situation de travail</b><span style="color:var(--muted)">Qu'est-ce que je fais, combien de fois, dans quelle position ?</span></div></div>
+<div class="rv step" style="--i:3;"><div><b>Analyser ce qui peut abîmer le corps</b><span style="color:var(--muted)">Le poids, la hauteur, la torsion, la durée, l'organisation, le matériel.</span></div></div>
+<div class="rv step" style="--i:4;"><div><b>Proposer des améliorations</b><span style="color:var(--muted)">Changer le geste, régler le matériel, réorganiser. Et en parler à l'équipe.</span></div></div>
+</div>
+<div class="rv " style="--i:5;"><p class="big">Vous serez observés <strong class="hl">aussi sur votre posture</strong> dans chaque TP de l'année.</p></div>
+</div></section>
+<section class="slide " data-title="Deuxième risque : les microbes"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Deuxième risque</span></div>
+<div class="rv " style="--i:1;"><h2>Nos mains transportent les microbes.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Elles changent les couches, mouchent les nez, préparent les biberons, consolent. Si elles ne sont pas lavées au bon moment, elles passent les microbes d'un enfant à l'autre, et à vous.</p></div>
+<div class="rv " style="--i:3;"><p class="big">Le lavage des mains est <strong class="hl">le geste n°1</strong> pour protéger les enfants et se protéger soi-même.</p></div>
+</div></section>
+<section class="slide " data-title="Les moments clés"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Quand se laver les mains ?</span></div>
+<div class="rv " style="--i:1;"><h2>Les huit moments clés.</h2></div>
+<div class="rv " style="--i:2;"><div class="moments"><span>En arrivant au travail</span><span>Avant de préparer un repas ou un biberon</span><span>Avant et après chaque change</span><span>Après être allé aux toilettes</span><span>Après avoir mouché un enfant (ou soi-même)</span><span>Après un contact avec selles, urine, vomi, sang</span><span>Après avoir touché linge sale ou poubelle</span><span>Avant de partir</span></div></div>
+<div class="rv " style="--i:3;"><div class="quiz" data-single><div class="q">Vous venez de moucher Sacha. Que faites-vous avant de toucher Léo ?</div><div class="opts"><button class="opt" data-ok=1><span class="k">A</span><span>Je me lave les mains</span></button><button class="opt"><span class="k">B</span><span>Je continue, je me laverai les mains avant le repas</span></button><button class="opt"><span class="k">C</span><span>Je m'essuie les mains sur ma blouse</span></button></div><div class="fb" hidden><b>Exactement.</b> Après un mouchage, on se lave les mains : le nez qui coule est plein de microbes.</div></div></div>
+</div></section>
+<section class="slide " data-title="Le lavage des mains"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Technique · au moins 30 secondes de frottement</span></div>
+<div class="rv " style="--i:1;"><h2>Le lavage des mains, étape par étape.</h2></div>
+<div class="wash">
+<div class="rv " style="--i:2;"><div class="clockring"><svg viewBox="0 0 220 220"><circle class="bg" cx="110" cy="110" r="96"/><circle class="fg" id="wring" cx="110" cy="110" r="96"/></svg><div class="num" id="wnum">30</div></div><div class="row" style="justify-content:center;margin-top:12px"><button class="btn" id="wgo">Lancer les 30 secondes</button></div></div>
+<div class="rv " style="--i:3;"><ol class="wsteps" id="wsteps"><li>Mouiller les mains</li><li>Prendre une dose de savon</li><li>Frotter paume contre paume</li><li>Frotter le dos des mains</li><li>Entre les doigts, doigts croisés</li><li>Les pouces, en tournant</li><li>Le bout des doigts et les ongles</li><li>Les poignets</li><li>Rincer, sécher avec un essuie-main à usage unique, fermer le robinet avec</li></ol></div>
+</div></div></section>
+<section class="slide " data-title="La friction hydroalcoolique"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Le gel hydroalcoolique</span></div>
+<div class="rv " style="--i:1;"><h2>Pratique, mais pas dans tous les cas.</h2></div>
+<div class="yesno">
+<div class="rv tile" style="--i:2;"><span class="tag" style="background:var(--ok-soft);color:var(--ok)">Oui</span><ul><li>Sur des mains <strong>propres et sèches</strong></li><li>Entre deux soins, quand on n'a pas de lavabo</li><li>Frotter toutes les zones jusqu'à ce que ce soit sec (20 à 30 secondes)</li></ul></div>
+<div class="rv tile" style="--i:3;"><span class="tag" style="background:var(--no-soft);color:var(--no)">Non</span><ul><li>Sur des mains <strong>sales ou mouillées</strong> : eau et savon</li><li>Après un contact avec des selles ou un vomi : eau et savon</li><li>Pour les jeunes enfants : on leur lave les mains à l'eau et au savon</li></ul></div>
+</div></div></section>
+<section class="slide uv" data-title="Expérience : la lampe UV"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Expérience</span></div>
+<div class="rv " style="--i:1;"><h2>Qu'avez-vous <span class="glow">oublié</span> ?</h2></div>
+<div class="grid g2" style="align-items:center">
+<div class="steps">
+<div class="rv step" style="--i:2;"><div><b>Une noisette de lotion révélatrice</b><span style="color:var(--muted)">Frottez comme si c'était du savon.</span></div></div>
+<div class="rv step" style="--i:3;"><div><b>Lavez-vous les mains</b><span style="color:var(--muted)">Comme d'habitude, sans faire plus attention.</span></div></div>
+<div class="rv step" style="--i:4;"><div><b>Passez sous la lampe UV</b><span style="color:var(--muted)">Ce qui brille encore = les zones mal lavées.</span></div></div>
+<div class="rv " style="--i:5;"><div><button class="btn" id="handbtn">Montrer les zones souvent oubliées</button></div></div>
+</div>
+<div class="rv " style="--i:6;max-width:340px;justify-self:center;width:100%"><svg class="handsvg" id="handsvg" viewBox="0 0 240 300" role="img" aria-label="Main avec les zones souvent oubliées">
+<rect class="hd" x="55" y="130" width="130" height="135" rx="40"/>
+<rect class="hd" x="58" y="40" width="26" height="110" rx="13"/><rect class="hd" x="90" y="20" width="26" height="125" rx="13"/>
+<rect class="hd" x="122" y="26" width="26" height="120" rx="13"/><rect class="hd" x="154" y="48" width="24" height="100" rx="12"/>
+<rect class="hd" x="10" y="150" width="26" height="90" rx="13" transform="rotate(-28 23 195)"/>
+<circle class="miss" cx="71" cy="50" r="10"/><circle class="miss" cx="103" cy="30" r="10"/><circle class="miss" cx="135" cy="36" r="10"/><circle class="miss" cx="166" cy="58" r="9"/>
+<circle class="miss" cx="22" cy="160" r="12"/><circle class="miss" cx="87" cy="146" r="7"/><circle class="miss" cx="119" cy="144" r="7"/><circle class="miss" cx="151" cy="146" r="7"/>
+<rect class="miss" x="75" y="262" width="90" height="14" rx="7"/></svg></div>
+</div></div></section>
+<section class="slide " data-title="Prêt pour le service ?"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Jeu · la tenue professionnelle</span></div>
+<div class="rv " style="--i:1;"><h2>Prêt pour le service ?</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">Sélectionnez uniquement ce qui est autorisé dans une section de crèche. Puis vérifiez.</p></div>
+<div class="rv " style="--i:3;"><div class="kit" id="kit"><button class="good">Tenue propre réservée au travail</button><button class="bad">Montre</button><button class="good">Cheveux attachés</button><button class="bad">Bagues</button><button class="good">Ongles courts, sans vernis</button><button class="bad">Faux ongles</button><button class="good">Manches courtes ou relevées</button><button class="bad">Bracelet</button><button class="good">Chaussures fermées, propres</button><button class="bad">Long collier</button></div></div>
+<div class="rv " style="--i:4;"><div class="row"><button class="btn" id="kitcheck">Vérifier</button><button class="btn ghost" id="kitreset">Recommencer</button><span id="kitscore" class="big" style="align-self:center"></span></div></div>
+</div></section>
+<section class="slide " data-title="Pourquoi ces règles"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Ce n'est pas une question de style</span></div>
+<div class="rv " style="--i:1;"><h2>Trois bonnes raisons.</h2></div>
+<div class="grid g3">
+<div class="rv tile" style="--i:2;"><span class="tag">Hygiène</span><h3 style="margin-top:10px">Les bijoux gardent les microbes</h3><p>Sous une bague ou une montre, le savon ne passe pas. Les ongles longs ou vernis cachent des microbes.</p></div>
+<div class="rv tile" style="--i:3;"><span class="tag">Sécurité de l'enfant</span><h3 style="margin-top:10px">Pas de griffure, rien à avaler</h3><p>Un ongle long griffe, une boucle d'oreille s'arrache, une perle se détache et finit dans une bouche.</p></div>
+<div class="rv tile" style="--i:4;"><span class="tag">Votre sécurité</span><h3 style="margin-top:10px">Cheveux et chaussures</h3><p>Les enfants tirent les cheveux et les colliers. Des chaussures fermées et stables évitent glissades et entorses.</p></div>
+</div></div></section>
+<section class="slide " data-title="Mes règles d'or"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">À retenir</span></div>
+<div class="rv " style="--i:1;"><h2>Mes six règles d'or.</h2></div>
+<div class="gold"><div class="rv tile" style="--i:2;"><h3 style="font-size:1.05em">Je règle le matériel à ma hauteur avant chaque soin.</h3></div><div class="rv tile" style="--i:3;"><h3 style="font-size:1.05em">Je plie les jambes, je garde le dos droit, je tourne avec les pieds.</h3></div><div class="rv tile" style="--i:4;"><h3 style="font-size:1.05em">Je porte l'enfant contre moi, jamais à bout de bras.</h3></div><div class="rv tile" style="--i:5;"><h3 style="font-size:1.05em">Je me lave les mains aux 8 moments clés, au moins 30 secondes.</h3></div><div class="rv tile" style="--i:6;"><h3 style="font-size:1.05em">Gel hydroalcoolique : seulement sur des mains propres et sèches.</h3></div><div class="rv tile" style="--i:7;"><h3 style="font-size:1.05em">Aucun bijou, ongles courts, cheveux attachés, tenue propre.</h3></div></div>
+<div class="rv " style="--i:8;"><p style="color:var(--muted)">Recopiez-les dans votre livret, fiche « Mes règles d'or ». Elle vous suivra toute l'année.</p></div>
+</div></section>
+<section class="slide " data-title="Quiz de fin"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">Quiz de fin · 5 questions</span></div>
+<div class="rv " style="--i:1;"><h2>Vous avez retenu l'essentiel ?</h2></div>
+<div class="rv " style="--i:2;"><div class="qseq"><script type="application/json">{"qs": [{"q": "Que veut dire TMS ?", "o": ["Temps de manipulation sécurisé", "Tension musculaire des soignants", "Troubles musculo-squelettiques"], "a": 2, "e": "Des douleurs des muscles, tendons et articulations liées aux gestes répétés."}, {"q": "Je dois préparer un biberon et je porte Maya. Je…", "o": ["la garde sur la hanche et je me tourne vite", "pose Maya en sécurité d'abord", "la tiens d'un bras, le biberon de l'autre"], "a": 1, "e": "On évite la charge d'un côté et la torsion du dos."}, {"q": "Quel est le dernier geste du lavage des mains ?", "o": ["Fermer le robinet avec l'essuie-main", "Sécher avec la serviette commune", "Remettre ses bagues avant de quitter le lavabo"], "a": 0, "e": "On ne retouche pas le robinet sale avec des mains propres."}, {"q": "Mes mains sont visiblement sales. J'utilise…", "o": ["du gel hydroalcoolique", "de l'eau et du savon", "une lingette parfumée"], "a": 1, "e": "Le gel ne fonctionne pas sur des mains sales."}, {"q": "Pourquoi pas de bague pendant le service ?", "o": ["Parce que c'est démodé dans le métier", "Parce qu'elle risque de se rayer au travail", "Elle garde les microbes et peut blesser"], "a": 2, "e": "Hygiène et sécurité de l'enfant."}], "end": "Comparez avec le quiz de départ : voilà ce que vous avez appris aujourd'hui."}</script><div class="qbody"></div></div></div>
+</div></section>
+<section class="slide " data-title="Défi entreprise"><div class="inner">
+<div class="rv " style="--i:0;"><span class="eyebrow">D'ici le 2 décembre</span></div>
+<div class="rv " style="--i:1;"><div class="defi"><span class="tag">Défi entreprise</span><h2 style="margin-top:14px">Le geste qui fait mal.</h2><p class="big" style="margin-top:12px">Dans votre structure, repérez <strong>une situation de travail</strong> qui fatigue le dos, les épaules ou les genoux. Décrivez-la, et proposez <strong>une amélioration</strong>.</p><p style="margin-top:10px;color:var(--muted)">Notez-la dans votre livret, page « Défi entreprise ». Si possible, parlez-en à votre maître d'apprentissage.</p></div></div>
+</div></section>
+<section class="slide hero" data-title="La prochaine fois"><div class="inner">
+<div class="ring" aria-hidden="true"></div>
+<div class="rv " style="--i:0;"><span class="eyebrow">Séance 2 · mercredi 2 décembre</span></div>
+<div class="rv " style="--i:1;"><h2>Porter, installer, mobiliser l'enfant.</h2></div>
+<div class="rv " style="--i:2;"><p class="lead">On passe à la pratique avec vos poupons : porter un nourrisson en tenant sa tête, le poser et le relever, en parlant à chaque geste.</p></div>
+</div></section>
+    <div class="overview" hidden><div class="og"></div></div>
+  </div>
+  <div class="bar">
+    <button class="navbtn" id="prev" aria-label="Diapositive précédente">←<span class="hide-sm"> Précédent</span></button>
+    <div class="prog" aria-hidden="true"><i></i></div>
+    <span class="count">1 / 23</span>
+    <button class="navbtn" id="plan" aria-label="Plan de la séance">Plan</button>
+    <button class="navbtn hide-sm" id="fs" aria-label="Plein écran">Plein écran</button>
+    <button class="navbtn primary" id="next" aria-label="Diapositive suivante"><span class="hide-sm">Suivant </span>→</button>
+  </div>
+</div>
+<script>
+window.__init=function(){
+  const Z={"cou": ["Nuque et épaules", "Se pencher longtemps sur la table à langer, porter un enfant sur la hanche, lever les bras pour attraper du matériel en hauteur.", "Régler le plan de change à hauteur des hanches, ranger le matériel à portée de main, changer de bras."], "dos": ["Bas du dos", "Ramasser un enfant au sol jambes tendues, se pencher au-dessus du lit à barreaux, se tourner en portant.", "Plier les jambes, garder le dos droit, tourner avec les pieds, baisser la barrière du lit."], "poi": ["Poignets", "Soulever un bébé en le tenant sous les bras du bout des doigts, essorer, porter des sacs lourds.", "Prendre l'enfant à pleines mains, contre soi ; utiliser les équipements (chariot, seau à presse)."], "gen": ["Genoux", "S'agenouiller au sol sans protection pour jouer ou habiller, s'accroupir longtemps.", "Utiliser un coussin ou un tapis, alterner les positions, s'asseoir sur une chaise adulte basse."]};
+  const panel=document.getElementById('zpanel');
+  document.querySelectorAll('.hot').forEach(h=>{ const f=()=>{ document.querySelectorAll('.hot').forEach(x=>x.classList.remove('on')); h.classList.add('on');
+      const z=Z[h.dataset.z]; panel.innerHTML=`<span class="tag">${z[0]}</span><h3 style="margin-top:12px">Ce qui l'abîme</h3><p style="margin-top:4px">${z[1]}</p><h3 style="margin-top:14px">Le bon réflexe</h3><p style="margin-top:4px;color:var(--ink)">${z[2]}</p>`;
+      panel.style.animation='none'; void panel.offsetWidth; panel.style.animation='rise .45s both'; };
+    h.addEventListener('click',f); h.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();f();} }); });
+  const pose=document.getElementById('pose'), pb=document.getElementById('posebtn');
+  pb.onclick=()=>{ const ok=pose.classList.toggle('ok');
+    document.getElementById('posetitle').textContent= ok?'Jambes pliées, dos droit, charge contre soi':'Dos penché, jambes tendues';
+    document.getElementById('posetxt').textContent= ok?'Les cuisses font le travail, le dos reste droit, l\'enfant est tenu près du corps. On se relève en poussant sur les jambes.':'Tout le poids passe par le bas du dos. Répété toute la journée, c\'est la douleur assurée.';
+    pb.textContent= ok?'Revoir la mauvaise façon':'Voir la bonne façon'; };
+  let wt=null; const ring=document.getElementById('wring'), num=document.getElementById('wnum'), steps=[...document.querySelectorAll('#wsteps li')];
+  document.getElementById('wgo').onclick=()=>{ if(wt) return; let t=0; const total=30; steps.forEach(s=>s.classList.remove('now'));
+    const tick=()=>{ ring.style.strokeDashoffset=603*(1-t/total); num.textContent=Math.max(0,total-Math.floor(t));
+      const idx = t<2?0 : t<4?1 : Math.min(7, 2+Math.floor((t-4)/ (26/6))); steps.forEach((s,i)=>s.classList.toggle('now',i===idx)); };
+    tick(); wt=setInterval(()=>{ t+=.25; tick(); if(t>=total){ clearInterval(wt); wt=null; steps.forEach(s=>s.classList.remove('now')); steps[8].classList.add('now'); num.textContent='✓'; } },250); };
+  document.getElementById('handbtn').onclick=()=>document.getElementById('handsvg').classList.toggle('show');
+  const kit=document.getElementById('kit');
+  kit.querySelectorAll('button').forEach(b=>b.onclick=()=>{ if(!kit.classList.contains('check')) b.classList.toggle('sel'); });
+  document.getElementById('kitcheck').onclick=()=>{ kit.classList.add('check'); let ok=0; const all=[...kit.querySelectorAll('button')];
+    all.forEach(b=>{ const g=b.classList.contains('good'), s=b.classList.contains('sel'); if(g===s) ok++; });
+    document.getElementById('kitscore').textContent=ok+' / '+all.length+' bonnes réponses'; };
+  document.getElementById('kitreset').onclick=()=>{ kit.classList.remove('check'); kit.querySelectorAll('button').forEach(b=>b.classList.remove('sel')); document.getElementById('kitscore').textContent=''; };
+};
+</script>
+<script>
+(function(){
+const slides=[...document.querySelectorAll('.slide')];
+const prog=document.querySelector('.prog i'), count=document.querySelector('.count'), ov=document.querySelector('.overview');
+let cur=0;
+function go(i,push=true){
+  i=Math.max(0,Math.min(slides.length-1,i));
+  slides[cur].classList.remove('active'); cur=i; slides[cur].classList.add('active');
+  slides[cur].scrollTop=0;
+  prog.style.width=((cur+1)/slides.length*100)+'%';
+  count.textContent=(cur+1)+' / '+slides.length;
+  if(push){try{history.replaceState(null,'','#s'+(cur+1));}catch(e){}}
+  slides[cur].dispatchEvent(new CustomEvent('enter'));
+}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('plan').onclick=()=>{ov.hidden=!ov.hidden; if(!ov.hidden) buildOv();};
+document.getElementById('fs').onclick=()=>{ try{ if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{}); else document.exitFullscreen(); }catch(e){} };
+function buildOv(){ ov.querySelector('.og').innerHTML=slides.map((s,i)=>`<button data-i="${i}" class="${i===cur?'cur':''}"><span>${i+1}</span>${s.dataset.title||''}</button>`).join('');
+  ov.querySelectorAll('button').forEach(b=>b.onclick=()=>{ov.hidden=true;go(+b.dataset.i);}); }
+document.addEventListener('keydown',e=>{
+  if(e.target.closest('input,textarea')) return;
+  if(['ArrowRight','PageDown'].includes(e.key)||(e.key===' '&&!e.target.closest('button'))){e.preventDefault();go(cur+1);}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(cur-1);}
+  if(e.key==='o'||e.key==='O'){ov.hidden=!ov.hidden; if(!ov.hidden) buildOv();}
+  if(e.key==='Escape') ov.hidden=true;
+});
+let x0=null,y0=null;
+document.querySelector('.slides').addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+document.querySelector('.slides').addEventListener('touchend',e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0, dy=e.changedTouches[0].clientY-y0;
+  if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5) go(cur+(dx<0?1:-1)); x0=null;},{passive:true});
+
+/* quiz à une question */
+document.querySelectorAll('.quiz[data-single]').forEach(q=>{
+  const fb=q.querySelector('.fb');
+  q.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+    q.querySelectorAll('.opt').forEach(x=>{x.disabled=true; if(x.dataset.ok) x.classList.add('ok');});
+    if(!o.dataset.ok) o.classList.add('no');
+    if(fb) fb.hidden=false;
+  });
+});
+/* quiz en série */
+document.querySelectorAll('.qseq').forEach(box=>{
+  const data=JSON.parse(box.querySelector('script').textContent); let i=0, score=0;
+  if(window.__PM){ box.querySelector('.qbody').innerHTML='<div class="pmq">'+data.qs.map((q,k)=>`<div class="tile"><b>${k+1}. ${q.q}</b><div class="pmo">${q.o.map((t,j)=>`<span><i>${'ABCD'[j]}</i>${t}</span>`).join('')}</div></div>`).join('')+'</div>'; return; }
+  const render=()=>{
+    if(i>=data.qs.length){
+      box.querySelector('.qbody').innerHTML=`<div class="tile" style="text-align:center;padding:28px"><h3 style="font-size:clamp(28px,3vw,44px)">${score} / ${data.qs.length}</h3><p style="margin:10px auto 0;color:var(--muted)">${data.end}</p><div style="margin-top:18px"><button class="btn ghost" data-restart>Recommencer</button></div></div>`;
+      box.querySelector('[data-restart]').onclick=()=>{i=0;score=0;render();}; return;
+    }
+    const q=data.qs[i];
+    box.querySelector('.qbody').innerHTML=`<div class="qprog">${data.qs.map((_,k)=>`<i class="${k<=i?'on':''}"></i>`).join('')}</div>
+      <div class="quiz"><div class="eyebrow">Question ${i+1} sur ${data.qs.length}</div><div class="q">${q.q}</div>
+      <div class="opts">${q.o.map((t,k)=>`<button class="opt" data-k="${k}"><span class="k">${'ABCD'[k]}</span><span>${t}</span></button>`).join('')}</div>
+      <div class="fb" hidden><b>${''}</b><span>${q.e}</span></div>
+      <div><button class="btn" data-next hidden>${i+1<data.qs.length?'Question suivante':'Voir le résultat'} →</button></div></div>`;
+    box.querySelectorAll('.opt').forEach(o=>o.onclick=()=>{
+      const k=+o.dataset.k; box.querySelectorAll('.opt').forEach(x=>{x.disabled=true; if(+x.dataset.k===q.a) x.classList.add('ok');});
+      if(k===q.a) score++; else o.classList.add('no');
+      const fb=box.querySelector('.fb'); fb.hidden=false; fb.querySelector('b').textContent=(k===q.a?'Exact. ':'Pas tout à fait. ');
+      box.querySelector('[data-next]').hidden=false;
+    });
+    box.querySelector('[data-next]').onclick=()=>{i++;render();};
+  };
+  render();
+});
+/* cartes à retourner */
+document.querySelectorAll('.flip').forEach(f=>f.addEventListener('click',()=>f.classList.toggle('on')));
+/* révélations */
+document.querySelectorAll('[data-reveal]').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll(b.dataset.reveal).forEach(t=>{t.hidden=false; t.classList.add('rv'); t.style.animation='rise .5s both';});
+  if(b.dataset.once!==undefined) b.hidden=true;
+}));
+window.__go=go;
+const h=(location.hash||'').match(/^#s(\d+)$/);
+slides[0].classList.remove('active');
+go(h?(+h[1]-1):0,false);
+if(window.__init) window.__init();
+})();
+</script>
+</body></html>
